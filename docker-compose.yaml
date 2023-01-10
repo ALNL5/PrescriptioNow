@@ -19,7 +19,7 @@ services:
         volumes:
             - postgres-data:/var/lib/postgresql/data
         environment:
-            POSTGRES_MULTIPLE_DATABASES: customerdb,deliverydb,pharmacydb,accountsdb
+            POSTGRES_MULTIPLE_DATABASES: customersdb,deliveriesdb,pharmacydb,usersdb
             POSTGRES_USER: admin
             POSTGRES_PASSWORD: admin123
         ports:
@@ -38,28 +38,28 @@ services:
       HOST: "0.0.0.0"
       PUBLIC_URL: http://localhost:3000
       REACT_APP_SAMPLE_SERVICE_API_HOST: http://localhost:8000
-  customer:
+  customers:
     build:
-        context: ./customer
+        context: ./customers
         dockerfile: ./Dockerfile.dev
     ports:
         - "8001:8000"
     volumes:
-        - ./customer:/app
+        - ./customers:/app
     environment:
-      DATABASE_URL: postgresql://admin:password@postgres/customerdb
+      DATABASE_URL: postgresql://admin:password@postgres/customersdb
       WAIT_HOSTS: postgres:5432
 
-  delivery:
+  deliveries:
     build:
-        context: ./delivery
+        context: ./deliveries
         dockerfile: ./Dockerfile.dev
     ports:
         - "8002:8000"
     volumes:
-        - ./delivery:/app
+        - ./deliveries:/app
     environment:
-      DATABASE_URL: postgresql://admin:password@postgres/deliverydb
+      DATABASE_URL: postgresql://admin:password@postgres/deliveriesdb
       WAIT_HOSTS: postgres:5432
 
   pharmacy:
@@ -73,16 +73,16 @@ services:
     environment:
       DATABASE_URL: postgresql://admin:password@postgres/pharmacydb
       WAIT_HOSTS: postgres:5432
-  accounts:
+  users:
     build:
-        context: ./accounts
+        context: ./users
         dockerfile: ./Dockerfile.dev
     ports:
         - "8004:8000"
     volumes:
-        - ./accounts:/app
+        - ./users:/app
     environment:
-      DATABASE_URL: postgresql://admin:password@postgres/accountsdb
+      DATABASE_URL: postgresql://admin:password@postgres/usersdb
       WAIT_HOSTS: postgres:5432
   pg-admin:
     image: dpage/pgadmin4
