@@ -16,10 +16,10 @@ steps = [
             zip VARCHAR(255) NOT NULL,
             user_id INTEGER NOT NULL
         );
-        """
+        """,
         ## drop the table
-        # """
-        # DROP TABLE customers;
-        # """
+        """
+        DROP TABLE customers;
+        """
     ]
 ]
