@@ -6,7 +6,14 @@ steps = [
             id SERIAL PRIMARY KEY NOT NULL,
             role VARCHAR(255) NOT NULL
         );
-
+        """,
+        ## drop the table
+        """
+        DROP TABLE roles;
+        """
+    ],
+    [
+        """
         CREATE TABLE users (
             id SERIAL PRIMARY KEY NOT NULL,
             username VARCHAR(255) NOT NULL,
@@ -17,7 +24,6 @@ steps = [
         """,
         ## drop the table
         """
-        DROP TABLE roles;
         DROP TABLE users;
         """
     ]

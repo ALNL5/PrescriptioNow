@@ -9,6 +9,14 @@ steps = [
             user_id INTEGER NOT NULL
         );
 
+        """,
+        ## drop the table
+        """
+        DROP TABLE employees;
+        """
+    ],
+    [
+        """
         CREATE TABLE prescriptions (
             id SERIAL PRIMARY KEY NOT NULL,
             rx_number VARCHAR(255) NOT NULL,
@@ -27,7 +35,6 @@ steps = [
         """,
         ## drop the table
         """
-        DROP TABLE employees;
         DROP TABLE prescriptions;
         """
     ]

@@ -6,4 +6,4 @@ ADD https://github.com/ufoscout/docker-compose-wait/releases/download/2.9.0/wait
 RUN chmod +x /wait
 RUN python -m pip install -r requirements.txt
 WORKDIR /app
-CMD /wait && uvicorn main:app --reload --host 0.0.0.0
+CMD /wait && python -m migrations up && uvicorn main:app --reload --host 0.0.0.0

@@ -29,3 +29,11 @@ Today, I worked on:
 * Finalizing GitLab stories for each issues, divided points on stories, assigned stories to each group member, and finalizing project pgAdmin setup.
 
 My team and I completed stories for each issues, and divided points on stories. We also assigned the features/stories with 13 points to each group member, and finalized project pgAdmin setup.
+
+## July 9, 2023
+
+Today, I worked on:
+
+* Settling the database tables, setting up the database migrations, starting working on the backend coding.
+
+My team and I completed designing the database tables and finished the database setup on the project.

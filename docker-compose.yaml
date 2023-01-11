@@ -47,9 +47,8 @@ services:
     volumes:
         - ./customers:/app
     environment:
-      DATABASE_URL: postgresql://admin:password@postgres/customersdb
+      DATABASE_URL: postgresql://customersdb:password@postgres/
       WAIT_HOSTS: postgres:5432
-
   deliveries:
     build:
         context: ./deliveries
@@ -59,9 +58,8 @@ services:
     volumes:
         - ./deliveries:/app
     environment:
-      DATABASE_URL: postgresql://admin:password@postgres/deliveriesdb
+      DATABASE_URL: postgresql://deliveriesdb:password@postgres/
       WAIT_HOSTS: postgres:5432
-
   pharmacy:
     build:
         context: ./pharmacy
@@ -71,7 +69,7 @@ services:
     volumes:
         - ./pharmacy:/app
     environment:
-      DATABASE_URL: postgresql://admin:password@postgres/pharmacydb
+      DATABASE_URL: postgresql://pharmacydb:password@postgres/
       WAIT_HOSTS: postgres:5432
   users:
     build:
@@ -82,7 +80,7 @@ services:
     volumes:
         - ./users:/app
     environment:
-      DATABASE_URL: postgresql://admin:password@postgres/usersdb
+      DATABASE_URL: postgresql://usersdb:password@postgres/
       WAIT_HOSTS: postgres:5432
   pg-admin:
     image: dpage/pgadmin4
