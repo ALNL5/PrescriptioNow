@@ -58,7 +58,7 @@ services:
     volumes:
         - ./deliveries:/app
     environment:
-      DATABASE_URL: postgresql://deliveriesdb:password@postgres/
+      DATABASE_URL: postgresql://deliveriesdb:password@postgres/deliveriesdb
       WAIT_HOSTS: postgres:5432
   pharmacy:
     build:
