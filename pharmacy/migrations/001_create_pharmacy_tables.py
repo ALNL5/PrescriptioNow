@@ -1,6 +1,6 @@
 steps = [
     [
-        ## create the table
+        # create the table
         """
         CREATE TABLE employees (
             id SERIAL PRIMARY KEY NOT NULL,
@@ -10,10 +10,10 @@ steps = [
         );
 
         """,
-        ## drop the table
+        # drop the table
         """
         DROP TABLE employees;
-        """
+        """,
     ],
     [
         """
@@ -33,9 +33,9 @@ steps = [
         );
 
         """,
-        ## drop the table
+        # drop the table
         """
         DROP TABLE prescriptions;
-        """
-    ]
+        """,
+    ],
 ]

@@ -1,16 +1,16 @@
 steps = [
     [
-        ## create the table
+        # create the table
         """
         CREATE TABLE roles (
             id SERIAL PRIMARY KEY NOT NULL,
             role VARCHAR(255) NOT NULL
         );
         """,
-        ## drop the table
+        # drop the table
         """
         DROP TABLE roles;
-        """
+        """,
     ],
     [
         """
@@ -22,9 +22,9 @@ steps = [
             role_id INTEGER NOT NULL
         );
         """,
-        ## drop the table
+        # drop the table
         """
         DROP TABLE users;
-        """
-    ]
+        """,
+    ],
 ]

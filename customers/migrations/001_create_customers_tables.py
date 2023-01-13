@@ -1,6 +1,6 @@
 steps = [
     [
-        ## create the table
+        # create the table
         """
         CREATE TABLE customers (
             id SERIAL PRIMARY KEY NOT NULL,
@@ -17,9 +17,9 @@ steps = [
             user_id INTEGER NOT NULL
         );
         """,
-        ## drop the table
+        # drop the table
         """
         DROP TABLE customers;
-        """
+        """,
     ]
 ]
