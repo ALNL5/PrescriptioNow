@@ -5,6 +5,7 @@ import ErrorNotification from './ErrorNotification';
 import './App.css';
 import MainPage from "./MainPage";
 import Nav from "./Nav";
+import CustomerForm from "./CustomerSignup.js";
 
 function App() {
   const [launch_info, setLaunchInfo] = useState([]);
@@ -36,6 +37,9 @@ function App() {
       <div className="container">
         <Routes>
           <Route path="/" element={<MainPage />} />
+          <Route path="customers">
+            <Route path="new" element={<CustomerForm />} />
+          </Route>
         </Routes>
       </div>
     </BrowserRouter>
