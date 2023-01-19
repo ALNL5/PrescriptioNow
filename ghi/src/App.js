@@ -5,6 +5,12 @@ import ErrorNotification from './ErrorNotification';
 import './App.css';
 import MainPage from "./MainPage";
 import Nav from "./Nav";
+import PrescriptionList from "./PharmacyPrescriptionSearch.js";
+import OrderedPrescriptions from "./OrderedPrescriptions.js";
+import PrescriptionDetails from "./PharmacyPrescriptionDetail.js";
+import PharmacyMain from "./PharmacyMain.js";
+
+
 import CustomerForm from "./CustomerSignup.js";
 
 function App() {
@@ -37,6 +43,10 @@ function App() {
       <div className="container">
         <Routes>
           <Route path="/" element={<MainPage />} />
+          <Route path="/pharmacy/" element={<PharmacyMain />} />
+          <Route path="/pharmacy/prescriptions/" element={<PrescriptionList />} />
+          <Route path="/pharmacy/prescriptions/orders/" element={<OrderedPrescriptions />} />
+          <Route path="/pharmacy/prescriptions/:id/" element={<PrescriptionDetails />} />
           <Route path="customers">
             <Route path="new" element={<CustomerForm />} />
           </Route>

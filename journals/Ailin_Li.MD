@@ -14,7 +14,7 @@ Today, I worked on:
 
 My team and I completed API endpoints design. We discussed the project MVP and made some updates on it. We are creating GitLab issues according to the MVP.
 
-## July 5, 2023
+## Jan 5, 2023
 
 Today, I worked on:
 
@@ -22,7 +22,7 @@ Today, I worked on:
 
 My team and I discussed and created stories for each issues. We also started working on project setup to set up the PostgreSQL database in our project.
 
-## July 6, 2023
+## Jan 6, 2023
 
 Today, I worked on:
 
@@ -30,10 +30,46 @@ Today, I worked on:
 
 My team and I completed stories for each issues, and divided points on stories. We also assigned the features/stories with 13 points to each group member, and finalized project pgAdmin setup.
 
-## July 9, 2023
+## Jan 9, 2023
 
 Today, I worked on:
 
 * Settling the database tables, setting up the database migrations, starting working on the backend coding.
 
 My team and I completed designing the database tables and finished the database setup on the project.
+
+## Jan 10, 2023
+
+Today, I worked on:
+
+* Troubleshooting the database migrations problem, which was found caused by incorrect DB_URL path. Starting coding on pharmacy microservice.
+
+## Jan 11, 2023
+
+Today, I worked on:
+
+* Working on back-end CRUD of prescription in pharmacy microservice
+
+## Jan 12, 2023
+
+Today, I worked on:
+
+* Completed back-end CRUD of prescription in pharmacy microservice. Reviewed merge request of Jared. Started working on the front-end.
+
+## Jan 13, 2023
+
+Today, I worked on:
+
+* Started working on the front-end.
+
+## Jan 17, 2023
+
+Today, I worked on:
+
+* Keep working on the front-end.
+
+## Jan 18, 2023
+
+Today, I worked on:
+
+* Finished front-end READ and DELETE functions on pharmacy microservice and implemented a search bar function.
