@@ -72,12 +72,11 @@ class CustomerRepository:
                         customer.city,
                         customer.state,
                         customer.zip,
-                        customer.user_id
-                    ]
+                        customer.user_id,
+                    ],
                 )
                 id = result.fetchone()[0]
                 return self.customer_in_out(id, customer)
-
 
     def customer(self, customer_id: int) -> Optional[CustomerOut]:
         try:
@@ -101,7 +100,7 @@ class CustomerRepository:
                         FROM customers
                         WHERE id = %s
                         """,
-                        [customer_id]
+                        [customer_id],
                     )
                     record = result.fetchone()
                     if record is None:
@@ -109,7 +108,6 @@ class CustomerRepository:
                     return self.record_in_out(record)
         except Exception:
             return {"message": "Could not get customer"}
-
 
     def customers(self) -> Union[list[CustomerOut], Error]:
         try:
@@ -138,8 +136,9 @@ class CustomerRepository:
         except Exception:
             return {"message": "Could not get all customers"}
 
-
-    def update(self, customer_id: int, customer: CustomerIn) -> Union[CustomerOut, Error]:
+    def update(
+        self, customer_id: int, customer: CustomerIn
+    ) -> Union[CustomerOut, Error]:
         try:
             with pool.connection() as conn:
                 with conn.cursor() as db:
@@ -171,13 +170,12 @@ class CustomerRepository:
                             customer.city,
                             customer.state,
                             customer.zip,
-                            customer.user_id
-                        ]
+                            customer.user_id,
+                        ],
                     )
                     return self.customer_in_out(customer_id, customer)
         except Exception:
             return {"message": "Could not update customer"}
-
 
     def delete(self, customer_id: int) -> bool:
         try:
@@ -188,18 +186,15 @@ class CustomerRepository:
                         DELETE FROM customers
                         WHERE id = %s
                         """,
-                        [customer_id]
+                        [customer_id],
                     )
                     return True
         except Exception:
             return False
 
-
-
     def customer_in_out(self, id: int, customer: CustomerIn):
         data = customer.dict()
         return CustomerOut(id=id, **data)
-
 
     def record_in_out(self, record):
         return CustomerOut(
@@ -214,5 +209,5 @@ class CustomerRepository:
             city=record[8],
             state=record[9],
             zip=record[10],
-            user_id=record[11]
+            user_id=record[11],
         )
