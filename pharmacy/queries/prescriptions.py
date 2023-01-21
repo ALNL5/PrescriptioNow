@@ -72,16 +72,15 @@ class PrescriptionRepository:
                         FROM prescriptions
                         WHERE id = %s
                         """,
-                        [prescription_id]
+                        [prescription_id],
                     )
                     record = result.fetchone()
-                    print("record:",record)
+                    print("record:", record)
                     if record is None:
                         return {"message": "The prescription_id is not valid"}
                     return self.record_in_to_out(record)
         except Exception:
             return {"message": "Could not get this prescription"}
-
 
     def delete(self, prescription_id: int) -> bool:
         try:
@@ -92,13 +91,15 @@ class PrescriptionRepository:
                         DELETE FROM prescriptions
                         WHERE id = %s
                         """,
-                        [prescription_id]
+                        [prescription_id],
                     )
                     return True
         except Exception:
             return False
 
-    def update(self, prescription_id: int, prescription: PrescriptionIn) -> Union[PrescriptionOut, Error]:
+    def update(
+        self, prescription_id: int, prescription: PrescriptionIn
+    ) -> Union[PrescriptionOut, Error]:
         try:
             with pool.connection() as conn:
                 with conn.cursor() as db:
@@ -119,24 +120,25 @@ class PrescriptionRepository:
                         WHERE id = %s
                         """,
                         [
-                            prescription.rx_number
-                            , prescription.name
-                            , prescription.description
-                            , prescription.quantity
-                            , prescription.refills_as_written
-                            , prescription.date_refills_expire
-                            , prescription.date_requested
-                            , prescription.date_filled
-                            , prescription.date_delivered
-                            , prescription.employee_id
-                            , prescription.customer_id
-                            , prescription_id
-                        ]
+                            prescription.rx_number,
+                            prescription.name,
+                            prescription.description,
+                            prescription.quantity,
+                            prescription.refills_as_written,
+                            prescription.date_refills_expire,
+                            prescription.date_requested,
+                            prescription.date_filled,
+                            prescription.date_delivered,
+                            prescription.employee_id,
+                            prescription.customer_id,
+                            prescription_id,
+                        ],
                     )
-                    return self.prescription_in_to_out(prescription_id, prescription)
+                    return self.prescription_in_to_out(
+                        prescription_id, prescription
+                    )
         except Exception:
             return {"message": "Could not update the prescription"}
-
 
     def get_all(self) -> Union[List[PrescriptionOut], Error]:
         try:
@@ -164,7 +166,6 @@ class PrescriptionRepository:
         except Exception:
             return {"message": "Could not get all prescriptions"}
 
-
     def get_ordered(self) -> Union[List[PrescriptionOut], Error]:
         try:
             with pool.connection() as conn:
@@ -190,14 +191,16 @@ class PrescriptionRepository:
                     ordered_prescriptions = []
                     for record in result:
                         prescription = self.record_in_to_out(record)
-                        if prescription.date_filled is None and prescription.date_requested is not None:
+                        if (
+                            prescription.date_filled is None
+                            and prescription.date_requested is not None
+                        ):
                             ordered_prescriptions.append(prescription)
                     return ordered_prescriptions
         except Exception:
             return {"message": "Could not get all prescriptions"}
 
-
-    def create(self, prescription:PrescriptionIn) -> PrescriptionOut:
+    def create(self, prescription: PrescriptionIn) -> PrescriptionOut:
         with pool.connection() as conn:
             with conn.cursor() as db:
                 result = db.execute(
@@ -219,29 +222,27 @@ class PrescriptionRepository:
                     RETURNING id;
                     """,
                     [
-                          prescription.rx_number
-                        , prescription.name
-                        , prescription.description
-                        , prescription.quantity
-                        , prescription.refills_as_written
-                        , prescription.date_refills_expire
-                        , prescription.date_requested
-                        , prescription.date_filled
-                        , prescription.date_delivered
-                        , prescription.employee_id
-                        , prescription.customer_id
-                    ]
+                        prescription.rx_number,
+                        prescription.name,
+                        prescription.description,
+                        prescription.quantity,
+                        prescription.refills_as_written,
+                        prescription.date_refills_expire,
+                        prescription.date_requested,
+                        prescription.date_filled,
+                        prescription.date_delivered,
+                        prescription.employee_id,
+                        prescription.customer_id,
+                    ],
                 )
                 id = result.fetchone()[0]
                 # if not old_data:
                 #     return {"message": "Error!"}
                 return self.prescription_in_to_out(id, prescription)
 
-
     def prescription_in_to_out(self, id: int, prescription: PrescriptionIn):
         old_data = prescription.dict()
         return PrescriptionOut(id=id, **old_data)
-
 
     def record_in_to_out(self, record):
         return PrescriptionOut(
@@ -261,7 +262,7 @@ class PrescriptionRepository:
 
 
 class EmployeeRepository:
-    def create_employee(self, employee:EmployeesIn) -> EmployeesOut:
+    def create_employee(self, employee: EmployeesIn) -> EmployeesOut:
         with pool.connection() as conn:
             with conn.cursor() as db:
                 result = db.execute(
@@ -275,14 +276,13 @@ class EmployeeRepository:
                     RETURNING id;
                     """,
                     [
-                          employee.first_name
-                        , employee.last_name
-                        , employee.user_id
-                    ]
+                        employee.first_name,
+                        employee.last_name,
+                        employee.user_id,
+                    ],
                 )
                 id = result.fetchone()[0]
                 return self.employee_in_to_out(id, employee)
-
 
     def get_all_employees(self) -> Union[List[EmployeesOut], Error]:
         try:
@@ -311,13 +311,15 @@ class EmployeeRepository:
                         DELETE FROM employees
                         WHERE id = %s
                         """,
-                        [employee_id]
+                        [employee_id],
                     )
                     return True
         except Exception:
             return False
 
-    def update_employee(self, employee_id: int, employee: EmployeesIn) -> Union[EmployeesOut, Error]:
+    def update_employee(
+        self, employee_id: int, employee: EmployeesIn
+    ) -> Union[EmployeesOut, Error]:
         try:
             with pool.connection() as conn:
                 with conn.cursor() as db:
@@ -328,16 +330,11 @@ class EmployeeRepository:
                           , last_name = %s
                         WHERE id = %s
                         """,
-                        [
-                            employee.first_name
-                            , employee.last_name
-                            , employee_id
-                        ]
+                        [employee.first_name, employee.last_name, employee_id],
                     )
                     return self.employee_in_to_out(employee_id, employee)
         except Exception:
             return {"message": "Could not update the employee"}
-
 
     def employee_in_to_out(self, id: int, employee: EmployeesIn):
         old_data = employee.dict()
