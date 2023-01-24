@@ -32,7 +32,7 @@ const PrescriptionDetails = () => {
             window.location.href="http://localhost:3000/pharmacy/prescriptions/";
       });
     }
-  }
+  
 
     const updatePrescription = async id => {
         await fetch(`http://localhost:8003/prescriptions/${id}/`, {
