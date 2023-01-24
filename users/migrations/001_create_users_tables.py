@@ -18,8 +18,7 @@ steps = [
             id SERIAL PRIMARY KEY NOT NULL,
             username VARCHAR(255) NOT NULL,
             password VARCHAR(255) NOT NULL,
-            creation_date DATE NOT NULL,
-            role_id INTEGER NOT NULL
+            role_id INTEGER DEFAULT 0
         );
         """,
         # drop the table
