@@ -19,7 +19,7 @@ class CustomerIn(BaseModel):
     city: str
     state: str
     zip: str
-    user_id: Optional[int]
+    user_id: int
 
 
 class CustomerOut(BaseModel):
@@ -34,7 +34,7 @@ class CustomerOut(BaseModel):
     city: str
     state: str
     zip: str
-    user_id: Optional[int]
+    user_id: int
 
 
 class CustomerRepository:
