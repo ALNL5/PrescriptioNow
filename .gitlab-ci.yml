@@ -9,8 +9,6 @@ lint-test-job:
   stage: test
   script:
     - pip install flake8
-    - flake8 customers
-    - flake8 deliveries
     - flake8 pharmacy
     - flake8 users
 
@@ -24,58 +22,6 @@ lint-test-job:
 #     - cd sample_service
 #     - pip install -r requirements.txt
 #     - python -m pytest
-
-build-api-customers-backend:
-  image: docker:19.03.1
-  stage: build
-  services:
-    - docker:19.03.1-dind
-  before_script:
-    - export DOCKER_REGISTRY_USER=$CI_REGISTRY_USER # built-in GitLab Registry User
-    - export DOCKER_REGISTRY_PASSWORD=$CI_REGISTRY_PASSWORD # built-in GitLab Registry Password
-    - export DOCKER_REGISTRY_URL=$CI_REGISTRY # built-in GitLab Registry URL
-    - export COMMIT_HASH=$CI_COMMIT_SHA # Your current commit sha
-    - export IMAGE_NAME_WITH_REGISTRY_PREFIX=$CI_REGISTRY_IMAGE # Your repository prefixed with GitLab Registry URL
-    - docker login -u "$DOCKER_REGISTRY_USER" -p "$DOCKER_REGISTRY_PASSWORD" $DOCKER_REGISTRY_URL # Instructs GitLab to login to its registry
-
-  script:
-    - cd customers
-    - echo "Building..." # MAKE SURE NO SPACE ON EITHER SIDE OF = IN THE FOLLOWING LINE
-    - export CONTAINER_FULL_IMAGE_NAME_WITH_TAG=$IMAGE_NAME_WITH_REGISTRY_PREFIX/customers:$COMMIT_HASH
-    - docker build -f ./Dockerfile --pull -t customers_img .
-    - docker tag customers_img "$CONTAINER_FULL_IMAGE_NAME_WITH_TAG"
-    - docker push "$CONTAINER_FULL_IMAGE_NAME_WITH_TAG"
-    - echo $CONTAINER_FULL_IMAGE_NAME_WITH_TAG
-    - echo "Deploying on CapRover..."
-    - docker run caprover/cli-caprover:v2.1.1 caprover deploy --caproverUrl $CAPROVER_URL --caproverPassword $CAPROVER_PASSWORD --caproverApp $CAPROVER_APP_ONE --imageName $CONTAINER_FULL_IMAGE_NAME_WITH_TAG
-  only:
-    - main
-
-build-api-deliveries-backend:
-  image: docker:19.03.1
-  stage: build
-  services:
-    - docker:19.03.1-dind
-  before_script:
-    - export DOCKER_REGISTRY_USER=$CI_REGISTRY_USER # built-in GitLab Registry User
-    - export DOCKER_REGISTRY_PASSWORD=$CI_REGISTRY_PASSWORD # built-in GitLab Registry Password
-    - export DOCKER_REGISTRY_URL=$CI_REGISTRY # built-in GitLab Registry URL
-    - export COMMIT_HASH=$CI_COMMIT_SHA # Your current commit sha
-    - export IMAGE_NAME_WITH_REGISTRY_PREFIX=$CI_REGISTRY_IMAGE # Your repository prefixed with GitLab Registry URL
-    - docker login -u "$DOCKER_REGISTRY_USER" -p "$DOCKER_REGISTRY_PASSWORD" $DOCKER_REGISTRY_URL # Instructs GitLab to login to its registry
-
-  script:
-    - cd deliveries
-    - echo "Building..." # MAKE SURE NO SPACE ON EITHER SIDE OF = IN THE FOLLOWING LINE
-    - export CONTAINER_FULL_IMAGE_NAME_WITH_TAG=$IMAGE_NAME_WITH_REGISTRY_PREFIX/deliveries:$COMMIT_HASH
-    - docker build -f ./Dockerfile --pull -t deliveries_img .
-    - docker tag deliveries_img "$CONTAINER_FULL_IMAGE_NAME_WITH_TAG"
-    - docker push "$CONTAINER_FULL_IMAGE_NAME_WITH_TAG"
-    - echo $CONTAINER_FULL_IMAGE_NAME_WITH_TAG
-    - echo "Deploying on CapRover..."
-    - docker run caprover/cli-caprover:v2.1.1 caprover deploy --caproverUrl $CAPROVER_URL --caproverPassword $CAPROVER_PASSWORD --caproverApp $CAPROVER_APP_ONE --imageName $CONTAINER_FULL_IMAGE_NAME_WITH_TAG
-  only:
-    - main
 
 build-api-pharmacy-backend:
   image: docker:19.03.1
