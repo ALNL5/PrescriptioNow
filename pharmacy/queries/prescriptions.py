@@ -14,11 +14,12 @@ class PrescriptionIn(BaseModel):
     description: str
     quantity: int
     refills_as_written: str
-    date_refills_expire: Optional[date]
+    date_refills_expire: date
     date_requested: Optional[date]
     date_filled: Optional[date]
     date_delivered: Optional[date]
-    employee_id: int
+    times_refilled: Optional[int]
+    employee_id: Optional[int]
     customer_id: int
 
 
@@ -33,7 +34,8 @@ class PrescriptionOut(BaseModel):
     date_requested: Optional[date]
     date_filled: Optional[date]
     date_delivered: Optional[date]
-    employee_id: int
+    times_refilled: Optional[int]
+    employee_id: Optional[int]
     customer_id: int
 
 
@@ -67,6 +69,7 @@ class PrescriptionRepository:
                             , date_requested
                             , date_filled
                             , date_delivered
+                            , times_refilled
                             , employee_id
                             , customer_id
                         FROM prescriptions
@@ -115,27 +118,26 @@ class PrescriptionRepository:
                           , date_requested = %s
                           , date_filled = %s
                           , date_delivered = %s
+                          , times_refilled = %s
                           , employee_id = %s
                           , customer_id = %s
                         WHERE id = %s
                         """,
                         [
-                            prescription.rx_number,
-                            prescription.name,
-                            prescription.description,
-                            prescription.quantity,
-                            prescription.refills_as_written,
-                            prescription.date_refills_expire,
-                            prescription.date_requested,
-                            prescription.date_filled,
-                            prescription.date_delivered,
-                            prescription.employee_id,
-                            prescription.customer_id,
-                            prescription_id,
-                        ],
-                    )
-                    return self.prescription_in_to_out(
-                        prescription_id, prescription
+                            prescription.rx_number
+                            , prescription.name
+                            , prescription.description
+                            , prescription.quantity
+                            , prescription.refills_as_written
+                            , prescription.date_refills_expire
+                            , prescription.date_requested
+                            , prescription.date_filled
+                            , prescription.date_delivered
+                            , prescription.times_refilled
+                            , prescription.employee_id
+                            , prescription.customer_id
+                            , prescription_id
+                        ]
                     )
         except Exception:
             return {"message": "Could not update the prescription"}
@@ -156,6 +158,7 @@ class PrescriptionRepository:
                         date_requested,
                         date_filled,
                         date_delivered,
+                        times_refilled,
                         employee_id,
                         customer_id
                         FROM prescriptions
@@ -182,6 +185,7 @@ class PrescriptionRepository:
                         date_requested,
                         date_filled,
                         date_delivered,
+                        times_refilled,
                         employee_id,
                         customer_id
                         FROM prescriptions
@@ -198,7 +202,7 @@ class PrescriptionRepository:
                             ordered_prescriptions.append(prescription)
                     return ordered_prescriptions
         except Exception:
-            return {"message": "Could not get all prescriptions"}
+            return {"message": "Could not get ordered prescriptions"}
 
     def create(self, prescription: PrescriptionIn) -> PrescriptionOut:
         with pool.connection() as conn:
@@ -215,25 +219,27 @@ class PrescriptionRepository:
                         , date_requested
                         , date_filled
                         , date_delivered
+                        , times_refilled
                         , employee_id
                         , customer_id)
                     VALUES
-                        (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)
+                        (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)
                     RETURNING id;
                     """,
                     [
-                        prescription.rx_number,
-                        prescription.name,
-                        prescription.description,
-                        prescription.quantity,
-                        prescription.refills_as_written,
-                        prescription.date_refills_expire,
-                        prescription.date_requested,
-                        prescription.date_filled,
-                        prescription.date_delivered,
-                        prescription.employee_id,
-                        prescription.customer_id,
-                    ],
+                          prescription.rx_number
+                        , prescription.name
+                        , prescription.description
+                        , prescription.quantity
+                        , prescription.refills_as_written
+                        , prescription.date_refills_expire
+                        , prescription.date_requested
+                        , prescription.date_filled
+                        , prescription.date_delivered
+                        , prescription.times_refilled
+                        , prescription.employee_id
+                        , prescription.customer_id
+                    ]
                 )
                 id = result.fetchone()[0]
                 # if not old_data:
@@ -256,8 +262,9 @@ class PrescriptionRepository:
             date_requested=record[7],
             date_filled=record[8],
             date_delivered=record[9],
-            employee_id=record[10],
-            customer_id=record[11],
+            times_refilled=record[10],
+            employee_id=record[11],
+            customer_id=record[12],
         )
 
 
