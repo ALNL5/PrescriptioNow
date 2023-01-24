@@ -1,6 +1,5 @@
 from pydantic import BaseModel
-from typing import List, Union, Optional
-from datetime import date
+from typing import List, Union
 from queries.pool import pool
 
 
@@ -11,8 +10,7 @@ class Error(BaseModel):
 class AccountIn(BaseModel):
     username: str
     password: str
-    creation_date: Optional[date]
-    role_id: Optional[int]
+    role_id: int
 
 
 class Account(AccountIn):
@@ -22,8 +20,7 @@ class Account(AccountIn):
 class AccountOut(BaseModel):
     id: int
     username: str
-    creation_date: Optional[date]
-    role_id: Optional[int]
+    role_id: int
 
 
 class AccountOutWithPassword(AccountOut):
@@ -48,14 +45,13 @@ class AccountsRepository:
                     (
                         username,
                         password,
-                        creation_date,
                         role_id
                     )
                     VALUES
-                    (%s, %s, %s, %s)
+                    (%s, %s, %s)
                     RETURNING id
                     """,
-                    [info.username, hashed_password, info.creation_date, info.role_id],
+                    [info.username, hashed_password, info.role_id],
                 )
                 id = result.fetchone()[0]
                 return self.account_in_out(id, info)
@@ -68,7 +64,8 @@ class AccountsRepository:
                     SELECT
                     id,
                     username,
-                    password
+                    password,
+                    role_id
                     FROM users
                     WHERE username = %s
                     """,
@@ -76,7 +73,7 @@ class AccountsRepository:
                 )
                 record = result.fetchone()
                 if record != None:
-                    return AccountOutWithPassword(id=record[0], username=record[1], hashed_password=record[2])
+                    return AccountOutWithPassword(id=record[0], username=record[1], hashed_password=record[2], role_id=record[3])
                 else:
                     print("Bad username")
 
