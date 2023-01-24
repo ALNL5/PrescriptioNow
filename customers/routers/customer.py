@@ -1,5 +1,5 @@
 from fastapi import APIRouter, Depends, Response
-from typing import Union, List, Optional
+from typing import Union, List
 from queries.customer import Error, CustomerIn, CustomerOut, CustomerRepository
 
 
