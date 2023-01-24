@@ -47,6 +47,7 @@ services:
     volumes:
         - ./customers:/app
     environment:
+      SIGNING_KEY: b16558ffb7322bfa4720e8aaf215a4d3028f29149ac3692e41d83b310aee2929
       DATABASE_URL: postgresql://customersdb:password@postgres/
       WAIT_HOSTS: postgres:5432
   deliveries:
@@ -58,6 +59,7 @@ services:
     volumes:
         - ./deliveries:/app
     environment:
+      SIGNING_KEY: b16558ffb7322bfa4720e8aaf215a4d3028f29149ac3692e41d83b310aee2929
       DATABASE_URL: postgresql://deliveriesdb:password@postgres/deliveriesdb
       WAIT_HOSTS: postgres:5432
   pharmacy:
@@ -69,6 +71,7 @@ services:
     volumes:
         - ./pharmacy:/app
     environment:
+      SIGNING_KEY: b16558ffb7322bfa4720e8aaf215a4d3028f29149ac3692e41d83b310aee2929
       DATABASE_URL: postgresql://pharmacydb:password@postgres/
       WAIT_HOSTS: postgres:5432
   users:
@@ -80,6 +83,7 @@ services:
     volumes:
         - ./users:/app
     environment:
+      SIGNING_KEY: b16558ffb7322bfa4720e8aaf215a4d3028f29149ac3692e41d83b310aee2929
       DATABASE_URL: postgresql://usersdb:password@postgres/
       WAIT_HOSTS: postgres:5432
   pg-admin:
