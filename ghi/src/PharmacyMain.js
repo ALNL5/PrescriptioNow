@@ -14,6 +14,7 @@ function PharmacyMain() {
             <p><a className="btn btn-lg" href="/pharmacy/prescriptions/" role="button">View all prescriptions</a></p>
             <p><a className="btn btn-lg" href="/pharmacy/prescriptions/new/" role="button">Create new prescription</a></p>
             <p><a className="btn btn-lg" href="/pharmacy/prescriptions/orders/" role="button">View prescription orders</a></p>
+            <p><a className="btn btn-lg" href="/pharmacy/order-history/" role="button">View prescription order history</a></p>
             </div>
             </div>
         </div>

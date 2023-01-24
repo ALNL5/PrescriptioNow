@@ -5,7 +5,7 @@ const SearchBar = ({keyword, onChange}) => {
      style={BarStyle}
      key="search-bar"
      value={keyword}
-     placeholder={"search prescriptions by name or RX#"}
+     placeholder={"search prescriptions by name"}
      onChange={(e) => onChange(e.target.value)}
     />
   );

@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 
 
-function OrderedPrescriptions() {
+function RefillOrders() {
     const [orderedPrescriptions, setOrderedPrescriptions] = useState([])
 
     useEffect(()=> {
@@ -42,12 +42,20 @@ function OrderedPrescriptions() {
 
 
   return (
-    <div className='container'>
-        <h1>Ordered prescriptions
-            <button type="button" className="btn btn-outline-primary">
-                <Link to={"/pharmacy/prescriptions/"}>All customers' prescriptions</Link>
-            </button>
-        </h1>
+    <div className="container d-grid gap-4">
+        <div>
+            <ul className="nav nav-tabs">
+            <li className="nav-item">
+                <a className="nav-link " aria-current="page" href="/pharmacy/prescriptions/">All prescriptions</a>
+            </li>
+            <li className="nav-item">
+                <a className="nav-link active" href="#">Refill orders</a>
+            </li>
+            <li className="nav-item">
+                <a className="nav-link" href="/pharmacy/order-history/">Order history</a>
+            </li>
+            </ul>
+        </div>
         <table className="table table-striped">
         <thead>
             <tr>
@@ -63,14 +71,14 @@ function OrderedPrescriptions() {
             {orderedPrescriptions?.map(prescription => {
             return (
                 <tr key={prescription.id}>
-                <td width="16%">{ prescription.name }</td>
+                <td width="20%">{ prescription.name }</td>
                 <td width="12%">{ prescription.rx_number }</td>
                 { prescription.date_requested && <td width="18%">{ prescription.date_requested }</td>}
                 { !prescription.date_requested && <td width="18%">N/A</td>}
                 <td width="20%">{ prescription.description }</td>
                 <td>
                     <button type="button" className="btn btn-outline-primary">
-                        <Link to={"/pharmacy/prescriptions/" + prescription.id }>Details</Link>
+                        <Link to={"/pharmacy/prescriptions/order-details/" + prescription.id }>Details</Link>
                     </button>
                 </td>
                 <td>
@@ -85,4 +93,4 @@ function OrderedPrescriptions() {
   );
 }
 
-export default OrderedPrescriptions;
+export default RefillOrders;

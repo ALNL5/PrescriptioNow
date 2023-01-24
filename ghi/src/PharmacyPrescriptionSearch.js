@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
-import SearchBar from './SearchBar';
+import SearchBar from './PharmacySearchBar';
 import PrescriptionList from "./PharmacyPrescriptionList";
-import { Link } from "react-router-dom";
 
 
 const PrescriptionsWithSearch = () => {
@@ -34,15 +33,30 @@ const PrescriptionsWithSearch = () => {
  }, [])
 
   return (
-    <>
-    <div className="wrapper">
-      <SearchBar keyword={keyword} onChange={updateKeyword}/>
-      <button type="button" className="btn btn-outline-primary">
-        <Link to={"orders/"}>Ordered prescriptions</Link>
-      </button>
-      <PrescriptionList prescriptions={prescriptions} />
+    <div  className="container d-grid gap-4">
+      <div>
+        <ul className="nav nav-tabs">
+        <li className="nav-item">
+            <a className="nav-link active" aria-current="page" href="#">All prescriptions</a>
+        </li>
+        <li className="nav-item">
+            <a className="nav-link" href="/pharmacy/prescriptions/orders/">Refill orders</a>
+        </li>
+        <li className="nav-item">
+            <a className="nav-link" href="/pharmacy/order-history/">Order history</a>
+        </li>
+        </ul>
+      </div>
+      <div>
+          <button type="button" className="btn btn-outline-primary  me-5">
+              <a className="nav-link" aria-current="page" href="/pharmacy/prescriptions/new/">Create prescription</a>
+          </button>
+          <SearchBar keyword={keyword} onChange={updateKeyword}/>
+        </div>
+      <div>
+        <PrescriptionList prescriptions={prescriptions} />
+      </div>
     </div>
-    </>
   )
 }
 
