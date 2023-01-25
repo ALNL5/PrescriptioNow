@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import "./App.css";
 import MainPage from "./MainPage";
 import Nav from "./Nav";
+import SignupForm from "./User/SignupForm";
 import SubmitNewPrescription from "./SubmitNewPrescriptionForm.js";
 import PrescriptionList from "./PharmacyPrescriptionSearch.js";
 import PrescriptionDetails from "./PharmacyPrescriptionDetail.js";
@@ -47,6 +48,9 @@ function App() {
           />
           <Route path="customers">
             <Route path="new" element={<CustomerForm />} />
+          </Route>
+          <Route path="accounts">
+            <Route path="signup" element={<SignupForm />} />
           </Route>
         </Routes>
       </div>
