@@ -26,6 +26,7 @@ class AccountOut(BaseModel):
 class AccountOutWithPassword(AccountOut):
     hashed_password: str
 
+
 class RoleIn(BaseModel):
     role: str
 
@@ -36,7 +37,11 @@ class RoleOut(BaseModel):
 
 
 class AccountsRepository:
-    def create(self, info: AccountIn, hashed_password: str) -> AccountOutWithPassword:
+    def create(
+        self,
+        info: AccountIn,
+        hashed_password: str,
+    ) -> AccountOutWithPassword:
         with pool.connection() as conn:
             with conn.cursor() as db:
                 result = db.execute(
@@ -72,11 +77,15 @@ class AccountsRepository:
                     [username],
                 )
                 record = result.fetchone()
-                if record != None:
-                    return AccountOutWithPassword(id=record[0], username=record[1], hashed_password=record[2], role_id=record[3])
+                if record is not None:
+                    return AccountOutWithPassword(
+                        id=record[0],
+                        username=record[1],
+                        hashed_password=record[2],
+                        role_id=record[3],
+                    )
                 else:
                     print("Bad username")
-
 
     def account_in_out(self, id: int, account: AccountIn):
         data = account.dict()
@@ -114,7 +123,7 @@ class RoleRepository:
                 with conn.cursor() as db:
                     result = db.execute(
                         """
-                        SELECT 
+                        SELECT
                         id,
                         role
                         FROM roles

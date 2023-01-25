@@ -124,20 +124,20 @@ class PrescriptionRepository:
                         WHERE id = %s
                         """,
                         [
-                            prescription.rx_number
-                            , prescription.name
-                            , prescription.description
-                            , prescription.quantity
-                            , prescription.refills_as_written
-                            , prescription.date_refills_expire
-                            , prescription.date_requested
-                            , prescription.date_filled
-                            , prescription.date_delivered
-                            , prescription.times_refilled
-                            , prescription.employee_id
-                            , prescription.customer_id
-                            , prescription_id
-                        ]
+                            prescription.rx_number,
+                            prescription.name,
+                            prescription.description,
+                            prescription.quantity,
+                            prescription.refills_as_written,
+                            prescription.date_refills_expire,
+                            prescription.date_requested,
+                            prescription.date_filled,
+                            prescription.date_delivered,
+                            prescription.times_refilled,
+                            prescription.employee_id,
+                            prescription.customer_id,
+                            prescription_id,
+                        ],
                     )
         except Exception:
             return {"message": "Could not update the prescription"}
@@ -227,19 +227,19 @@ class PrescriptionRepository:
                     RETURNING id;
                     """,
                     [
-                          prescription.rx_number
-                        , prescription.name
-                        , prescription.description
-                        , prescription.quantity
-                        , prescription.refills_as_written
-                        , prescription.date_refills_expire
-                        , prescription.date_requested
-                        , prescription.date_filled
-                        , prescription.date_delivered
-                        , prescription.times_refilled
-                        , prescription.employee_id
-                        , prescription.customer_id
-                    ]
+                        prescription.rx_number,
+                        prescription.name,
+                        prescription.description,
+                        prescription.quantity,
+                        prescription.refills_as_written,
+                        prescription.date_refills_expire,
+                        prescription.date_requested,
+                        prescription.date_filled,
+                        prescription.date_delivered,
+                        prescription.times_refilled,
+                        prescription.employee_id,
+                        prescription.customer_id,
+                    ],
                 )
                 id = result.fetchone()[0]
                 # if not old_data:

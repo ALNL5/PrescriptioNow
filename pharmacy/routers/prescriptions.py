@@ -8,7 +8,7 @@ from queries.prescriptions import (
     EmployeeRepository,
     EmployeesIn,
     EmployeesOut,
-    )
+)
 
 
 router = APIRouter()
