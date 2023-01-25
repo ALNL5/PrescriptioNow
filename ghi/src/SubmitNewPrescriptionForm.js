@@ -20,7 +20,7 @@ const SubmitNewPrescription = () => {
       customer_id: customerID,
     };
 
-    const prescriptionUrl = "http://localhost:8003/prescriptions";
+    const prescriptionUrl = "http://localhost:8001/prescriptions";
     const fetchConfig = {
       method: "post",
       body: JSON.stringify(newPrescription),

@@ -2,6 +2,7 @@ from pydantic import BaseModel
 from typing import List, Union
 from queries.pool import pool
 
+
 class Error(BaseModel):
     message: str
 
@@ -10,6 +11,7 @@ class DeliveriesIn(BaseModel):
     prescription_id: int
     employee_id: int
     customer_id: int
+
 
 class DeliveriesOut(BaseModel):
     id: int
@@ -30,7 +32,9 @@ class DeliveriesRepository:
                         ORDER BY id;
                         """
                     )
-# We can maybe change the "ORDER BY id", to a new field including order date or distance, depends on what we want to do
+                    # We can maybe change the "ORDER BY id", to a new field
+                    # including order date or distance, depends on what we want
+                    # to do
 
                     return [
                         self.record_to_delivery_out(record)
@@ -41,11 +45,11 @@ class DeliveriesRepository:
             return {"message": "Could not get all deliveries"}
 
     def get_one(self, delivery_id: int) -> DeliveriesOut:
-            try:
-                with pool.connection() as conn:
-                    with conn.cursor() as db:
-                        result = db.execute(
-                            """
+        try:
+            with pool.connection() as conn:
+                with conn.cursor() as db:
+                    result = db.execute(
+                        """
                             SELECT id
                             , prescription_id
                             , employee_id
@@ -53,15 +57,15 @@ class DeliveriesRepository:
                              FROM deliveries
                             WHERE id = %s
                             """,
-                            [delivery_id]
-                        )
-                        record = result.fetchone()
-                        if record is None:
-                            return None
-                        return self.record_to_delivery_out(record)
-            except Exception as e:
-                print(e)
-                return {"message": "Could not get delivery"}
+                        [delivery_id],
+                    )
+                    record = result.fetchone()
+                    if record is None:
+                        return None
+                    return self.record_to_delivery_out(record)
+        except Exception as e:
+            print(e)
+            return {"message": "Could not get delivery"}
 
     def create(self, delivery: DeliveriesIn) -> DeliveriesOut:
         try:
@@ -77,17 +81,19 @@ class DeliveriesRepository:
 
                         """,
                         [
-                        delivery.prescription_id,
-                        delivery.employee_id,
-                        delivery.customer_id
-                        ]
+                            delivery.prescription_id,
+                            delivery.employee_id,
+                            delivery.customer_id,
+                        ],
                     )
                     id = result.fetchone()[0]
                     return self.delivery_in_to_out(id, delivery)
         except Exception:
-            return{"message": "error! Did not create a delivery"}
+            return {"message": "error! Did not create a delivery"}
 
-    def update(self, delivery_id: int, delivery: DeliveriesOut) -> Union[DeliveriesOut, Error]:
+    def update(
+        self, delivery_id: int, delivery: DeliveriesOut
+    ) -> Union[DeliveriesOut, Error]:
         try:
             with pool.connection() as conn:
                 with conn.cursor() as db:
@@ -103,8 +109,8 @@ class DeliveriesRepository:
                             delivery.prescription_id,
                             delivery.employee_id,
                             delivery.customer_id,
-                            delivery_id
-                        ]
+                            delivery_id,
+                        ],
                     )
                     return self.delivery_in_to_out(delivery_id, delivery)
         except Exception as e:
@@ -120,7 +126,7 @@ class DeliveriesRepository:
                         DELETE FROM deliveries
                         WHERE id = %s
                         """,
-                        [delivery_id]
+                        [delivery_id],
                     )
                     return True
         except Exception as e:
@@ -133,8 +139,8 @@ class DeliveriesRepository:
 
     def record_to_delivery_out(self, record):
         return DeliveriesOut(
-            id = record[0],
-            prescription_id = record[1],
-            employee_id = record[2],
-            customer_id = record[3],
-            )
+            id=record[0],
+            prescription_id=record[1],
+            employee_id=record[2],
+            customer_id=record[3],
+        )

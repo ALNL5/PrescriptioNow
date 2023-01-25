@@ -1,5 +1,4 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import { useEffect, useState } from "react";
 import "./App.css";
 import MainPage from "./MainPage";
 import Nav from "./Nav";
@@ -11,12 +10,13 @@ import PharmacyMain from "./PharmacyMain.js";
 import RefillOrders from "./PharmacyRefillOrders.js";
 import OrderDetails from "./PharmacyOrderDetails.js";
 import OrderHistoryWithSearch from "./PharmacyOrderHistorySearch.js";
-
 import CustomerForm from "./CustomerSignup.js";
 
 function App() {
+  const domain = /https:\/\/[^/]+/;
+  const basename = process.env.PUBLIC_URL.replace(domain, "");
   return (
-    <BrowserRouter>
+    <BrowserRouter basename={basename}>
       <Nav />
       <div className="container">
         <Routes>
@@ -42,6 +42,7 @@ function App() {
             path="/pharmacy/prescriptions/order-details/:id/"
             element={<OrderDetails />}
           />
+          <Route path="/pharmacy/refill-orders/" element={<RefillOrders />} />
           <Route
             path="/pharmacy/order-history/"
             element={<OrderHistoryWithSearch />}
