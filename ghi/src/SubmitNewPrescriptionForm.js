@@ -1,23 +1,57 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 
-const SubmitNewPrescription = () => {
-  const [prescriptionRxNumber, setPrescriptionRxNumber] = useState("");
-  const [prescriptionName, setPrescriptionName] = useState("");
-  const [prescriptionQuantity, setPrescriptionQuantity] = useState("");
-  const [prescriptionRefills, setPrescriptionRefills] = useState("");
-  const [prescriptionRefillsExpire, setPrescriptionRefillsExpire] =
-    useState("");
-  const [customerID, setCustomerID] = useState(0);
+function PrescriptionFormInput(props) {
+  const { id, value, labelText, onChange, type, name, placeholder } = props;
+
+  return (
+    <div className="mb-3">
+      <label htmlFor={id}>{labelText}</label>
+      <input
+        id={id}
+        value={value}
+        onChange={onChange}
+        required
+        type={type}
+        name={name}
+        placeholder={placeholder}
+        className="form-control"
+      />
+    </div>
+  );
+}
+
+function SubmitNewPrescription(props) {
+  const [dateRequested, setDateRequested] = useState("");
+  const [rxNumber, setRxNumber] = useState("");
+  const [name, setName] = useState("");
+  const [quantity, setQuantity] = useState("");
+  const [refills, setRefills] = useState("");
+  const [refillsExpire, setRefillsExpire] = useState("");
+  const [customerId, setCustomerId] = useState(0);
+  const [customers, setCustomers] = useState([]);
+
+  useEffect(() => {
+    async function getCustomers() {
+      const url = "http://localhost:8001/customers";
+      const response = await fetch(url);
+      if (response.ok) {
+        const data = await response.json();
+        setCustomers(data);
+      }
+    }
+    getCustomers();
+  }, [setCustomers]);
 
   const handleSubmit = (event) => {
     event.preventDefault();
     const newPrescription = {
-      rx_number: prescriptionRxNumber,
-      name: prescriptionName,
-      quantity: prescriptionQuantity,
-      refills_as_written: prescriptionRefills,
-      date_refills_expire: prescriptionRefillsExpire,
-      customer_id: customerID,
+      date_requested: dateRequested,
+      rx_number: rxNumber,
+      name: name,
+      quantity: quantity,
+      refills_as_written: refills,
+      date_refills_expire: refillsExpire,
+      customer_id: customerId,
     };
 
     const prescriptionUrl = "http://localhost:8001/prescriptions";
@@ -31,138 +65,98 @@ const SubmitNewPrescription = () => {
     fetch(prescriptionUrl, fetchConfig)
       .then((response) => response.json())
       .then(() => {
-        setPrescriptionRxNumber("");
-        setPrescriptionName("");
-        setPrescriptionQuantity("");
-        setPrescriptionRefills("");
-        setPrescriptionRefillsExpire("");
-        setCustomerID("");
+        setDateRequested("");
+        setRxNumber("");
+        setName("");
+        setQuantity(0);
+        setRefills(0);
+        setRefillsExpire("");
+        setCustomerId(0);
+        setCustomers([]);
       })
       .catch((e) => console.log("error: ", e));
   };
 
-  const handlePrescriptionRxNumberChange = (event) => {
-    const value = event.target.value;
-    setPrescriptionRxNumber(value);
-  };
-
-  const handlePrescriptionNameChange = (event) => {
-    const value = event.target.value;
-    setPrescriptionName(value);
-  };
-
-  const handlePrescriptionQuantityChange = (event) => {
-    const value = event.target.value;
-    setPrescriptionQuantity(value);
-  };
-
-  const handlePrescriptionRefillsChange = (event) => {
-    const value = event.target.value;
-    setPrescriptionRefills(value);
-  };
-
-  const handlePrescriptionRefillsExpireChange = (event) => {
-    const value = event.target.value;
-    setPrescriptionRefillsExpire(value);
-  };
-
-  const handleCustomerIDChange = (event) => {
-    const value = event.target.value;
-    setCustomerID(value);
-  };
-
   return (
     <div className="container">
-      <div className="row">
-        <div className="offset-2 col-8">
-          <div className="p-4 mt-4">
-            <h1 className="mb-4">Submit a new prescription</h1>
-            <form onSubmit={handleSubmit} id="new-prescription-form">
-              <div className="mb-3">
-                <label htmlFor="rx_name">Rx Number</label>
-                <input
-                  value={prescriptionRxNumber}
-                  onChange={handlePrescriptionRxNumberChange}
-                  placeholder="Rx number"
-                  required
-                  type="text"
-                  name="rx-number"
-                  id="rx-number"
-                  className="form-control"
-                />
-              </div>
-              <div className="mb-3">
-                <label htmlFor="prescription_name">Prescription Name</label>
-                <input
-                  value={prescriptionName}
-                  onChange={handlePrescriptionNameChange}
-                  placeholder="Prescription name (generic)"
-                  required
-                  type="text"
-                  name="prescription-name"
-                  id="prescription-name"
-                  className="form-control"
-                />
-              </div>
-              <div className="mb-3">
-                <label htmlFor="quantity">Quantity</label>
-                <input
-                  value={prescriptionQuantity}
-                  onChange={handlePrescriptionQuantityChange}
-                  placeholder="Quantity"
-                  required
-                  type="number"
-                  name="quantity"
-                  id="quantity"
-                  className="form-control"
-                />
-              </div>
-              <div className="mb-3">
-                <label htmlFor="refills">Number of Refills</label>
-                <input
-                  value={prescriptionRefills}
-                  onChange={handlePrescriptionRefillsChange}
-                  placeholder="Number of refills"
-                  required
-                  type="number"
-                  name="refills"
-                  id="refills"
-                  className="form-control"
-                />
-              </div>
-              <div className="mb-3">
-                <label htmlFor="refill-expiration">
-                  Refill Expiration Date
-                </label>
-                <input
-                  value={prescriptionRefillsExpire}
-                  onChange={handlePrescriptionRefillsExpireChange}
-                  required
-                  type="date"
-                  name="refill-expiration"
-                  id="refill-expiration"
-                  className="form-control"
-                />
-              </div>
-              <div className="mb-3">
-                <label htmlFor="customer-id">Customer ID</label>
-                <input
-                  value={customerID}
-                  onChange={handleCustomerIDChange}
-                  required
-                  type="number"
-                  name="customer-id"
-                  id="customer-id"
-                  className="form-control"
-                />
-              </div>
-              <button className="btn btn-primary">Submit prescription</button>
-            </form>
+      <div className="row offset-3 col-6 p-3 mt-4">
+        <h1 className="mb-4">Submit a new prescription</h1>
+        <form onSubmit={handleSubmit} id="new-prescription-form">
+          <PrescriptionFormInput
+            labelText="Date requested"
+            id="date-requested"
+            value={dateRequested}
+            onChange={(e) => setDateRequested(e.target.value)}
+            type="date"
+            name="date-requested"
+          />
+          <PrescriptionFormInput
+            labelText="Rx number"
+            id="rx-number"
+            value={rxNumber}
+            onChange={(e) => setRxNumber(e.target.value)}
+            type="text"
+            name="rx-number"
+            placeholder="Rx number"
+          />
+          <PrescriptionFormInput
+            labelText="Prescription name"
+            id="name"
+            value={name}
+            onChange={(e) => setName(e.target.value)}
+            type="text"
+            name="name"
+            placeholder="Prescription name (generic)"
+          />
+          <PrescriptionFormInput
+            labelText="Quantity to dispense per refill"
+            id="quantity"
+            value={quantity}
+            onChange={(e) => setQuantity(e.target.value)}
+            type="number"
+            name="quantity"
+            placeholder="Quantity"
+          />
+          <PrescriptionFormInput
+            labelText="Number of refills"
+            id="refills"
+            value={refills}
+            onChange={(e) => setRefills(e.target.value)}
+            type="number"
+            name="refills"
+            placeholder="Number of refills"
+          />
+          <PrescriptionFormInput
+            labelText="Refill expiration date"
+            id="refill-expiration"
+            value={refillsExpire}
+            onChange={(e) => setRefillsExpire(e.target.value)}
+            type="date"
+            name="refills-expiration"
+          />
+          <div className="mb-4">
+            <label htmlFor="customer">Customer</label>
+            <select
+              required
+              className="form-select"
+              id="customer"
+              onChange={(e) => setCustomerId(e.target.value)}
+            >
+              <option value="">Select customer</option>
+              {customers.map((customer) => (
+                <option key={customer.id} value={customer.id}>
+                  {customer.first_name} {customer.last_name}
+                </option>
+              ))}
+            </select>
           </div>
-        </div>
+          <button type="submit" className="btn btn-primary">
+            Submit prescription
+          </button>
+        </form>
       </div>
     </div>
   );
-};
+}
 
 export default SubmitNewPrescription;
