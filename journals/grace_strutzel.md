@@ -59,3 +59,40 @@ I worked on:
 ## January 17, 2023
 
 I worked on:
+
+* Finished the customer backend
+* Cleaned up the user backend for code cleanliness
+
+## January 18, 2023
+
+* Worked on authentication and customer signup form frontend.
+* Submitted a merge request for the customer microservice.
+
+## January 19, 2023
+
+* Reviewed merge requests submitted from the previous day and approved for a merge.
+* Setup CapRover
+* Configured the cI/CD for the caprover deployment.
+
+## January 20, 2023
+
+* Continued to work on getting the pipelines running.
+* Continued setting up Authentication and users microservice
+
+## January 23, 2023
+
+* Our group decided to refactor our entire project from four microservices down to two microservices. 
+* Reconfigured our databases to reflect these changes and developments we have encountered since initial creation.
+* Reviewed merge requests for the refactor.
+* Worked on customer endpoints
+
+## January 24, 2023
+
+* Worked on the customer microservice to finish the last two stories.
+* Was able to configure the backend and the list view for the frontend.
+* Worked on the detail frontend page for the customer service.
+* user signup story completed and merged.
+
+## January 25, 2023
+
+* Setup backend authentication for all of my features

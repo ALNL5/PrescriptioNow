@@ -9,40 +9,39 @@ const PrescriptionDetails = () => {
 
   useEffect(() => {
     async function getPrescriptions() {
-      const response = await fetch(
-        `http://localhost:8001/prescriptions/${id}/`
-      );
-      if (response.ok) {
-        const data = await response.json();
-        setPrescriptions(data);
-        setTempPrescriptions(data);
-      }
+        const response = await fetch(`http://localhost:8001/prescriptions/${id}`)
+        if (response.ok) {
+            const data = await response.json();
+            setPrescriptions(data)
+            setTempPrescriptions(data)
+        }
     }
     getPrescriptions();
   });
 
-  const deletePrescription = async (id) => {
-    await fetch(`http://localhost:8001/prescriptions/${id}/`, {
-      method: "delete",
-      headers: {
-        "Content-Type": "application/json",
-      },
-    }).then(() => {
-      window.location.href = "http://localhost:3000/pharmacy/prescriptions/";
-    });
-  };
+    const deletePrescription = async id => {
+        await fetch(`http://localhost:8001/prescriptions/${id}`, {
+          method: "delete",
+          headers: {
+            "Content-Type": "application/json"
+        },
+        }).then(() => {
+            window.location.href="http://localhost:3000/pharmacy/prescriptions";
+      });
+    }
+  
 
-  const updatePrescription = async (id) => {
-    await fetch(`http://localhost:8001/prescriptions/${id}/`, {
-      method: "put",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(tempPrescriptions),
-    }).then(() => {
-      window.location.reload();
-    });
-  };
+    const updatePrescription = async id => {
+        await fetch(`http://localhost:8001/prescriptions/${id}`, {
+          method: "put",
+          headers: {
+            "Content-Type": "application/json"
+        },
+          body: JSON.stringify(tempPrescriptions)
+        }).then(() => {
+            window.location.reload();
+      });
+    }
 
   return (
     <div className="container d-grid gap-4">
@@ -52,23 +51,23 @@ const PrescriptionDetails = () => {
             <a
               className="nav-link "
               aria-current="page"
-              href="/pharmacy/prescriptions/"
+              href="/pharmacy/prescriptions"
             >
               All prescriptions
             </a>
           </li>
           <li className="nav-item">
-            <a className="nav-link" href="/pharmacy/prescriptions/orders/">
+            <a className="nav-link" href="/pharmacy/prescriptions/orders">
               Refill orders
             </a>
           </li>
           <li className="nav-item">
-            <a className="nav-link" href="/pharmacy/order-history/">
+            <a className="nav-link" href="/pharmacy/order-history">
               Order history
             </a>
           </li>
           <li className="nav-item">
-            <a className="nav-link active" href="/pharmacy/order-history/">
+            <a className="nav-link active" href="/pharmacy/order-history">
               Prescription details and refill history
             </a>
           </li>

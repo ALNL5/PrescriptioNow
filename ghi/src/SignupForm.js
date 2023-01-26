@@ -1,9 +1,11 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 const SignupForm = () => {
   const [accountsUsername, setAccountsUsername] = useState("");
   const [accountsPassword, setAccountsPassword] = useState("");
   const [accountsRoleID, setAccountsRoleID] = useState(0);
+  const navigate = useNavigate();
 
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -12,6 +14,7 @@ const SignupForm = () => {
       password: accountsPassword,
       role_id: accountsRoleID,
     };
+    navigate('/');
 
     const accountsUrl = "http://localhost:8002/api/accounts";
     const fetchConfig = {

@@ -2,6 +2,7 @@ from pydantic import BaseModel
 from typing import Optional, Union
 from datetime import date
 from queries.pool import pool
+from queries.prescriptions import PrescriptionOut
 
 
 class Error(BaseModel):
@@ -210,4 +211,54 @@ class CustomerRepository:
             state=record[9],
             zip=record[10],
             user_id=record[11],
+        )
+
+
+class PrescriptionsRepository:
+    def customer_prescription(
+        self, customer_id: int
+    ) -> Union[list[PrescriptionOut], Error]:
+        try:
+            with pool.connection() as conn:
+                with conn.cursor() as db:
+                    result = db.execute(
+                        """
+                        SELECT
+                        id,
+                        rx_number,
+                        name,
+                        description,
+                        quantity,
+                        refills_as_written,
+                        date_refills_expire,
+                        date_requested,
+                        date_filled,
+                        date_delivered,
+                        times_refilled,
+                        employee_id,
+                        customer_id
+                        FROM prescriptions
+                        WHERE customer_id = %s
+                        """,
+                        [customer_id],
+                    )
+                    return [self.record_in_out(record) for record in result]
+        except Exception:
+            return {"message": "Could not get customer"}
+
+    def record_in_out(self, record):
+        return PrescriptionOut(
+            id=record[0],
+            rx_number=record[1],
+            name=record[2],
+            description=record[3],
+            quantity=record[4],
+            refills_as_written=record[5],
+            date_refills_expire=record[6],
+            date_requested=record[7],
+            date_filled=record[8],
+            date_delivered=record[9],
+            times_refilled=record[10],
+            employee_id=record[11],
+            customer_id=record[12],
         )
