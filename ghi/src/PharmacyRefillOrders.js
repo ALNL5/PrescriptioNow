@@ -1,50 +1,44 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
 
 function RefillOrders() {
   const [orderedPrescriptions, setOrderedPrescriptions] = useState([]);
 
-  useEffect(() => {
-    getOrderedPrescriptions();
-  }, []);
-
-  async function getOrderedPrescriptions() {
-    const response = await fetch("http://localhost:8001/prescriptions/");
-    if (response.ok) {
-      const data = await response.json();
-      const orderedPrescriptions = await data.filter(
-        (prescription) =>
-          prescription.date_requested !== null &&
-          prescription.date_filled === null
-      );
-      setOrderedPrescriptions(orderedPrescriptions);
+    async function getOrderedPrescriptions() {
+        const response = await fetch("http://localhost:8001/prescriptions")
+        if (response.ok) {
+            const data = await response.json();
+            const orderedPrescriptions = await data.filter(
+                prescription => prescription.date_requested !== null && prescription.date_filled === null
+            );
+            setOrderedPrescriptions(orderedPrescriptions)
+        }
     }
-  }
 
-  const updatePrescription = async (id) => {
-    const updatePrescriptions = orderedPrescriptions.filter(
-      (prescription) => prescription.id === id
-    );
-    const prescriptionObj = updatePrescriptions[0];
-    const tempDate = new Date();
-    const date =
-      tempDate.getFullYear() +
-      "-" +
-      (tempDate.getMonth() + 1) +
-      "-" +
-      tempDate.getDate();
-    await fetch(`http://localhost:8001/prescriptions/${id}/`, {
-      method: "put",
-      body: JSON.stringify({
-        ...prescriptionObj,
-        date_filled: date,
-      }),
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
-    getOrderedPrescriptions();
-  };
+    const updatePrescription = async (id) => {
+      const updatePrescriptions = orderedPrescriptions.filter(
+        (prescription) => prescription.id === id
+      );
+      const prescriptionObj = updatePrescriptions[0];
+      const tempDate = new Date();
+      const date =
+        tempDate.getFullYear() +
+        "-" +
+        (tempDate.getMonth() + 1) +
+        "-" +
+        tempDate.getDate();
+      await fetch(`http://localhost:8001/prescriptions/${id}`, {
+        method: "put",
+        body: JSON.stringify({
+          ...prescriptionObj,
+          date_filled: date,
+        }),
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+      getOrderedPrescriptions();
+    };
 
   return (
     <div className="container d-grid gap-4">
@@ -54,7 +48,7 @@ function RefillOrders() {
             <a
               className="nav-link "
               aria-current="page"
-              href="/pharmacy/prescriptions/"
+              href="/pharmacy/prescriptions"
             >
               All prescriptions
             </a>
@@ -65,7 +59,7 @@ function RefillOrders() {
             </a>
           </li>
           <li className="nav-item">
-            <a className="nav-link" href="/pharmacy/order-history/">
+            <a className="nav-link" href="/pharmacy/order-history">
               Order history
             </a>
           </li>
@@ -97,7 +91,7 @@ function RefillOrders() {
                   <button type="button" className="btn btn-outline-primary">
                     <Link
                       to={
-                        "/pharmacy/prescriptions/order-details/" +
+                        "/pharmacy/prescriptions/order-details" +
                         prescription.id
                       }
                     >

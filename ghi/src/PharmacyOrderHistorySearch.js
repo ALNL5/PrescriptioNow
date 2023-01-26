@@ -8,13 +8,14 @@ const OrderHistoryWithSearch = () => {
   const [keyword, setKeyword] = useState("");
 
   async function fetchPrescriptions() {
-    const response = await fetch("http://localhost:8001/prescriptions/");
-    if (response.ok) {
-      const data = await response.json();
-      setAllPrescriptions(data);
-      setPrescriptions(data);
+        const response = await fetch("http://localhost:8001/prescriptions")
+        if (response.ok) {
+            const data = await response.json();
+            setAllPrescriptions(data);
+            setPrescriptions(data);
+        }
     }
-  }
+  
 
   const updateKeyword = (keyword) => {
     const filtered = allPrescriptions.filter((prescription) => {
@@ -39,18 +40,18 @@ const OrderHistoryWithSearch = () => {
             <a
               className="nav-link"
               aria-current="page"
-              href="/pharmacy/prescriptions/"
+              href="/pharmacy/prescriptions"
             >
               All prescriptions
             </a>
           </li>
           <li className="nav-item">
-            <a className="nav-link" href="/pharmacy/prescriptions/orders/">
+            <a className="nav-link" href="/pharmacy/prescriptions/orders">
               Refill orders
             </a>
           </li>
           <li className="nav-item">
-            <a className="nav-link active" href="/pharmacy/order-history/">
+            <a className="nav-link active" href="/pharmacy/order-history">
               Order history
             </a>
           </li>

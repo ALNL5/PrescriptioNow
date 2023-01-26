@@ -7,13 +7,11 @@ const OrderDetails = () => {
 
   useEffect(() => {
     async function getPrescriptions() {
-      const response = await fetch(
-        `http://localhost:8001/prescriptions/${id}/`
-      );
-      if (response.ok) {
-        const data = await response.json();
-        setPrescriptions(data);
-      }
+        const response = await fetch(`http://localhost:8001/prescriptions/${id}`)
+        if (response.ok) {
+            const data = await response.json();
+            setPrescriptions(data)
+        }
     }
     getPrescriptions();
   });

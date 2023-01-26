@@ -27,6 +27,9 @@ function Nav() {
             <a className="nav-link link-dark" href="login">
               Delivery Login
             </a>
+            <a className="btn btn-primary" href="/accounts/logout" role="button">
+              Logout
+            </a>
           </div>
         </div>
       </div>

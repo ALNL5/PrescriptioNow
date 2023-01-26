@@ -38,6 +38,8 @@ services:
       HOST: "0.0.0.0"
       PUBLIC_URL: http://localhost:3000
       REACT_APP_SAMPLE_SERVICE_API_HOST: http://localhost:8000
+      REACT_APP_PHARMACY_API_HOST: http://localhost:8001
+      REACT_APP_USERS_API_HOST: http://localhost:8002
   pharmacy:
     build:
       context: ./pharmacy
@@ -50,6 +52,7 @@ services:
       SIGNING_KEY: b16558ffb7322bfa4720e8aaf215a4d3028f29149ac3692e41d83b310aee2929
       DATABASE_URL: postgresql://pharmacydb:password@postgres/
       WAIT_HOSTS: postgres:5432
+      REACT_APP_PHARMACY_API_HOST: http://localhost:8001
   users:
     build:
       context: ./users
@@ -62,6 +65,7 @@ services:
       SIGNING_KEY: b16558ffb7322bfa4720e8aaf215a4d3028f29149ac3692e41d83b310aee2929
       DATABASE_URL: postgresql://usersdb:password@postgres/
       WAIT_HOSTS: postgres:5432
+      REACT_APP_USERS_API_HOST: http://localhost:8002
   pg-admin:
     image: dpage/pgadmin4
     volumes:

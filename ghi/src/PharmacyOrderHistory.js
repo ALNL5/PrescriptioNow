@@ -8,16 +8,16 @@ function OrderHistory() {
     getRefilledOrders();
   }, []);
 
-  async function getRefilledOrders() {
-    const response = await fetch("http://localhost:8001/prescriptions/");
-    if (response.ok) {
-      const data = await response.json();
-      const refilledOrders = await data.filter(
-        (prescription) => prescription.date_requested !== null
-      );
-      setRefilledOrders(refilledOrders);
+    async function getRefilledOrders() {
+        const response = await fetch("http://localhost:8001/prescriptions")
+        if (response.ok) {
+            const data = await response.json();
+            const refilledOrders = await data.filter(
+                prescription => prescription.date_requested !== null
+            );
+            setRefilledOrders(refilledOrders)
+        }
     }
-  }
 
   return (
     <div className="container">
@@ -56,7 +56,7 @@ function OrderHistory() {
                   <button type="button" className="btn btn-outline-primary">
                     <Link
                       to={
-                        "/pharmacy/prescriptions/order-details/" +
+                        "/pharmacy/prescriptions/order-details" +
                         prescription.id
                       }
                     >

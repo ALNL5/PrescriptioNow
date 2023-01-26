@@ -9,8 +9,8 @@ function MainPage() {
           <p>Get refills without leaving home</p>
           <p></p>
           <div className="mt-5">
-            <p><a className="btn btn-lg" href="/sign-in" role="button">Sign In</a></p>
-            <p><a className="btn btn-lg" href="/sign-up" role="button">Create Account</a></p>
+            <p><a className="btn btn-lg" href="/accounts/login" role="button">Login</a></p>
+            <p><a className="btn btn-lg" href="/accounts/signup" role="button">Create Account</a></p>
           </div>
         </div>
       </div>
