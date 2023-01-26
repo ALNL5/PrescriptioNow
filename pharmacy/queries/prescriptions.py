@@ -11,11 +11,11 @@ class Error(BaseModel):
 class PrescriptionIn(BaseModel):
     rx_number: str
     name: str
-    description: str
+    description: Optional[str]
     quantity: int
-    refills_as_written: str
+    refills_as_written: int
     date_refills_expire: date
-    date_requested: Optional[date]
+    date_requested: date
     date_filled: Optional[date]
     date_delivered: Optional[date]
     times_refilled: Optional[int]
@@ -27,11 +27,11 @@ class PrescriptionOut(BaseModel):
     id: int
     rx_number: str
     name: str
-    description: str
+    description: Optional[str]
     quantity: int
-    refills_as_written: str
-    date_refills_expire: date
-    date_requested: Optional[date]
+    refills_as_written: int
+    date_refills_expire: Optional[date]
+    date_requested: date
     date_filled: Optional[date]
     date_delivered: Optional[date]
     times_refilled: Optional[int]

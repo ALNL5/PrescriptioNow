@@ -58,7 +58,7 @@ const PrescriptionDetails = () => {
             </a>
           </li>
           <li className="nav-item">
-            <a href="/pharmacy/prescriptions/orders/" className="nav-link">
+            <a className="nav-link" href="/pharmacy/prescriptions/orders/">
               Refill orders
             </a>
           </li>
@@ -68,8 +68,8 @@ const PrescriptionDetails = () => {
             </a>
           </li>
           <li className="nav-item">
-            <a className="nav-link active" href="/pharmacy/prescriptions/:id/">
-              Prescription details
+            <a className="nav-link active" href="/pharmacy/order-history/">
+              Prescription details and refill history
             </a>
           </li>
         </ul>
