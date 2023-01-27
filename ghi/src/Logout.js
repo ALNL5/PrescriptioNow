@@ -15,7 +15,10 @@ function Logout() {
             <div className="shadow p-4 mt-4">
               <h1>Sign-out Success</h1>
               <form id="create-account-form">
-                <button className="btn btn-primary" onClick={handleDelete}>
+                <button
+                  className="btn btn-primary d-grid gap-2 col-4 mx-auto"
+                  onClick={handleDelete}
+                >
                   Home Page
                 </button>
               </form>

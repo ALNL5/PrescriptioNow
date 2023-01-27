@@ -48,7 +48,7 @@ function Login() {
       <div className="row">
         <div className="offset-3 col-6">
           <div className="shadow p-4 mt-4">
-            <h1>Login</h1>
+            <h1 className="text-center">Login</h1>
             <form id="create-account-form">
               <div className="form-floating mb-3">
                 <input
@@ -72,7 +72,10 @@ function Login() {
                 />
                 <label htmlFor="password">Password</label>
               </div>
-              <button className="btn btn-primary" onClick={handleSubmit}>
+              <button
+                className="btn btn-primary d-grid gap-2 col-4 mx-auto"
+                onClick={handleSubmit}
+              >
                 Login
               </button>
             </form>
