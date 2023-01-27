@@ -1,5 +1,6 @@
-from fastapi import APIRouter, Depends, Response
+from fastapi import APIRouter, Depends, Response, HTTPException
 from typing import Union, List
+from auth import authenticator
 from queries.prescriptions import (
     Error,
     PrescriptionIn,
@@ -16,23 +17,40 @@ router = APIRouter()
 
 @router.post("/prescriptions", response_model=Union[PrescriptionOut, Error])
 def create_prescription(
-    prescription: PrescriptionIn, repo: PrescriptionRepository = Depends()
+    prescription: PrescriptionIn,
+    repo: PrescriptionRepository = Depends(),
+    account_data: dict = Depends(authenticator.get_current_account_data),
 ):
-    return repo.create(prescription)
+    if account_data:
+        return repo.create(prescription)
+    else:
+        raise HTTPException(status_code=401, detail="Invalid Token")
 
 
 @router.get(
-    "/prescriptions", response_model=Union[List[PrescriptionOut], Error]
+    "/prescriptions", response_model=Union[List[PrescriptionOut], Error, bool]
 )
-def get_all_customers_prescriptions(repo: PrescriptionRepository = Depends()):
-    return repo.get_all()
+def get_all_customers_prescriptions(
+    repo: PrescriptionRepository = Depends(),
+    account_data: dict = Depends(authenticator.get_current_account_data),
+):
+    if account_data:
+        return repo.get_all()
+    else:
+        raise HTTPException(status_code=401, detail="Invalid Token")
 
 
 @router.get(
     "/prescriptions/orders", response_model=Union[List[PrescriptionOut], Error]
 )
-def get_ordered_prescriptions(repo: PrescriptionRepository = Depends()):
-    return repo.get_ordered()
+def get_ordered_prescriptions(
+    repo: PrescriptionRepository = Depends(),
+    account_data: dict = Depends(authenticator.get_current_account_data),
+):
+    if account_data:
+        return repo.get_ordered()
+    else:
+        raise HTTPException(status_code=401, detail="Invalid Token")
 
 
 @router.put(
@@ -43,15 +61,22 @@ def update_prescription(
     prescription_id: int,
     prescription: PrescriptionIn,
     repo: PrescriptionRepository = Depends(),
+    account_data: dict = Depends(authenticator.get_current_account_data),
 ) -> Union[PrescriptionOut, Error]:
-    return repo.update(prescription_id, prescription)
+    if account_data:
+        return repo.update(prescription_id, prescription)
 
 
 @router.delete("/prescriptions/{prescription_id}", response_model=bool)
 def delete_prescription(
-    prescription_id: int, repo: PrescriptionRepository = Depends()
+    prescription_id: int,
+    repo: PrescriptionRepository = Depends(),
+    account_data: dict = Depends(authenticator.get_current_account_data),
 ) -> bool:
-    return repo.delete(prescription_id)
+    if account_data:
+        return repo.delete(prescription_id)
+    else:
+        raise HTTPException(status_code=401, detail="Invalid Token")
 
 
 @router.get(
@@ -62,11 +87,15 @@ def get_one_prescription(
     prescription_id: int,
     response: Response,
     repo: PrescriptionRepository = Depends(),
+    account_data: dict = Depends(authenticator.get_current_account_data),
 ) -> PrescriptionOut:
-    prescription = repo.get_one(prescription_id)
-    if prescription is None:
-        response.status_code = 404
-    return prescription
+    if account_data:
+        prescription = repo.get_one(prescription_id)
+        if prescription is None:
+            response.status_code = 404
+        return prescription
+    else:
+        raise HTTPException(status_code=401, detail="Invalid Token")
 
 
 @router.post("/employees", response_model=Union[EmployeesOut, Error])

@@ -17,10 +17,16 @@ import CustomerPrescriptionList from "./CustomerPrescriptions";
 import Deliveries from "./Deliveries/Deliveries.jsx"
 import CustomerForm from "./CustomerSignup.js";
 
+function GetToken() {
+  // Get token from JWT cookie (if already logged in)
+  return null;
+}
+
 function App() {
   return (
     <BrowserRouter>
       <AuthProvider>
+        <GetToken />
         <Nav />
         <div className="container">
           <Routes>

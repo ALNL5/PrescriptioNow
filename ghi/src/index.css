@@ -47,3 +47,28 @@ code {
   background-color: #2BCCDE;
   color: #FFFFFF;
 }
+
+
+.pharmacist {
+  background-image: url("https://media.capc.org/images/AdobeStock_274131656.original.original.jpg");
+  background-position: center center;
+  border: 1px solid #2BCCDE;
+  border-radius: 10px;
+  height: 550px;
+  width: 1200px;
+}
+
+.pharmacist p {
+  font-size: 1.5em;
+}
+
+.pharmacist .btn-lg {
+  background-color: #FFFFFF;
+  border: 2px solid #2BCCDE;
+  color: #2BCCDE;
+}
+
+.pharmacist .btn-lg:hover {
+  background-color: #2BCCDE;
+  color: #FFFFFF;
+}

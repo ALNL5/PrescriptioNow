@@ -3,12 +3,12 @@ const SearchBar = ({keyword, onChange}) => {
   return (
     <>
       <input
-      className="rounded bg-light float-right"
-      style={BarStyle}
-      key="search-bar"
-      value={keyword}
-      placeholder={"search by name or RX#"}
-      onChange={(e) => onChange(e.target.value)}
+        className="rounded bg-light float-right"
+        style={BarStyle}
+        key="search-bar"
+        value={keyword}
+        placeholder={"search by RX# or name"}
+        onChange={(e) => onChange(e.target.value)}
       />
     </>
   );

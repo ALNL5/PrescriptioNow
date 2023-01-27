@@ -1,32 +1,44 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import { useAuthContext } from "./auth";
 
 function OrderHistory() {
   const [refilledOrders, setRefilledOrders] = useState([]);
+  const { token } = useAuthContext();
 
   useEffect(() => {
-    getRefilledOrders();
-  }, []);
-
-    async function getRefilledOrders() {
-        const response = await fetch("http://localhost:8001/prescriptions")
-        if (response.ok) {
+    if (token) {
+        const getRefilledOrders = async () => {
+          const prescriptionURL = `${process.env.REACT_APP_PHARMACY_API_HOST}/prescriptions`;
+          const fetchConfig = {
+            method: "GET",
+            headers: {
+              Authorization: `Bearer ${token}`,
+              "Content-Type": "application/json",
+            },
+          };
+          const response = await fetch(prescriptionURL, fetchConfig);
+          if (response.ok) {
             const data = await response.json();
             const refilledOrders = await data.filter(
-                prescription => prescription.date_requested !== null
+              (prescription) => prescription.date_requested !== null
             );
-            setRefilledOrders(refilledOrders)
+            setRefilledOrders(refilledOrders);
+          }
         }
+        getRefilledOrders();
     }
+  }, [token, setRefilledOrders]);
+
 
   return (
     <div className="container">
       <table className="table table-striped">
         <thead>
           <tr>
-            <th>Customer name</th>
+            <th>RX #</th>
+            <th>RX name</th>
             <th>Customer ID</th>
-            <th>RX_#</th>
             <th>Request date</th>
             <th>Refill date</th>
             <th>Delivery date</th>
@@ -37,9 +49,9 @@ function OrderHistory() {
           {refilledOrders?.map((prescription) => {
             return (
               <tr key={prescription.id}>
-                <td width="20%">{prescription.name}</td>
+                <td width="14%">{prescription.rx_number}</td>
+                <td width="16%">{prescription.name}</td>
                 <td width="16%">{prescription.customer_id}</td>
-                <td width="10%">{prescription.rx_number}</td>
                 {prescription.date_requested && (
                   <td width="18%">{prescription.date_requested}</td>
                 )}
@@ -56,7 +68,7 @@ function OrderHistory() {
                   <button type="button" className="btn btn-outline-primary">
                     <Link
                       to={
-                        "/pharmacy/prescriptions/order-details" +
+                        "/pharmacy/prescriptions/order-details/" +
                         prescription.id
                       }
                     >

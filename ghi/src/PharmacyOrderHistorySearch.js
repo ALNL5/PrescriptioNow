@@ -1,36 +1,34 @@
 import React, { useEffect, useState } from "react";
-import SearchBar from "./PharmacySearchBar";
 import OrderHistory from "./PharmacyOrderHistory";
+import { useAuthContext } from "./auth";
 
-const OrderHistoryWithSearch = () => {
+function OrderHistoryWithSearch() {
   const [prescriptions, setPrescriptions] = useState([]);
-  const [allPrescriptions, setAllPrescriptions] = useState([]);
-  const [keyword, setKeyword] = useState("");
+  const { token } = useAuthContext();
 
-  async function fetchPrescriptions() {
-        const response = await fetch("http://localhost:8001/prescriptions")
-        if (response.ok) {
-            const data = await response.json();
-            setAllPrescriptions(data);
-            setPrescriptions(data);
-        }
-    }
-  
 
-  const updateKeyword = (keyword) => {
-    const filtered = allPrescriptions.filter((prescription) => {
-      return `${prescription.name.toLowerCase()}
-              ${prescription.rx_number.toLowerCase()}`.includes(
-        keyword.toLowerCase()
-      );
-    });
-    setKeyword(keyword);
-    setPrescriptions(filtered);
-  };
+
 
   useEffect(() => {
-    fetchPrescriptions();
-  }, []);
+    if (token) {
+        const fetchPrescriptions = async () => {
+          const prescriptionURL = `${process.env.REACT_APP_PHARMACY_API_HOST}/prescriptions`;
+          const fetchConfig = {
+            method: "GET",
+            headers: {
+              Authorization: `Bearer ${token}`,
+              "Content-Type": "application/json",
+            },
+          };
+          const response = await fetch(prescriptionURL, fetchConfig);
+          if (response.ok) {
+            const data = await response.json();
+            setPrescriptions(data);
+          }
+        }
+        fetchPrescriptions();
+    }
+  }, [token, setPrescriptions]);
 
   return (
     <div className="container d-grid gap-4">
@@ -55,9 +53,6 @@ const OrderHistoryWithSearch = () => {
               Order history
             </a>
           </li>
-          <li>
-            <SearchBar keyword={keyword} onChange={updateKeyword} />
-          </li>
         </ul>
       </div>
       <div className="wrapper">
@@ -65,6 +60,6 @@ const OrderHistoryWithSearch = () => {
       </div>
     </div>
   );
-};
+}
 
 export default OrderHistoryWithSearch;

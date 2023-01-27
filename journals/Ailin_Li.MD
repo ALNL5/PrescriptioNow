@@ -61,3 +61,29 @@ My team and I completed designing the database tables and finished the database 
 ## Jan 20, 2023
 
 * Polished UI and trying to redesign database tables
+
+
+## Jan 20, 2023
+
+* Refactored microservices and databases. Each of group members merged to main branch and keep working on the stories.
+
+## Jan 23, 2023
+
+* Working on the authentication at backend
+
+
+## Jan 24, 2023
+
+* Finished backend authentication and working on the frontend authentication. Debugging on the frontend authentication implementation on pharmacist features.
+
+## Jan 25, 2023
+
+* Working on the frontend authentication. Almost finished the README.md of our group.
+
+## Jan 25, 2023
+
+* Finished unit test -- passed. Debugging on the frontend authentication.
+
+## Jan 26, 2023
+
+* Finished frontend authentication on pharmacist.
