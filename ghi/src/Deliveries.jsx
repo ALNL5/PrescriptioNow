@@ -18,7 +18,7 @@ export const pinIcon = new L.Icon({
 });
 
 const Deliveries = () => {
-  const [deliveries, setDeliveries] = useState([{"coordinates": [47.56483, -122.28776], "address": "4208 Rainier Ave S", "name":"Pending..."}])
+  const [deliveries, setDeliveries] = useState([{"coordinates": [47.56483, -122.28776], "address": "4208 Rainier Ave S", "name":"Pending...", "phone":"Pending...", "status": "Pending..."}])
   const { token } = useAuthContext();
   var homeCoodinates=[47.56483, -122.28776]
 
@@ -92,15 +92,13 @@ const Deliveries = () => {
           url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
         />
         <Marker position={homeCoodinates} icon={homeIcon}></Marker>
-        {deliveries.map((i) => {
+        {deliveries.map((i, num) => {
           return (
-            <>
               <Marker
-                key={i.coordinates}
+                key={num}
                 position={i.coordinates}
                 icon={pinIcon}
               ></Marker>
-            </>
           );
         })}
         <Polyline
@@ -128,9 +126,9 @@ const Deliveries = () => {
             </tr>
           </thead>
           <tbody>
-            {deliveries.map((i) => {
+            {deliveries.map((i, num) => {
               return (
-                <tr key={i.coordinates}>
+                <tr key={num}>
                   <td>{i.name}</td>
                   <td>
                     <a href={"https://maps.google.com/?q=" + i.address}>
