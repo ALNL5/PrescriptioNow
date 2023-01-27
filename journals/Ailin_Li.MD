@@ -86,4 +86,4 @@ My team and I completed designing the database tables and finished the database 
 
 ## Jan 26, 2023
 
-* Finished frontend authentication on pharmacist.
+* Finished frontend authentication on pharmacist. Merged to main and polished UI.

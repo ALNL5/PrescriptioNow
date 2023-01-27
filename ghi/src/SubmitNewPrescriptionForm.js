@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { useAuthContext } from "./auth";
 
 function PrescriptionFormInput(props) {
   const { id, value, labelText, onChange, type, name, placeholder } = props;
@@ -29,18 +30,28 @@ function SubmitNewPrescription(props) {
   const [refillsExpire, setRefillsExpire] = useState("");
   const [customerId, setCustomerId] = useState(0);
   const [customers, setCustomers] = useState([]);
+  const { token } = useAuthContext();
 
   useEffect(() => {
-    async function getCustomers() {
-      const url = "http://localhost:8001/customers";
-      const response = await fetch(url);
-      if (response.ok) {
-        const data = await response.json();
-        setCustomers(data);
+    if (token) {
+      async function getCustomers() {
+        const url = `${process.env.REACT_APP_PHARMACY_API_HOST}/customers`;
+        const fetchConfig = {
+          method: "GET",
+          headers: {
+            Authorization: `Bearer ${token}`,
+            "Content-Type": "application/json",
+          },
+        };
+        const response = await fetch(url, fetchConfig);
+        if (response.ok) {
+          const data = await response.json();
+          setCustomers(data);
+        }
       }
+      getCustomers();
     }
-    getCustomers();
-  }, [setCustomers]);
+  }, [token, setCustomers]);
 
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -54,7 +65,7 @@ function SubmitNewPrescription(props) {
       customer_id: customerId,
     };
 
-    const prescriptionUrl = "http://localhost:8001/prescriptions";
+    const prescriptionUrl = `${process.env.REACT_APP_PHARMACY_API_HOST}/prescriptions`;
     const fetchConfig = {
       method: "post",
       body: JSON.stringify(newPrescription),
