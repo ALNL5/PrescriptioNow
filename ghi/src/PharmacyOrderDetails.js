@@ -1,20 +1,33 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
+import { useAuthContext } from "./auth";
 
 const OrderDetails = () => {
   let { id } = useParams();
   const [prescriptions, setPrescriptions] = useState([]);
+  const { token } = useAuthContext();
+
 
   useEffect(() => {
-    async function getPrescriptions() {
-        const response = await fetch(`http://localhost:8001/prescriptions/${id}`)
+    if (token) {
+      async function getPrescriptions() {
+        const prescriptionURL = `${process.env.REACT_APP_PHARMACY_API_HOST}/prescriptions/${id}`;
+        const fetchConfig = {
+          method: "GET",
+          headers: {
+            Authorization: `Bearer ${token}`,
+            "Content-Type": "application/json",
+          },
+        };
+        const response = await fetch(prescriptionURL, fetchConfig);
         if (response.ok) {
-            const data = await response.json();
-            setPrescriptions(data)
+          const data = await response.json();
+          setPrescriptions(data);
         }
+      }
+      getPrescriptions();
     }
-    getPrescriptions();
-  });
+  }, [token, setPrescriptions, id]);
 
   return (
     <div className="container d-grid gap-4">
@@ -24,23 +37,23 @@ const OrderDetails = () => {
             <a
               class="nav-link "
               aria-current="page"
-              href="/pharmacy/prescriptions/"
+              href="/pharmacy/prescriptions"
             >
               All prescriptions
             </a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="/pharmacy/prescriptions/orders/">
+            <a class="nav-link" href="/pharmacy/prescriptions/orders">
               Refill orders
             </a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="/pharmacy/order-history/">
+            <a class="nav-link" href="/pharmacy/order-history">
               Order history
             </a>
           </li>
           <li class="nav-item">
-            <a class="nav-link active" href="/pharmacy/order-details/">
+            <a class="nav-link active" href="/pharmacy/order-details/:id">
               Order details
             </a>
           </li>
@@ -109,13 +122,6 @@ const OrderDetails = () => {
             type="date"
             className="form-control mx-1"
             value={prescriptions.date_delivered}
-          />
-        </div>
-        <div className="col-sm-9 d-flex align-items-center">
-          <label className="col-sm-4 col-form-label">Refilled by</label>
-          <input
-            className="form-control mx-1"
-            value={prescriptions.employee_id}
           />
         </div>
       </form>

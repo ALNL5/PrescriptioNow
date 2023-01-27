@@ -1,4 +1,9 @@
+import { useToken } from "./auth";
+
+
 function Nav() {
+  const [token] = useToken();
+
   return (
     <nav className="navbar navbar-expand-lg px-4 py-3 mb-4">
       <div className="container-fluid">
@@ -21,13 +26,14 @@ function Nav() {
           id="navbarNavAltMarkup"
         >
           <div className="navbar-nav">
-            <a className="nav-link link-dark" href="login">
-              Pharmacy Login
-            </a>
-            <a className="nav-link link-dark" href="login">
-              Delivery Login
-            </a>
-            <a className="btn btn-primary" href="/accounts/logout" role="button">
+            <li className={token ? "d-none" : "nav-link link-dark"}>
+              Welcome!
+            </li>
+            <a
+              className={token ? "btn btn-primary" : "d-none"}
+              href="/accounts/logout"
+              role="button"
+            >
               Logout
             </a>
           </div>

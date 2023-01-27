@@ -11,7 +11,7 @@ app.include_router(deliveries.router)
 
 origins = [
     "http://localhost:3000",
-    os.environ.get("CORS_HOST", None),
+    os.environ.get("PUBLIC_URL", None),
 ]
 
 app.add_middleware(

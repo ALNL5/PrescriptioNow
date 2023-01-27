@@ -1,44 +1,65 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
+import { useAuthContext } from "./auth";
 
 function RefillOrders() {
-  const [orderedPrescriptions, setOrderedPrescriptions] = useState([]);
+    const [orderedPrescriptions, setOrderedPrescriptions] = useState([])
+    const { token } = useAuthContext();
 
-    async function getOrderedPrescriptions() {
-        const response = await fetch("http://localhost:8001/prescriptions")
-        if (response.ok) {
+    useEffect(() => {
+      if (token) {
+        const getOrderedPrescriptions = async () => {
+          const prescriptionURL = `${process.env.REACT_APP_PHARMACY_API_HOST}/prescriptions`;
+          const fetchConfig = {
+            method: "GET",
+            headers: {
+              Authorization: `Bearer ${token}`,
+              "Content-Type": "application/json",
+            },
+          };
+          const response = await fetch(prescriptionURL, fetchConfig);
+          if (response.ok) {
             const data = await response.json();
-            const orderedPrescriptions = await data.filter(
-                prescription => prescription.date_requested !== null && prescription.date_filled === null
+            const orderedPrescriptions = data.filter(
+              (prescription) =>
+                prescription.date_requested !== null &&
+                prescription.date_filled === null
             );
-            setOrderedPrescriptions(orderedPrescriptions)
+            setOrderedPrescriptions(orderedPrescriptions);
+          }
         }
-    }
+        getOrderedPrescriptions();
+      }
+    }, [token, setOrderedPrescriptions]);
 
-    const updatePrescription = async (id) => {
-      const updatePrescriptions = orderedPrescriptions.filter(
-        (prescription) => prescription.id === id
-      );
-      const prescriptionObj = updatePrescriptions[0];
-      const tempDate = new Date();
-      const date =
-        tempDate.getFullYear() +
-        "-" +
-        (tempDate.getMonth() + 1) +
-        "-" +
-        tempDate.getDate();
-      await fetch(`http://localhost:8001/prescriptions/${id}`, {
+
+  const updatePrescription = (id) => {
+    const updatePrescriptions = orderedPrescriptions.filter(
+      (prescription) => prescription.id === id
+    );
+    const prescriptionObj = updatePrescriptions[0];
+    const tempDate = new Date();
+    const date =
+      tempDate.getFullYear() +
+      "-" +
+      ("0" + (tempDate.getMonth() + 1)).slice(-2) +
+      "-" +
+      tempDate.getDate();
+    fetch(
+      `${process.env.REACT_APP_PHARMACY_API_HOST}/prescriptions/${id}`,
+      {
         method: "put",
         body: JSON.stringify({
           ...prescriptionObj,
           date_filled: date,
         }),
         headers: {
+          Authorization: `Bearer ${token}`,
           "Content-Type": "application/json",
         },
-      });
-      getOrderedPrescriptions();
-    };
+      }
+    );
+  };
 
   return (
     <div className="container d-grid gap-4">
@@ -54,7 +75,10 @@ function RefillOrders() {
             </a>
           </li>
           <li className="nav-item">
-            <a href="/pharmacy/refill-orders/" className="nav-link active">
+            <a
+              className="nav-link active"
+              href="/pharmacy/prescriptions/orders"
+            >
               Refill orders
             </a>
           </li>
@@ -68,20 +92,20 @@ function RefillOrders() {
       <table className="table table-striped">
         <thead>
           <tr>
-            <th>Customer name</th>
             <th>RX_#</th>
+            <th>RX name</th>
             <th>Request date</th>
             <th>Description</th>
             <th>Details</th>
-            <th>Refill status</th>
+            <th>Change status</th>
           </tr>
         </thead>
         <tbody>
           {orderedPrescriptions?.map((prescription) => {
             return (
               <tr key={prescription.id}>
-                <td width="20%">{prescription.name}</td>
                 <td width="12%">{prescription.rx_number}</td>
+                <td width="20%">{prescription.name}</td>
                 {prescription.date_requested && (
                   <td width="18%">{prescription.date_requested}</td>
                 )}
@@ -91,7 +115,7 @@ function RefillOrders() {
                   <button type="button" className="btn btn-outline-primary">
                     <Link
                       to={
-                        "/pharmacy/prescriptions/order-details" +
+                        "/pharmacy/prescriptions/order-details/" +
                         prescription.id
                       }
                     >

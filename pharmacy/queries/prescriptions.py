@@ -242,8 +242,6 @@ class PrescriptionRepository:
                     ],
                 )
                 id = result.fetchone()[0]
-                # if not old_data:
-                #     return {"message": "Error!"}
                 return self.prescription_in_to_out(id, prescription)
 
     def prescription_in_to_out(self, id: int, prescription: PrescriptionIn):

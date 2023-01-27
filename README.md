@@ -1,12 +1,5 @@
 # Module3 Project Gamma
 
-## Getting started
-
-You have a project repository, now what? The next section
-lists all of the deliverables that are due at the end of the
-week. Below is some guidance for getting started on the
-tasks for this week.
-
 ## Install Extensions
 
 * Prettier: <https://marketplace.visualstudio.com/items?itemName=esbenp.prettier-vscode>
@@ -14,11 +7,45 @@ tasks for this week.
 
 ## Deliverables
 
-* [ ] Wire-frame diagrams
-* [ ] API documentation
-* [ ] Project is deployed to Render.com/GitLab-pages
-* [ ] GitLab issue board is setup and in use
-* [ ] Journals
+* [API documentation](docs/apis.md)
+* ![Wire-frame diagrams](docs/main_page.png)
+* ![Wire-frame diagrams](docs/login.png)
+* ![Wire-frame diagrams](docs/signup.png)
+* ![Wire-frame diagrams](docs/customer_home.png)
+* ![Wire-frame diagrams](docs/pharmacist_prescription_lisst.png)
+* ![Wire-frame diagrams](docs/pharmacist_create_prescription.png)
+* ![Wire-frame diagrams](docs/delivery_home.png)
+* ![Wire-frame diagrams](docs/delivery_task_map.png)
+
+* [Journals](Journals/Ailin_Li.md)
+* [Journals](Journals/grace_strutzel.md)
+* [Journals](Journals/jared_wolf.md)
+
+* [ ] Project is deployed to GitLab-pages
+* [GitLab issue board](https://gitlab.com/epsilon15/prescriptionow/-/boards)
+
+## Intended market
+
+The people we would expect to use this application, are customers, pharmacists, and delivery drivers. Pharmacist creates prescriptions for customers, then customers can see their prescription in their account and select to refill, then pharmacists receive the order to fulfill. When the refill is complete, delivery driver deliver the refill orders to customers with an optimized routing suggestion. After finishing the delivery, the customer will receive a confirmation message about delivery.
+
+## Backend needs
+
+- We made CRUD of prescriptions, customers, deliveries and their personal information. Additionally, we used two third-party APIs to obtain medicine description and routing suggestions.
+
+### Functionality
+
+- customers should be able to sign up for an account
+- customers should be able to log in for an account to see their prescriptions and order refill in their account
+- customers should be able to log out for an account
+- pharmacists should be able to log in for an account to make CRUD on prescriptions
+- pharmacists should be able to select medicine description from information provided by a 3rd-party API
+- pharmacists should be able to filter out prescriptions with refill request
+- pharmacists should be able to log out for an account
+- delivery drivers should be able to log in to their account
+- delivery drivers should be able to filter out delivery tasks with completed refill request
+- delivery drivers should be able to see routing suggestions automatically list on the map provided by a 3rd-party API
+- delivery drivers should be able to update delivery status when the order is delivered
+- delivery drivers should be able to send a delivery notification to customer when the order is delivered
 
 ## Project layout
 
@@ -103,18 +130,9 @@ deployment, but it just consists of these steps:
   * PUBLIC_URL : this is your gitlab pages URL
   * SAMPLE_SERVICE_API_HOST: enter "blank" for now
 
-#### Your GitLab pages URL
+#### GitLab pages URL
 
-You can't find this in GitLab until after you've done a deploy
-but you can figure it out yourself from your GitLab project URL.
-
-If this is your project URL
-
-https://gitlab.com/GROUP_NAME/PROJECT_NAME
-
-then your GitLab pages URL will be
-
-https://GROUP_NAME.gitlab.io/PROJECT_NAME
+https://gitlab.com/epsilon15/prescriptionow
 
 ### Create render.com account and application
 

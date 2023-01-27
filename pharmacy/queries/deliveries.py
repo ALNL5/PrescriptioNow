@@ -27,7 +27,10 @@ class DeliveriesRepository:
                 with conn.cursor() as db:
                     result = db.execute(
                         """
-                        SELECT  id, prescription_id, employee_id, customer_id
+                        SELECT  id,
+                        prescription_id,
+                        employee_id,
+                        customer_id
                         FROM Deliveries
                         ORDER BY id;
                         """
@@ -50,13 +53,13 @@ class DeliveriesRepository:
                 with conn.cursor() as db:
                     result = db.execute(
                         """
-                            SELECT id
-                            , prescription_id
-                            , employee_id
-                            , customer_id
-                             FROM deliveries
-                            WHERE id = %s
-                            """,
+                        SELECT id
+                        , prescription_id
+                        , employee_id
+                        , customer_id
+                            FROM deliveries
+                        WHERE id = %s
+                        """,
                         [delivery_id],
                     )
                     record = result.fetchone()
@@ -112,7 +115,7 @@ class DeliveriesRepository:
                             delivery_id,
                         ],
                     )
-                    return self.delivery_in_to_out(delivery_id, delivery)
+                return self.delivery_in_to_out(delivery_id, delivery)
         except Exception as e:
             print(e)
             return {"message": "Could not update delivery"}

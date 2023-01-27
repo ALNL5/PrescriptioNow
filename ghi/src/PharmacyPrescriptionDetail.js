@@ -1,47 +1,68 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
+import { useAuthContext } from "./auth";
 
 const PrescriptionDetails = () => {
   let { id } = useParams();
   const [prescriptions, setPrescriptions] = useState([]);
   const [tempPrescriptions, setTempPrescriptions] = useState([]);
   const [changed, setChanged] = useState(false);
+  const { token } = useAuthContext();
+
 
   useEffect(() => {
-    async function getPrescriptions() {
-        const response = await fetch(`http://localhost:8001/prescriptions/${id}`)
-        if (response.ok) {
+    if (token) {
+        async function getPrescriptions() {
+          const prescriptionURL = `${process.env.REACT_APP_PHARMACY_API_HOST}/prescriptions/${id}`;
+          const fetchConfig = {
+            method: "GET",
+            headers: {
+              Authorization: `Bearer ${token}`,
+              "Content-Type": "application/json",
+            },
+          };
+          const response = await fetch(prescriptionURL, fetchConfig);
+          if (response.ok) {
             const data = await response.json();
-            setPrescriptions(data)
-            setTempPrescriptions(data)
+            setPrescriptions(data);
+            setTempPrescriptions(data);
+          }
         }
+        getPrescriptions();
     }
-    getPrescriptions();
-  });
+  }, [token, setPrescriptions, id]);
 
-    const deletePrescription = async id => {
-        await fetch(`http://localhost:8001/prescriptions/${id}`, {
-          method: "delete",
-          headers: {
-            "Content-Type": "application/json"
+  const deletePrescription = async (id) => {
+    await fetch(
+      `${process.env.REACT_APP_PHARMACY_API_HOST}/prescriptions/${id}`,
+      {
+        method: "delete",
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "application/json",
         },
-        }).then(() => {
-            window.location.href="http://localhost:3000/pharmacy/prescriptions";
-      });
-    }
-  
+      }
+    ).then(() => {
+      window.location.href =
+        `${process.env.PUBLIC_URL}/pharmacy/prescriptions`;
+    });
+  };
 
-    const updatePrescription = async id => {
-        await fetch(`http://localhost:8001/prescriptions/${id}`, {
-          method: "put",
-          headers: {
-            "Content-Type": "application/json"
+  const updatePrescription = async (id) => {
+    await fetch(
+      `${process.env.REACT_APP_PHARMACY_API_HOST}/prescriptions/${id}`,
+      {
+        method: "put",
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "application/json",
         },
-          body: JSON.stringify(tempPrescriptions)
-        }).then(() => {
-            window.location.reload();
-      });
-    }
+        body: JSON.stringify(tempPrescriptions),
+      }
+    ).then(() => {
+      window.location.reload();
+    });
+  };
 
   return (
     <div className="container d-grid gap-4">
@@ -64,11 +85,6 @@ const PrescriptionDetails = () => {
           <li className="nav-item">
             <a className="nav-link" href="/pharmacy/order-history">
               Order history
-            </a>
-          </li>
-          <li className="nav-item">
-            <a className="nav-link active" href="/pharmacy/order-history">
-              Prescription details and refill history
             </a>
           </li>
         </ul>
@@ -173,10 +189,6 @@ const PrescriptionDetails = () => {
             Delete
           </button>
         </div>
-        {/* <div className="offset-2 col-8">
-        <h3>Refill history</h3>
-        <RefillHistory/>
-      </div> */}
       </div>
     </div>
   );
