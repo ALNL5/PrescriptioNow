@@ -14,6 +14,7 @@ import RefillOrders from "./PharmacyRefillOrders.js";
 import OrderDetails from "./PharmacyOrderDetails.js";
 import OrderHistoryWithSearch from "./PharmacyOrderHistorySearch.js";
 import CustomerPrescriptionList from "./CustomerPrescriptions";
+import Deliveries from "./Deliveries/Deliveries.jsx"
 import CustomerForm from "./CustomerSignup.js";
 
 function App() {
@@ -59,7 +60,8 @@ function App() {
               <Route path="login" element={<Login />} />
               <Route path="logout" element={<Logout />} />
             </Route>
-          </Routes>
+            <Route path="/Deliveries" element={<Deliveries/>}/>
+        </Routes>
         </div>
       </AuthProvider>
     </BrowserRouter>
