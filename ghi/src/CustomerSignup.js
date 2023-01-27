@@ -29,7 +29,7 @@ const CustomerForm = () => {
       user_id: customerUserID,
     };
 
-    const customerUrl = "http://localhost:8001/customers";
+    const customerUrl = `${process.env.REACT_APP_PHARMACY_API_HOST}/customers`;
     const fetchConfig = {
       method: "post",
       body: JSON.stringify(newCustomer),
