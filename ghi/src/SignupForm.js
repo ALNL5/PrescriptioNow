@@ -14,7 +14,7 @@ const SignupForm = () => {
       password: accountsPassword,
       role_id: accountsRoleID,
     };
-    navigate('/');
+    navigate('/accounts/login');
 
     const accountsUrl = "http://localhost:8002/api/accounts";
     const fetchConfig = {
@@ -42,11 +42,6 @@ const SignupForm = () => {
   const handlePasswordChange = (event) => {
     const value = event.target.value;
     setAccountsPassword(value);
-  };
-
-  const handleRoleIDChange = (event) => {
-    const value = event.target.value;
-    setAccountsRoleID(value);
   };
 
   return (
@@ -82,22 +77,7 @@ const SignupForm = () => {
                 />
                 <label htmlFor="password">Password</label>
               </div>
-              <div className="form-floating mb-3">
-                <input
-                  value={accountsRoleID}
-                  onChange={handleRoleIDChange}
-                  placeholder="Role ID"
-                  required
-                  type="number"
-                  name="role_id"
-                  id="role_id"
-                  className="form-control"
-                />
-                <label htmlFor="role_id">Role ID</label>
-              </div>
-              <button className="btn btn-primary d-grid gap-2 col-4 mx-auto">
-                Submit
-              </button>
+              <button className="btn btn-primary">Submit</button>
             </form>
           </div>
         </div>

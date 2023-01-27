@@ -1,20 +1,31 @@
 import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { useAuthContext } from "./auth";
 
 const CustomerPrescriptionList = () => {
   const [prescriptions, setPrescriptions] = useState([]);
-
-  async function fetchPrescriptions() {
-    const response = await fetch("http://localhost:8001/prescriptions");
-    if (response.ok) {
-      const data = await response.json();
-      setPrescriptions(data);
-    }
-  }
+  const { token } = useAuthContext();
 
   useEffect(() => {
-    fetchPrescriptions();
-  }, []);
+    if (token) {
+      const fetchPrescriptions = async () => {
+        const prescriptionURL = `${process.env.REACT_APP_PHARMACY_API_HOST}/prescriptions`;
+        const fetchConfig = {
+          method: "GET",
+          headers: {
+            Authorization: `Bearer ${token}`,
+            "Content-Type": "application/json",
+          },
+        };
+        const response = await fetch(prescriptionURL, fetchConfig);
+        if (response.ok) {
+          const data = await response.json();
+          setPrescriptions(data);
+        }
+      };
+      fetchPrescriptions();
+    }
+  }, [token, setPrescriptions]);
+
 
   return (
     <div className="container">
@@ -25,6 +36,9 @@ const CustomerPrescriptionList = () => {
             <th>Name</th>
             <th>RX #</th>
             <th>Expiration date</th>
+            <th>Refills remaining</th>
+            <th>Description</th>
+            <th>Request refill</th>
           </tr>
         </thead>
         <tbody>
@@ -34,9 +48,11 @@ const CustomerPrescriptionList = () => {
                 <td width="20%">{prescription.name}</td>
                 <td width="16%">{prescription.rx_number}</td>
                 <td width="22%">{prescription.date_refills_expire}</td>
+                <td width="22%">{prescription.times_refilled}</td>
+                <td width="22%">{prescription.description}</td>
                 <td>
                   <button type="button" className="btn btn-outline-primary">
-                    <Link to={"prescriptions/" + prescription.id}>Details</Link>
+                    Refill
                   </button>
                 </td>
               </tr>

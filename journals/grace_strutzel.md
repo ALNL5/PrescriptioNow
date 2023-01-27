@@ -96,3 +96,23 @@ I worked on:
 ## January 25, 2023
 
 * Setup backend authentication for all of my features
+* Login authentication
+* Authentication and file clean up
+
+## January 25, 2023
+
+* Login authentication
+* authentication
+* determining customer prescription details
+
+## January 26, 2023
+
+* Finish stories and updated frontend with authentication
+* Made several merge requests and merges
+* Finished tests
+
+## January 27, 2023
+
+* Deployment
+* Final merges
+* Finalize READMEs
