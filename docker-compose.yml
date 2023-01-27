@@ -4,14 +4,6 @@ volumes:
   pg-admin:
     external: true
 services:
-  fastapi:
-    build:
-      context: sample_service
-      dockerfile: Dockerfile.dev
-    ports:
-      - 8000:8000
-    volumes:
-      - ./sample_service:/app
   postgres:
     build:
       context: ./relational-data
@@ -37,7 +29,6 @@ services:
       NODE_ENV: development
       HOST: "0.0.0.0"
       PUBLIC_URL: http://localhost:3000
-      REACT_APP_SAMPLE_SERVICE_API_HOST: http://localhost:8000
       REACT_APP_PHARMACY_API_HOST: http://localhost:8001
       REACT_APP_USERS_API_HOST: http://localhost:8002
   pharmacy:
