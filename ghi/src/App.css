@@ -12,3 +12,4 @@
   font-size: calc(10px + 2vmin);
   color: white;
 }
+.leaflet-container { height: 500px; width: 680px; }

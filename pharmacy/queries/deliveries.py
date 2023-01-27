@@ -144,3 +144,28 @@ class DeliveriesRepository:
             employee_id=record[2],
             customer_id=record[3],
         )
+
+
+def link_maker(deliveries):
+    api_key = "4Aaiz0b6Haq8HqpLQ5ld8kmJQCAAm55yrIIkaFZQUu4"
+
+    start_location = "47.57566,-122.28845"
+
+    start_link = (
+        "https://wps.hereapi.com/v8/findsequence2?start=" + start_location
+    )
+    destination_num = 0
+    for i in deliveries:
+        destination_num += 1
+        num = str(destination_num)
+        start_link += "&destination" + num + "="
+        start_link += i["coordinates"]
+    final_link = (
+        start_link
+        + "&end="
+        + start_location
+        + "&improveFor=time&departure=2014-12-09T09:30:00%2b01:00"
+        + "&mode=fastest;car;traffic:enabled&apikey="
+        + api_key
+    )
+    return final_link
