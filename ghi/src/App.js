@@ -14,6 +14,7 @@ import RefillOrders from "./PharmacyRefillOrders.js";
 import OrderDetails from "./PharmacyOrderDetails.js";
 import OrderHistoryWithSearch from "./PharmacyOrderHistorySearch.js";
 import CustomerPrescriptionList from "./CustomerPrescriptions";
+import Deliveries from "./Deliveries.jsx";
 <<<<<<< HEAD
 import Deliveries from "./Deliveries/Deliveries.jsx";
 =======
@@ -27,6 +28,8 @@ function GetToken() {
 }
 
 function App() {
+  const domain = /https:\/\/[^/]+/;
+  const basename = process.env.PUBLIC_URL.replace(domain, "");
   const domain = /https:\/\/[^/]+/;
   const basename = process.env.PUBLIC_URL.replace(domain, "");
   return (
@@ -72,6 +75,8 @@ function App() {
               <Route path="login" element={<Login />} />
               <Route path="logout" element={<Logout />} />
             </Route>
+            <Route path="/Deliveries" element={<Deliveries />} />
+          </Routes>
             <Route path="/Deliveries" element={<Deliveries />} />
           </Routes>
         </div>
