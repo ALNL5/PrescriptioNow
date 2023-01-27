@@ -16,7 +16,7 @@ const SignupForm = () => {
     };
     navigate('/accounts/login');
 
-    const accountsUrl = "http://localhost:8002/api/accounts";
+    const accountsUrl = `${process.env.REACT_APP_USERS_API_HOST}/api/accounts`;
     const fetchConfig = {
       method: "post",
       body: JSON.stringify(newAccount),
@@ -50,6 +50,9 @@ const SignupForm = () => {
         <div className="offset-3 col-6">
           <div className="shadow p-4 mt-4">
             <h1 className="text-center">Sign Up</h1>
+            <p className="text-center">
+             * For customers in Seattle area only
+            </p>
             <form onSubmit={handleSubmit} id="create-account-form">
               <div className="form-floating mb-3">
                 <input
