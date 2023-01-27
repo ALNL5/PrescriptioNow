@@ -42,15 +42,15 @@ function OrderHistory() {
             <th>Request date</th>
             <th>Refill date</th>
             <th>Delivery date</th>
-            <th>Details</th>
+            <th>Prescription</th>
           </tr>
         </thead>
         <tbody>
           {refilledOrders?.map((prescription) => {
             return (
               <tr key={prescription.id}>
-                <td width="14%">{prescription.rx_number}</td>
-                <td width="16%">{prescription.name}</td>
+                <td width="12%">{prescription.rx_number}</td>
+                <td width="15%">{prescription.name}</td>
                 <td width="16%">{prescription.customer_id}</td>
                 {prescription.date_requested && (
                   <td width="18%">{prescription.date_requested}</td>
@@ -65,16 +65,14 @@ function OrderHistory() {
                 )}
                 {!prescription.date_delivered && <td width="18%">N/A</td>}
                 <td>
-                  <button type="button" className="btn btn-outline-primary">
-                    <Link
-                      to={
-                        "/pharmacy/prescriptions/order-details/" +
-                        prescription.id
-                      }
-                    >
-                      Details
-                    </Link>
-                  </button>
+                  <Link
+                    to={
+                      "/pharmacy/prescriptions/order-details/" +
+                      prescription.id
+                    }
+                  >
+                    <span className="badge bg-info text-dark">Details</span>
+                  </Link>
                 </td>
               </tr>
             );

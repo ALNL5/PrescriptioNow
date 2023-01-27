@@ -94,9 +94,9 @@ function RefillOrders() {
           <tr>
             <th>RX_#</th>
             <th>RX name</th>
+            <th>Customer ID</th>
             <th>Request date</th>
-            <th>Description</th>
-            <th>Details</th>
+            <th>Prescription</th>
             <th>Change status</th>
           </tr>
         </thead>
@@ -104,33 +104,26 @@ function RefillOrders() {
           {orderedPrescriptions?.map((prescription) => {
             return (
               <tr key={prescription.id}>
-                <td width="12%">{prescription.rx_number}</td>
-                <td width="20%">{prescription.name}</td>
+                <td width="14%">{prescription.rx_number}</td>
+                <td width="14%">{prescription.name}</td>
+                <td width="16%">{prescription.customer_id}</td>
                 {prescription.date_requested && (
                   <td width="18%">{prescription.date_requested}</td>
                 )}
                 {!prescription.date_requested && <td width="18%">N/A</td>}
-                <td width="20%">{prescription.description}</td>
                 <td>
-                  <button type="button" className="btn btn-outline-primary">
-                    <Link
-                      to={
-                        "/pharmacy/prescriptions/order-details/" +
-                        prescription.id
-                      }
-                    >
-                      Details
-                    </Link>
-                  </button>
+                  <Link
+                    to={
+                      "/pharmacy/prescriptions/order-details/" + prescription.id
+                    }
+                  >
+                    <span className="badge bg-info text-dark">Details</span>
+                  </Link>
                 </td>
                 <td>
-                  <button
-                    onClick={() => updatePrescription(prescription.id)}
-                    type="button"
-                    className="btn btn-outline-success"
-                  >
-                    Complete
-                  </button>
+                  <Link onClick={() => updatePrescription(prescription.id)}>
+                    <span className="badge bg-success">Complete</span>
+                  </Link>
                 </td>
               </tr>
             );

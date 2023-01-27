@@ -54,7 +54,7 @@ const SignupForm = () => {
       <div className="row">
         <div className="offset-3 col-6">
           <div className="shadow p-4 mt-4">
-            <h1>Sign Up</h1>
+            <h1 className="text-center">Sign Up</h1>
             <form onSubmit={handleSubmit} id="create-account-form">
               <div className="form-floating mb-3">
                 <input
@@ -95,7 +95,9 @@ const SignupForm = () => {
                 />
                 <label htmlFor="role_id">Role ID</label>
               </div>
-              <button className="btn btn-primary">Submit</button>
+              <button className="btn btn-primary d-grid gap-2 col-4 mx-auto">
+                Submit
+              </button>
             </form>
           </div>
         </div>

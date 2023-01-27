@@ -13,7 +13,7 @@ function PrescriptionList({prescriptions = []}) {
             <th>RX name</th>
             <th>Customer ID</th>
             <th>Expiration date</th>
-            <th>Prescription details</th>
+            <th>Prescription</th>
           </tr>
         </thead>
         <tbody>
@@ -25,11 +25,9 @@ function PrescriptionList({prescriptions = []}) {
                 <td width="20%">{prescription.customer_id}</td>
                 <td width="22%">{prescription.date_refills_expire}</td>
                 <td>
-                  <button type="button" className="btn btn-outline-primary">
-                    <Link to={"/pharmacy/prescriptions/" + prescription.id}>
-                      Details
-                    </Link>
-                  </button>
+                  <Link to={"/pharmacy/prescriptions/" + prescription.id}>
+                    <span className="badge bg-info text-dark">Details</span>
+                  </Link>
                 </td>
               </tr>
             );
