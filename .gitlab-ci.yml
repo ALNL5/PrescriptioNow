@@ -21,6 +21,8 @@ api-unit-test-job:
   script:
     - cd pharmacy
     - pip install -r requirements.txt
+    - export DATABASE_URL="postgres://postgres:pass@srv-captain--postgres2-postgres/postgres"
+    - export SIGNING_KEY="b16558ffb7322bfa4720e8aaf215a4d3028f29149ac3692e41d83b310aee2929"
     - python -m pytest
   # only:
   #   - main
