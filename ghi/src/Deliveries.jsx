@@ -16,15 +16,7 @@ export const pinIcon = new L.Icon({
 });
 
 const Deliveries = () => {
-  const [deliveries, setDeliveries] = useState([
-    {
-      coordinates: [47.56483, -122.28776],
-      address: "4208 Rainier Ave S",
-      name: "Pending...",
-      phone: "Pending...",
-      status: "Pending...",
-    },
-  ]);
+  const [deliveries, setDeliveries] = useState([{"coordinates": [47.56483, -122.28776], "address": "4208 Rainier Ave S", "name":"Pending...", "phone":"Pending...", "status": "Pending..."}])
   const { token } = useAuthContext();
   var homeCoodinates = [47.56483, -122.28776];
 
@@ -114,7 +106,11 @@ const Deliveries = () => {
         <Marker position={homeCoodinates} icon={homeIcon}></Marker>
         {deliveries.map((i, num) => {
           return (
-            <Marker key={num} position={i.coordinates} icon={pinIcon}></Marker>
+              <Marker
+                key={num}
+                position={i.coordinates}
+                icon={pinIcon}
+              ></Marker>
           );
         })}
         <Polyline
