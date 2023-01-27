@@ -8,12 +8,40 @@ function Login() {
   const token = useToken();
   const loginUser = token[1];
   const navigate = useNavigate();
-  function handleSubmit(e) {
+  async function handleSubmit(e) {
     e.preventDefault();
-    loginUser(username, password);
-    navigate("/");
+    const userResponse = await loginUser(username, password);
+    const decodedToken = parseJwt(userResponse.access_token);
+    const decodedUser = decodedToken.account;
+    const decodedUsersRole = decodedUser.role_id;
+
+    if (decodedUsersRole === 0) {
+      navigate(`/customers/${decodedUser.id}`);
+    };
+    if (decodedUsersRole === 1) {
+      navigate(`/pharmacy`);
+    };
+    if (decodedUsersRole === 2) {
+      navigate(`/Deliveries`);
+    };
   }
-  
+
+  function parseJwt(token) {
+    var base64Url = token.split(".")[1];
+    var base64 = base64Url.replace(/-/g, "+").replace(/_/g, "/");
+    var jsonPayload = decodeURIComponent(
+      window
+        .atob(base64)
+        .split("")
+        .map(function (c) {
+          return "%" + ("00" + c.charCodeAt(0).toString(16)).slice(-2);
+        })
+        .join("")
+    );
+
+    return JSON.parse(jsonPayload);
+
+  }
 
   return (
     <div className="container">

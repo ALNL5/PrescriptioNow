@@ -94,9 +94,10 @@ export function useToken() {
       body: form,
     });
     if (response.ok) {
+      const userResponse = await response.json();
       const token = await getTokenInternal();
       setToken(token);
-      return;
+      return userResponse;
     }
     let error = await response.json();
     return handleErrorMessage(error);
