@@ -13,26 +13,17 @@ lint-test-job:
     - flake8 users
 
 # Run the unit tests
-# api-unit-test-job:
-#   image: python:3-bullseye
-#   stage: test
-#   needs:
-#     - lint-test-job
-#   script:
-#     - cd users
-#     - pip install -r requirements.txt
-#     - python -m pytest
-
-# Run the unit tests
-# api-unit-test-job:
-#   image: python:3-bullseye
-#   stage: test
-#   needs:
-#     - lint-test-job
-#   script:
-#     - cd pharmacy
-#     - pip install -r requirements.txt
-#     - python -m pytest
+api-unit-test-job:
+  image: python:3-bullseye
+  stage: test
+  needs:
+    - lint-test-job
+  script:
+    - cd pharmacy
+    - pip install -r requirements.txt
+    - python -m pytest
+  # only:
+  #   - main
 
 build-api-pharmacy-backend:
   image: docker:19.03.1
