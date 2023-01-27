@@ -14,6 +14,7 @@ import RefillOrders from "./PharmacyRefillOrders.js";
 import OrderDetails from "./PharmacyOrderDetails.js";
 import OrderHistoryWithSearch from "./PharmacyOrderHistorySearch.js";
 import CustomerPrescriptionList from "./CustomerPrescriptions";
+<<<<<<< HEAD
 import Deliveries from "./Deliveries/Deliveries.jsx";
 import Deliveries from "./Deliveries.jsx";
 import CustomerForm from "./CustomerSignup.js";
