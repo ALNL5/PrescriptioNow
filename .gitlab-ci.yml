@@ -22,6 +22,8 @@ api-unit-test-job:
     - cd pharmacy
     - pip install -r requirements.txt
     - python -m pytest
+  only:
+    - main
 
 build-api-pharmacy-backend:
   image: docker:19.03.1
