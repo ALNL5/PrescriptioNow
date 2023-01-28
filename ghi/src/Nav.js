@@ -30,7 +30,7 @@ function Nav() {
             </li>
             <a
               className={token ? "btn btn-primary" : "d-none"}
-              href="prescriptionow/accounts/logout"
+              href="accounts/logout"
               role="button"
             >
               Logout

@@ -65,24 +65,18 @@ function RefillOrders() {
             <a
               className="nav-link "
               aria-current="page"
-              href="prescriptionow/pharmacy/prescriptions"
+              href="pharmacy/prescriptions"
             >
               All prescriptions
             </a>
           </li>
           <li className="nav-item">
-            <a
-              className="nav-link active"
-              href="prescriptionow/pharmacy/prescriptions/orders"
-            >
+            <a className="nav-link active" href="pharmacy/prescriptions/orders">
               Refill orders
             </a>
           </li>
           <li className="nav-item">
-            <a
-              className="nav-link"
-              href="prescriptionow/pharmacy/order-history"
-            >
+            <a className="nav-link" href="pharmacy/order-history">
               Order history
             </a>
           </li>
