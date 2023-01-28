@@ -9,26 +9,25 @@ const PrescriptionDetails = () => {
   const [changed, setChanged] = useState(false);
   const { token } = useAuthContext();
 
-
   useEffect(() => {
     if (token) {
-        async function getPrescriptions() {
-          const prescriptionURL = `${process.env.REACT_APP_PHARMACY_API_HOST}/prescriptions/${id}`;
-          const fetchConfig = {
-            method: "GET",
-            headers: {
-              Authorization: `Bearer ${token}`,
-              "Content-Type": "application/json",
-            },
-          };
-          const response = await fetch(prescriptionURL, fetchConfig);
-          if (response.ok) {
-            const data = await response.json();
-            setPrescriptions(data);
-            setTempPrescriptions(data);
-          }
+      async function getPrescriptions() {
+        const prescriptionURL = `${process.env.REACT_APP_PHARMACY_API_HOST}/prescriptions/${id}`;
+        const fetchConfig = {
+          method: "GET",
+          headers: {
+            Authorization: `Bearer ${token}`,
+            "Content-Type": "application/json",
+          },
+        };
+        const response = await fetch(prescriptionURL, fetchConfig);
+        if (response.ok) {
+          const data = await response.json();
+          setPrescriptions(data);
+          setTempPrescriptions(data);
         }
-        getPrescriptions();
+      }
+      getPrescriptions();
     }
   }, [token, setPrescriptions, id]);
 
@@ -43,8 +42,7 @@ const PrescriptionDetails = () => {
         },
       }
     ).then(() => {
-      window.location.href =
-        `${process.env.PUBLIC_URL}/pharmacy/prescriptions`;
+      window.location.href = `${process.env.PUBLIC_URL}/pharmacy/prescriptions`;
     });
   };
 
@@ -72,18 +70,24 @@ const PrescriptionDetails = () => {
             <a
               className="nav-link "
               aria-current="page"
-              href="/pharmacy/prescriptions"
+              href="prescriptionow/pharmacy/prescriptions"
             >
               All prescriptions
             </a>
           </li>
           <li className="nav-item">
-            <a className="nav-link" href="/pharmacy/prescriptions/orders">
+            <a
+              className="nav-link"
+              href="prescriptionow/pharmacy/prescriptions/orders"
+            >
               Refill orders
             </a>
           </li>
           <li className="nav-item">
-            <a className="nav-link" href="/pharmacy/order-history">
+            <a
+              className="nav-link"
+              href="prescriptionow/pharmacy/order-history"
+            >
               Order history
             </a>
           </li>

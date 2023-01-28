@@ -1,6 +1,5 @@
 import { useToken } from "./auth";
 
-
 function Nav() {
   const [token] = useToken();
 
@@ -31,7 +30,7 @@ function Nav() {
             </li>
             <a
               className={token ? "btn btn-primary" : "d-none"}
-              href="/accounts/logout"
+              href="prescriptionow/accounts/logout"
               role="button"
             >
               Logout
