@@ -12,7 +12,7 @@ function PharmacyMain() {
             <p>
               <a
                 className="btn btn-lg"
-                href="pharmacy/prescriptions/"
+                href="pharmacy/prescriptions"
                 role="button"
               >
                 View all prescriptions
@@ -21,7 +21,7 @@ function PharmacyMain() {
             <p>
               <a
                 className="btn btn-lg"
-                href="pharmacy/prescriptions/new/"
+                href="pharmacy/prescriptions/new"
                 role="button"
               >
                 Create new prescription
@@ -30,7 +30,7 @@ function PharmacyMain() {
             <p>
               <a
                 className="btn btn-lg"
-                href="pharmacy/prescriptions/orders/"
+                href="pharmacy/prescriptions/orders"
                 role="button"
               >
                 View refill orders
@@ -39,7 +39,7 @@ function PharmacyMain() {
             <p>
               <a
                 className="btn btn-lg"
-                href="pharmacy/order-history/"
+                href="pharmacy/order-history"
                 role="button"
               >
                 View refill order history

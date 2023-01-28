@@ -1,9 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 
-
-function PrescriptionList({prescriptions = []}) {
-
+function PrescriptionList({ prescriptions = [] }) {
   return (
     <div className="container">
       <table className="table table-striped">
@@ -25,7 +23,7 @@ function PrescriptionList({prescriptions = []}) {
                 <td width="20%">{prescription.customer_id}</td>
                 <td width="22%">{prescription.date_refills_expire}</td>
                 <td>
-                  <Link to={"/pharmacy/prescriptions/" + prescription.id}>
+                  <Link to={"/pharmacy/prescriptions" + prescription.id}>
                     <span className="badge bg-info text-dark">Details</span>
                   </Link>
                 </td>

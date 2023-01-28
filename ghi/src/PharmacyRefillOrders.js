@@ -107,7 +107,7 @@ function RefillOrders() {
                 <td>
                   <Link
                     to={
-                      "prescriptionow/pharmacy/prescriptions/order-details/" +
+                      "prescriptionow/pharmacy/prescriptions/order-details" +
                       prescription.id
                     }
                   >
