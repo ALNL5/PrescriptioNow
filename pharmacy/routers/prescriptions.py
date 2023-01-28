@@ -10,6 +10,7 @@ from queries.prescriptions import (
     EmployeesIn,
     EmployeesOut,
 )
+from queries.deliveries import DeliveriesRepository
 
 
 router = APIRouter()
@@ -61,9 +62,17 @@ def update_prescription(
     prescription_id: int,
     prescription: PrescriptionIn,
     repo: PrescriptionRepository = Depends(),
+    delivery_repo: DeliveriesRepository = Depends(),
     account_data: dict = Depends(authenticator.get_current_account_data),
 ) -> Union[PrescriptionOut, Error]:
     if account_data:
+        if prescription.date_filled is not None:
+            delivery_repo.create(
+                {
+                    "prescription_id": prescription_id,
+                    "customer_id": prescription.customer_id,
+                }
+            )
         return repo.update(prescription_id, prescription)
 
 
