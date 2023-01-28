@@ -3,35 +3,34 @@ import { Link } from "react-router-dom";
 import { useAuthContext } from "./auth";
 
 function RefillOrders() {
-    const [orderedPrescriptions, setOrderedPrescriptions] = useState([])
-    const { token } = useAuthContext();
+  const [orderedPrescriptions, setOrderedPrescriptions] = useState([]);
+  const { token } = useAuthContext();
 
-    useEffect(() => {
-      if (token) {
-        const getOrderedPrescriptions = async () => {
-          const prescriptionURL = `${process.env.REACT_APP_PHARMACY_API_HOST}/prescriptions`;
-          const fetchConfig = {
-            method: "GET",
-            headers: {
-              Authorization: `Bearer ${token}`,
-              "Content-Type": "application/json",
-            },
-          };
-          const response = await fetch(prescriptionURL, fetchConfig);
-          if (response.ok) {
-            const data = await response.json();
-            const orderedPrescriptions = data.filter(
-              (prescription) =>
-                prescription.date_requested !== null &&
-                prescription.date_filled === null
-            );
-            setOrderedPrescriptions(orderedPrescriptions);
-          }
+  useEffect(() => {
+    if (token) {
+      const getOrderedPrescriptions = async () => {
+        const prescriptionURL = `${process.env.REACT_APP_PHARMACY_API_HOST}/prescriptions`;
+        const fetchConfig = {
+          method: "GET",
+          headers: {
+            Authorization: `Bearer ${token}`,
+            "Content-Type": "application/json",
+          },
+        };
+        const response = await fetch(prescriptionURL, fetchConfig);
+        if (response.ok) {
+          const data = await response.json();
+          const orderedPrescriptions = data.filter(
+            (prescription) =>
+              prescription.date_requested !== null &&
+              prescription.date_filled === null
+          );
+          setOrderedPrescriptions(orderedPrescriptions);
         }
-        getOrderedPrescriptions();
-      }
-    }, [token, setOrderedPrescriptions]);
-
+      };
+      getOrderedPrescriptions();
+    }
+  }, [token, setOrderedPrescriptions]);
 
   const updatePrescription = (id) => {
     const updatePrescriptions = orderedPrescriptions.filter(
@@ -45,20 +44,17 @@ function RefillOrders() {
       ("0" + (tempDate.getMonth() + 1)).slice(-2) +
       "-" +
       tempDate.getDate();
-    fetch(
-      `${process.env.REACT_APP_PHARMACY_API_HOST}/prescriptions/${id}`,
-      {
-        method: "put",
-        body: JSON.stringify({
-          ...prescriptionObj,
-          date_filled: date,
-        }),
-        headers: {
-          Authorization: `Bearer ${token}`,
-          "Content-Type": "application/json",
-        },
-      }
-    );
+    fetch(`${process.env.REACT_APP_PHARMACY_API_HOST}/prescriptions/${id}`, {
+      method: "put",
+      body: JSON.stringify({
+        ...prescriptionObj,
+        date_filled: date,
+      }),
+      headers: {
+        Authorization: `Bearer ${token}`,
+        "Content-Type": "application/json",
+      },
+    });
   };
 
   return (
@@ -69,7 +65,7 @@ function RefillOrders() {
             <a
               className="nav-link "
               aria-current="page"
-              href="/pharmacy/prescriptions"
+              href="prescriptionow/pharmacy/prescriptions"
             >
               All prescriptions
             </a>
@@ -77,13 +73,16 @@ function RefillOrders() {
           <li className="nav-item">
             <a
               className="nav-link active"
-              href="/pharmacy/prescriptions/orders"
+              href="prescriptionow/pharmacy/prescriptions/orders"
             >
               Refill orders
             </a>
           </li>
           <li className="nav-item">
-            <a className="nav-link" href="/pharmacy/order-history">
+            <a
+              className="nav-link"
+              href="prescriptionow/pharmacy/order-history"
+            >
               Order history
             </a>
           </li>
@@ -114,7 +113,8 @@ function RefillOrders() {
                 <td>
                   <Link
                     to={
-                      "/pharmacy/prescriptions/order-details/" + prescription.id
+                      "prescriptionow/pharmacy/prescriptions/order-details/" +
+                      prescription.id
                     }
                   >
                     <span className="badge bg-info text-dark">Details</span>

@@ -9,7 +9,6 @@ function PrescriptionsWithSearch() {
   const { token } = useAuthContext();
   const [keyword, setKeyword] = useState("");
 
-  
   const updateKeyword = (keyword) => {
     const filtered = allPrescriptions.filter((prescription) => {
       return `${prescription.name.toLowerCase()}
@@ -23,23 +22,23 @@ function PrescriptionsWithSearch() {
 
   useEffect(() => {
     if (token) {
-        const fetchPrescriptions = async () => {
-          const prescriptionURL = `${process.env.REACT_APP_PHARMACY_API_HOST}/prescriptions`;
-          const fetchConfig = {
-            method: "GET",
-            headers: {
-              Authorization: `Bearer ${token}`,
-              "Content-Type": "application/json",
-            },
-          };
-          const response = await fetch(prescriptionURL, fetchConfig);
-          if (response.ok) {
-            const data = await response.json();
-            setAllPrescriptions(data);
-            setPrescriptions(data);
-          }
+      const fetchPrescriptions = async () => {
+        const prescriptionURL = `${process.env.REACT_APP_PHARMACY_API_HOST}/prescriptions`;
+        const fetchConfig = {
+          method: "GET",
+          headers: {
+            Authorization: `Bearer ${token}`,
+            "Content-Type": "application/json",
+          },
+        };
+        const response = await fetch(prescriptionURL, fetchConfig);
+        if (response.ok) {
+          const data = await response.json();
+          setAllPrescriptions(data);
+          setPrescriptions(data);
         }
-        fetchPrescriptions();
+      };
+      fetchPrescriptions();
     }
   }, [token, setPrescriptions]);
 
@@ -51,18 +50,24 @@ function PrescriptionsWithSearch() {
             <a
               className="nav-link active"
               aria-current="page"
-              href="/pharmacy/prescriptions"
+              href="prescriptionow/pharmacy/prescriptions"
             >
               All prescriptions
             </a>
           </li>
           <li className="nav-item">
-            <a className="nav-link" href="/pharmacy/prescriptions/orders">
+            <a
+              className="nav-link"
+              href="prescriptionow/pharmacy/prescriptions/orders"
+            >
               Refill orders
             </a>
           </li>
           <li className="nav-item">
-            <a className="nav-link" href="/pharmacy/order-history">
+            <a
+              className="nav-link"
+              href="prescriptionow/pharmacy/order-history"
+            >
               Order history
             </a>
           </li>
@@ -85,6 +90,6 @@ function PrescriptionsWithSearch() {
       </div>
     </div>
   );
-};
+}
 
 export default PrescriptionsWithSearch;

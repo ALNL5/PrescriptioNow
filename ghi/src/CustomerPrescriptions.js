@@ -26,10 +26,10 @@ const CustomerPrescriptionList = () => {
     }
   }, [token, setPrescriptions]);
 
-
   return (
     <div className="container">
       <h2>Welcome, Customer!</h2>
+      <a href="prescriptionow/customers/new">Add customer information</a>
       <table className="table table-striped">
         <thead>
           <tr>

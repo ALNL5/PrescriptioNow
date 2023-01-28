@@ -6,27 +6,24 @@ function OrderHistoryWithSearch() {
   const [prescriptions, setPrescriptions] = useState([]);
   const { token } = useAuthContext();
 
-
-
-
   useEffect(() => {
     if (token) {
-        const fetchPrescriptions = async () => {
-          const prescriptionURL = `${process.env.REACT_APP_PHARMACY_API_HOST}/prescriptions`;
-          const fetchConfig = {
-            method: "GET",
-            headers: {
-              Authorization: `Bearer ${token}`,
-              "Content-Type": "application/json",
-            },
-          };
-          const response = await fetch(prescriptionURL, fetchConfig);
-          if (response.ok) {
-            const data = await response.json();
-            setPrescriptions(data);
-          }
+      const fetchPrescriptions = async () => {
+        const prescriptionURL = `${process.env.REACT_APP_PHARMACY_API_HOST}/prescriptions`;
+        const fetchConfig = {
+          method: "GET",
+          headers: {
+            Authorization: `Bearer ${token}`,
+            "Content-Type": "application/json",
+          },
+        };
+        const response = await fetch(prescriptionURL, fetchConfig);
+        if (response.ok) {
+          const data = await response.json();
+          setPrescriptions(data);
         }
-        fetchPrescriptions();
+      };
+      fetchPrescriptions();
     }
   }, [token, setPrescriptions]);
 
@@ -38,18 +35,24 @@ function OrderHistoryWithSearch() {
             <a
               className="nav-link"
               aria-current="page"
-              href="/pharmacy/prescriptions"
+              href="prescriptionow/pharmacy/prescriptions"
             >
               All prescriptions
             </a>
           </li>
           <li className="nav-item">
-            <a className="nav-link" href="/pharmacy/prescriptions/orders">
+            <a
+              className="nav-link"
+              href="prescriptionow/pharmacy/prescriptions/orders"
+            >
               Refill orders
             </a>
           </li>
           <li className="nav-item">
-            <a className="nav-link active" href="/pharmacy/order-history">
+            <a
+              className="nav-link active"
+              href="prescriptionow/pharmacy/order-history"
+            >
               Order history
             </a>
           </li>
