@@ -4,7 +4,7 @@ stages:
   - deploy
 
 variables:
-  DATABASE_URL: postgresql://postgres:test@postgres:5432/postgres
+  DATABASE_URL: postgres://postgres:pass@srv-captain--postgres2-postgres/postgres
   SIGNING_KEY: b16558ffb7322bfa4720e8aaf215a4d3028f29149ac3692e41d83b310aee2929
 
 # Run flake8 to check for code quality
