@@ -5,7 +5,7 @@ stages:
 
 variables:
   DATABASE_URL: postgresql://postgres:test@postgres:5432/postgres
-  SIGNING_KEY: "b16558ffb7322bfa4720e8aaf215a4d3028f29149ac3692e41d83b310aee2929"
+  SIGNING_KEY: b16558ffb7322bfa4720e8aaf215a4d3028f29149ac3692e41d83b310aee2929
 
 # Run flake8 to check for code quality
 lint-test-job:
