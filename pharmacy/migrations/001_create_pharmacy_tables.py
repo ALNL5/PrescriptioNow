@@ -44,8 +44,8 @@ steps = [
         """
         CREATE TABLE deliveries (
             id SERIAL PRIMARY KEY NOT NULL,
-            prescription_id INTEGER NOT NULL,
-            employee_id INTEGER NOT NULL,
+            prescription_id INTEGER NOT NULL REFERENCES prescriptions(id),
+            employee_id INTEGER NULL REFERENCES employees(id),
             customer_id INTEGER NOT NULL
         );
         """,
