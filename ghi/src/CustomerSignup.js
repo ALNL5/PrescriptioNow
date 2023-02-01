@@ -1,4 +1,6 @@
 import React, { useState } from "react";
+import { useAuthContext } from "./auth";
+import { Link } from "react-router-dom";
 
 const CustomerForm = () => {
   const [customerFirstName, setCustomerFirstName] = useState("");
@@ -12,6 +14,7 @@ const CustomerForm = () => {
   const [customerState, setCustomerState] = useState("");
   const [customerZip, setCustomerZip] = useState("");
   const [customerUserID, setCustomerUserID] = useState(0);
+  const { token } = useAuthContext();
 
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -34,8 +37,9 @@ const CustomerForm = () => {
       method: "post",
       body: JSON.stringify(newCustomer),
       headers: {
+        Authorization: `Bearer ${token}`,
         "Content-Type": "application/json",
-      },
+      }
     };
     fetch(customerUrl, fetchConfig)
       .then((response) => response.json())
@@ -52,7 +56,10 @@ const CustomerForm = () => {
         setCustomerZip("");
         setCustomerUserID(0);
       })
-      .catch((e) => console.log("error: ", e));
+      .catch((e) => console.log("error: ", e))
+      .then(() => {
+        window.location.reload();
+      });;
   };
 
   const handleFirstNameChange = (event) => {
@@ -110,7 +117,7 @@ const CustomerForm = () => {
       <div className="row">
         <div className="offset-3 col-6">
           <div className="shadow p-4 mt-4">
-            <h1>Create a new Customer</h1>
+            <h1>Add Customer information</h1>
             <form onSubmit={handleSubmit} id="create-shoe-form">
               <div className="form-floating mb-3">
                 <input
@@ -241,7 +248,13 @@ const CustomerForm = () => {
                 />
                 <label htmlFor="zip">Zip Code</label>
               </div>
-              <button className="btn btn-primary">Create</button>
+              <Link
+                className={"btn btn-primary"}
+                to={"/customers/:id"}
+                role="button"
+              >
+                Create
+              </Link>
             </form>
           </div>
         </div>

@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { useAuthContext } from "./auth";
+import { Link } from "react-router-dom";
 
 const PrescriptionDetails = () => {
   let { id } = useParams();
@@ -67,23 +68,22 @@ const PrescriptionDetails = () => {
       <div>
         <ul className="nav nav-tabs">
           <li className="nav-item">
-            <a
+            <Link
               className="nav-link "
-              aria-current="page"
-              href="pharmacy/prescriptions"
+              to={"/pharmacy/prescriptions"}
             >
               All prescriptions
-            </a>
+            </Link>
           </li>
           <li className="nav-item">
-            <a className="nav-link" href="pharmacy/prescriptions/orders">
+            <Link className="nav-link" to={"/pharmacy/prescriptions/orders"}>
               Refill orders
-            </a>
+            </Link>
           </li>
           <li className="nav-item">
-            <a className="nav-link" href="pharmacy/order-history">
+            <Link className="nav-link" to={"/pharmacy/order-history"}>
               Order history
-            </a>
+            </Link>
           </li>
         </ul>
       </div>

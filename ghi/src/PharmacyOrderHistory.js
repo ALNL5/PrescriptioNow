@@ -66,7 +66,7 @@ function OrderHistory() {
                 <td>
                   <Link
                     to={
-                      "/pharmacy/prescriptions/order-details" + prescription.id
+                      "/pharmacy/prescriptions/order-details/" + prescription.id
                     }
                   >
                     <span className="badge bg-info text-dark">Details</span>

@@ -1,4 +1,5 @@
 import { useToken } from "./auth";
+import { Link } from "react-router-dom";
 
 function Nav() {
   const [token] = useToken();
@@ -28,13 +29,13 @@ function Nav() {
             <li className={token ? "d-none" : "nav-link link-dark"}>
               Welcome!
             </li>
-            <a
+            <Link
               className={token ? "btn btn-primary" : "d-none"}
-              href="accounts/logout"
+              to={"accounts/logout"}
               role="button"
             >
               Logout
-            </a>
+            </Link>
           </div>
         </div>
       </div>

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, Link } from "react-router-dom";
 import { useAuthContext } from "./auth";
 
 const OrderDetails = () => {
@@ -31,30 +31,26 @@ const OrderDetails = () => {
   return (
     <div className="container d-grid gap-4">
       <div>
-        <ul class="nav nav-tabs">
-          <li class="nav-item">
-            <a
-              class="nav-link "
-              aria-current="page"
-              href="pharmacy/prescriptions"
-            >
+        <ul className="nav nav-tabs">
+          <li className="nav-item">
+            <Link className="nav-link " to={"/pharmacy/prescriptions"}>
               All prescriptions
-            </a>
+            </Link>
           </li>
-          <li class="nav-item">
-            <a class="nav-link" href="pharmacy/prescriptions/orders">
+          <li className="nav-item">
+            <Link className="nav-link" to={"/pharmacy/prescriptions/orders"}>
               Refill orders
-            </a>
+            </Link>
           </li>
-          <li class="nav-item">
-            <a class="nav-link" href="pharmacy/order-history">
+          <li className="nav-item">
+            <Link className="nav-link" to={"/pharmacy/order-history"}>
               Order history
-            </a>
+            </Link>
           </li>
-          <li class="nav-item">
-            <a class="nav-link active" href="pharmacy/order-details/:id">
+          <li className="nav-item">
+            <Link className="nav-link active" to={"/pharmacy/order-details/:id"}>
               Order details
-            </a>
+            </Link>
           </li>
         </ul>
       </div>

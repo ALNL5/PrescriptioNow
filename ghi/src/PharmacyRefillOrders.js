@@ -54,6 +54,8 @@ function RefillOrders() {
         Authorization: `Bearer ${token}`,
         "Content-Type": "application/json",
       },
+    }).then(() => {
+      window.location.reload();
     });
   };
 
@@ -62,23 +64,28 @@ function RefillOrders() {
       <div>
         <ul className="nav nav-tabs">
           <li className="nav-item">
-            <a
-              className="nav-link "
-              aria-current="page"
-              href="pharmacy/prescriptions"
+            <Link
+            className="nav-link"
+            to={"/pharmacy/prescriptions"}
             >
               All prescriptions
-            </a>
+            </Link>
           </li>
           <li className="nav-item">
-            <a className="nav-link active" href="pharmacy/prescriptions/orders">
+            <Link
+              className="nav-link active"
+              to={"/pharmacy/prescriptions/orders"}
+            >
               Refill orders
-            </a>
+            </Link>
           </li>
           <li className="nav-item">
-            <a className="nav-link" href="pharmacy/order-history">
+            <Link
+            className="nav-link"
+            to={"/pharmacy/order-history"}
+            >
               Order history
-            </a>
+            </Link>
           </li>
         </ul>
       </div>
@@ -107,7 +114,7 @@ function RefillOrders() {
                 <td>
                   <Link
                     to={
-                      "prescriptionow/pharmacy/prescriptions/order-details" +
+                      "/pharmacy/prescriptions/order-details/" +
                       prescription.id
                     }
                   >
