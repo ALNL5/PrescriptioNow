@@ -9,20 +9,12 @@ function MainPage() {
           <p></p>
           <div className="mt-5">
             <p>
-              <a
-                className="btn btn-lg"
-                href="prescriptionow/accounts/login"
-                role="button"
-              >
+              <a className="btn btn-lg" href="accounts/login" role="button">
                 Login
               </a>
             </p>
             <p>
-              <a
-                className="btn btn-lg"
-                href="prescriptionow/accounts/signup"
-                role="button"
-              >
+              <a className="btn btn-lg" href="accounts/signup" role="button">
                 Create Account
               </a>
             </p>

@@ -1,48 +1,104 @@
-from pydantic import BaseModel
-from typing import List, Union
+from pydantic import BaseModel, EmailStr
+from typing import List, Union, Optional
 from queries.pool import pool
+from geopy.geocoders import Nominatim
+from datetime import date
 
 
 class Error(BaseModel):
     message: str
 
 
-class DeliveriesIn(BaseModel):
+class DeliveriesTableIn(BaseModel):
     prescription_id: int
-    employee_id: int
+    employee_id: Optional[int]
     customer_id: int
+
+
+# class DeliveriesTableOut(BaseModel):
+#     id: int
+#     prescription_id : int
+#     employee_id : Optional[int]
+#     customer_id : int
+
+
+class DeliveriesIn(BaseModel):
+    customer_id: int
+    customer_address_1: str
+    customers_city: str
+    customers_state: str
+    customers_zip: str
+    employee_id: int
+    employee_first_name: str
+    prescriptions_date_filled: date
+    prescriptions_date_delivered: Optional[date]
+    prescriptions_id: int
 
 
 class DeliveriesOut(BaseModel):
     id: int
-    prescription_id: int
-    employee_id: int
     customer_id: int
+    customer_address_1: str
+    customers_city: str
+    customers_state: str
+    customers_zip: str
+    employee_id: int
+    employee_first_name: str
+    prescriptions_date_filled: date
+    prescriptions_date_delivered: Optional[date]
+    prescriptions_id: int
+
+
+class EmailSchema(BaseModel):
+    email: List[EmailStr]
 
 
 class DeliveriesRepository:
+    def delivery_to_coordinates(self, address):
+        locator = Nominatim(user_agent="myGeocoder")
+        location = locator.geocode((str(address)))
+        return location.latitude
+
     def get_all(self) -> Union[Error, List[DeliveriesOut]]:
         try:
             with pool.connection() as conn:
                 with conn.cursor() as db:
                     result = db.execute(
                         """
-                        SELECT  id,
-                        prescription_id,
-                        employee_id,
-                        customer_id
-                        FROM Deliveries
-                        ORDER BY id;
+                        SELECT deliveries.id, customers.id,
+                        customers.address_1, customers.city, customers.state,
+                        customers.zip, employees.id,
+                        employees.first_name, prescriptions.date_filled,
+                        prescriptions.date_delivered, prescriptions.id
+                        FROM deliveries
+                        left join customers
+                        on deliveries.customer_id = customers.id
+                        left join employees
+                        on deliveries.employee_id = employees.id
+                        left join prescriptions
+                        on deliveries.prescription_id = prescriptions.id;
+
                         """
                     )
-                    # We can maybe change the "ORDER BY id", to a new field
-                    # including order date or distance, depends on what we want
-                    # to do
+                    result = []
+                    for record in db:
+                        delivery = DeliveriesOut(
+                            id=record[0],
+                            customer_id=record[1],
+                            customer_address_1=record[2],
+                            customers_city=record[3],
+                            customers_state=record[4],
+                            customers_zip=record[5],
+                            employee_id=record[6],
+                            employee_first_name=record[7],
+                            prescriptions_date_filled=record[8],
+                            prescriptions_date_delivered=record[9],
+                            prescriptions_id=record[10],
+                        )
 
-                    return [
-                        self.record_to_delivery_out(record)
-                        for record in result
-                    ]
+                        result.append(delivery)
+                    return result
+
         except Exception as e:
             print(e)
             return {"message": "Could not get all deliveries"}
@@ -53,13 +109,22 @@ class DeliveriesRepository:
                 with conn.cursor() as db:
                     result = db.execute(
                         """
-                        SELECT id
-                        , prescription_id
-                        , employee_id
-                        , customer_id
-                            FROM deliveries
-                        WHERE id = %s
-                        """,
+                        SELECT deliveries.id, customers.id,
+                        customers.address_1, customers.city,
+                        customers.state, customers.zip,
+                        employees.id, employees.first_name,
+                        prescriptions.date_filled,
+                        prescriptions.date_delivered,
+                        prescriptions.id
+                        FROM deliveries
+                        left join customers
+                        on deliveries.customer_id = customers.id
+                        left join employees
+                        on deliveries.employee_id = employees.id
+                        left join prescriptions
+                        on deliveries.prescription_id = prescriptions.id
+                        WHERE deliveries.id = %s
+                            """,
                         [delivery_id],
                     )
                     record = result.fetchone()
@@ -70,32 +135,38 @@ class DeliveriesRepository:
             print(e)
             return {"message": "Could not get delivery"}
 
-    def create(self, delivery: DeliveriesIn) -> DeliveriesOut:
+    def create(self, delivery: DeliveriesTableIn) -> DeliveriesOut:
         try:
             with pool.connection() as conn:
                 with conn.cursor() as db:
                     result = db.execute(
                         """
-                        INSERT INTO deliveries
-                            (prescription_id, employee_id, customer_id)
-                        VALUES
-                            (%s, %s, %s)
-                        RETURNING id;
+                            SELECT id
+                            FROM deliveries
+                            WHERE deliveries.prescription_id = %s
+                            """,
+                        [delivery.prescription_id],
+                    )
+                    if 0 == len(result):
+                        return
+                    result = db.execute(
+                        """
+                            INSERT INTO deliveries
+                                (prescription_id, employee_id, customer_id)
+                            VALUES
+                                (%s, 1, %s)
+                            RETURNING id;
 
-                        """,
-                        [
-                            delivery.prescription_id,
-                            delivery.employee_id,
-                            delivery.customer_id,
-                        ],
+                            """,
+                        [delivery.prescription_id, delivery.customer_id],
                     )
                     id = result.fetchone()[0]
-                    return self.delivery_in_to_out(id, delivery)
+                    return self.get_one(id)
         except Exception:
             return {"message": "error! Did not create a delivery"}
 
     def update(
-        self, delivery_id: int, delivery: DeliveriesOut
+        self, delivery_id: int, delivery: DeliveriesTableIn
     ) -> Union[DeliveriesOut, Error]:
         try:
             with pool.connection() as conn:
@@ -104,21 +175,40 @@ class DeliveriesRepository:
                         """
                         UPDATE deliveries
                         SET prescription_id = %s
-                        , employee_id = %s
+                        , employee_id = 1
                         , customer_id = %s
                         WHERE id = %s
                         """,
                         [
                             delivery.prescription_id,
-                            delivery.employee_id,
                             delivery.customer_id,
                             delivery_id,
                         ],
                     )
-                return self.delivery_in_to_out(delivery_id, delivery)
+                    return self.get_one(delivery_id)
         except Exception as e:
             print(e)
             return {"message": "Could not update delivery"}
+
+    def update_prescription_delivery(
+        self, delivery_id: int, delivery: DeliveriesIn
+    ) -> Union[DeliveriesOut, Error]:
+        try:
+            with pool.connection() as conn:
+                with conn.cursor() as db:
+                    db.execute(
+                        """
+                        UPDATE prescriptions
+                        SET date_delivered = CURRENT_DATE
+                        WHERE prescriptions.id = %s
+                        """,
+                        [delivery.prescriptions_id],
+                    )
+
+                    return self.get_one(delivery_id)
+        except Exception as e:
+            print(e)
+            return {"message": "Could not update delivery date"}
 
     def delete(self, delivery_id: int) -> bool:
         try:
@@ -136,16 +226,19 @@ class DeliveriesRepository:
             print(e)
             return {"message": "Could not delete delivery"}
 
-    def delivery_in_to_out(self, id: int, delivery: DeliveriesIn):
-        old_data = delivery.dict()
-        return DeliveriesOut(id=id, **old_data)
-
     def record_to_delivery_out(self, record):
         return DeliveriesOut(
             id=record[0],
-            prescription_id=record[1],
-            employee_id=record[2],
-            customer_id=record[3],
+            customer_id=record[1],
+            customer_address_1=record[2],
+            customers_city=record[3],
+            customers_state=record[4],
+            customers_zip=record[5],
+            employee_id=record[6],
+            employee_first_name=record[7],
+            prescriptions_date_filled=record[8],
+            prescriptions_date_delivered=record[9],
+            prescriptions_id=record[10],
         )
 
 

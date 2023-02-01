@@ -36,29 +36,23 @@ const OrderDetails = () => {
             <a
               class="nav-link "
               aria-current="page"
-              href="prescriptionow/pharmacy/prescriptions"
+              href="pharmacy/prescriptions"
             >
               All prescriptions
             </a>
           </li>
           <li class="nav-item">
-            <a
-              class="nav-link"
-              href="prescriptionow/pharmacy/prescriptions/orders"
-            >
+            <a class="nav-link" href="pharmacy/prescriptions/orders">
               Refill orders
             </a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="prescriptionow/pharmacy/order-history">
+            <a class="nav-link" href="pharmacy/order-history">
               Order history
             </a>
           </li>
           <li class="nav-item">
-            <a
-              class="nav-link active"
-              href="prescriptionow/pharmacy/order-details/:id"
-            >
+            <a class="nav-link active" href="pharmacy/order-details/:id">
               Order details
             </a>
           </li>

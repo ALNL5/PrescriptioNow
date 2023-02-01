@@ -8,28 +8,27 @@ function OrderHistory() {
 
   useEffect(() => {
     if (token) {
-        const getRefilledOrders = async () => {
-          const prescriptionURL = `${process.env.REACT_APP_PHARMACY_API_HOST}/prescriptions`;
-          const fetchConfig = {
-            method: "GET",
-            headers: {
-              Authorization: `Bearer ${token}`,
-              "Content-Type": "application/json",
-            },
-          };
-          const response = await fetch(prescriptionURL, fetchConfig);
-          if (response.ok) {
-            const data = await response.json();
-            const refilledOrders = await data.filter(
-              (prescription) => prescription.date_requested !== null
-            );
-            setRefilledOrders(refilledOrders);
-          }
+      const getRefilledOrders = async () => {
+        const prescriptionURL = `${process.env.REACT_APP_PHARMACY_API_HOST}/prescriptions`;
+        const fetchConfig = {
+          method: "GET",
+          headers: {
+            Authorization: `Bearer ${token}`,
+            "Content-Type": "application/json",
+          },
+        };
+        const response = await fetch(prescriptionURL, fetchConfig);
+        if (response.ok) {
+          const data = await response.json();
+          const refilledOrders = await data.filter(
+            (prescription) => prescription.date_requested !== null
+          );
+          setRefilledOrders(refilledOrders);
         }
-        getRefilledOrders();
+      };
+      getRefilledOrders();
     }
   }, [token, setRefilledOrders]);
-
 
   return (
     <div className="container">
@@ -67,8 +66,7 @@ function OrderHistory() {
                 <td>
                   <Link
                     to={
-                      "/pharmacy/prescriptions/order-details/" +
-                      prescription.id
+                      "/pharmacy/prescriptions/order-details" + prescription.id
                     }
                   >
                     <span className="badge bg-info text-dark">Details</span>
