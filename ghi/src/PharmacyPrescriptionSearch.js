@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import SearchBar from "./PharmacySearchBar";
 import PrescriptionList from "./PharmacyPrescriptionList";
 import { useAuthContext } from "./auth";
+import { Link } from "react-router-dom";
 
 function PrescriptionsWithSearch() {
   const [prescriptions, setPrescriptions] = useState([]);
@@ -47,35 +48,33 @@ function PrescriptionsWithSearch() {
       <div>
         <ul className="nav nav-tabs">
           <li className="nav-item">
-            <a
+            <Link
               className="nav-link active"
-              aria-current="page"
-              href="pharmacy/prescriptions"
+              to={"/pharmacy/prescriptions"}
             >
               All prescriptions
-            </a>
+            </Link>
           </li>
           <li className="nav-item">
-            <a className="nav-link" href="pharmacy/prescriptions/orders">
+            <a className="nav-link" href="prescriptions/orders">
               Refill orders
             </a>
           </li>
           <li className="nav-item">
-            <a className="nav-link" href="pharmacy/order-history">
+            <Link className="nav-link" to={"/pharmacy/order-history"}>
               Order history
-            </a>
+            </Link>
           </li>
         </ul>
       </div>
       <div>
         <button type="button" className="btn btn-outline-primary  me-5">
-          <a
+          <Link
             className="nav-link"
-            aria-current="page"
-            href="/pharmacy/prescriptions/new"
+            to={"/pharmacy/prescriptions/new"}
           >
             Create prescription
-          </a>
+          </Link>
         </button>
         <SearchBar keyword={keyword} onChange={updateKeyword} />
       </div>

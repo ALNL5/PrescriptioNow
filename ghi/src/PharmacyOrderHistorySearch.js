@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import OrderHistory from "./PharmacyOrderHistory";
 import { useAuthContext } from "./auth";
+import { Link } from "react-router-dom";
 
 function OrderHistoryWithSearch() {
   const [prescriptions, setPrescriptions] = useState([]);
@@ -32,23 +33,28 @@ function OrderHistoryWithSearch() {
       <div>
         <ul className="nav nav-tabs">
           <li className="nav-item">
-            <a
+            <Link
               className="nav-link"
-              aria-current="page"
-              href="pharmacy/prescriptions"
+              to={"/pharmacy/prescriptions"}
             >
               All prescriptions
-            </a>
+            </Link>
           </li>
           <li className="nav-item">
-            <a className="nav-link" href="pharmacy/prescriptions/orders">
+            <Link
+            className="nav-link"
+            to={"/pharmacy/prescriptions/orders"}
+            >
               Refill orders
-            </a>
+            </Link>
           </li>
           <li className="nav-item">
-            <a className="nav-link active" href="pharmacy/order-history">
+            <Link
+            className="nav-link active"
+            to={"/pharmacy/order-history"}
+            >
               Order history
-            </a>
+            </Link>
           </li>
         </ul>
       </div>

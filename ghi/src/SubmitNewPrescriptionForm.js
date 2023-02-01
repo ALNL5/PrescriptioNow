@@ -70,6 +70,7 @@ function SubmitNewPrescription(props) {
       method: "post",
       body: JSON.stringify(newPrescription),
       headers: {
+        Authorization: `Bearer ${token}`,
         "Content-Type": "application/json",
       },
     };
