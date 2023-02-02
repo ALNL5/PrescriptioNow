@@ -29,7 +29,7 @@ const OrderDetails = () => {
   }, [token, setPrescriptions, id]);
 
   return (
-    <div className="container d-grid gap-4">
+    <div className="container d-grid gap-4 mt-5">
       <div>
         <ul className="nav nav-tabs">
           <li className="nav-item">
@@ -48,7 +48,10 @@ const OrderDetails = () => {
             </Link>
           </li>
           <li className="nav-item">
-            <Link className="nav-link active" to={"/pharmacy/order-details/:id"}>
+            <Link
+              className="nav-link active"
+              to={"/pharmacy/order-details/:id"}
+            >
               Order details
             </Link>
           </li>

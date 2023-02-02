@@ -1,20 +1,20 @@
-@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&display=swap");
 
 body {
   margin: 0;
-  font-family: 'Noto Sans JP', sans-serif;
+  font-family: "Noto Sans JP", sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
 code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
     monospace;
 }
 
 .navbar {
-  background-color: #65DAE7;
-  border-bottom: 1px solid #2BCCDE;
+  background-color: #65dae7;
+  border-bottom: 1px solid #2bccde;
 }
 
 .nav-link {
@@ -28,9 +28,11 @@ code {
 .hero {
   background-image: url("img/pixelumina-photography-EAwdUc0T7PY-unsplash.jpg");
   background-position: center center;
-  border: 1px solid #2BCCDE;
+  background-size: cover;
+  border: 1px solid #2bccde;
   border-radius: 10px;
-  height: 400px;
+  height: 550px;
+  contain: strict;
 }
 
 .hero p {
@@ -38,24 +40,23 @@ code {
 }
 
 .hero .btn-lg {
-  background-color: #FFFFFF;
-  border: 2px solid #2BCCDE;
-  color: #2BCCDE;
+  background-color: #ffffff;
+  border: 2px solid #2bccde;
+  color: #2bccde;
 }
 
 .hero .btn-lg:hover {
-  background-color: #2BCCDE;
-  color: #FFFFFF;
+  background-color: #2bccde;
+  color: #ffffff;
 }
-
 
 .pharmacist {
   background-image: url("https://media.capc.org/images/AdobeStock_274131656.original.original.jpg");
   background-position: center center;
-  border: 1px solid #2BCCDE;
+  background-size: cover;
+  border: 1px solid #2bccde;
   border-radius: 10px;
   height: 550px;
-  width: 1200px;
 }
 
 .pharmacist p {
@@ -63,12 +64,12 @@ code {
 }
 
 .pharmacist .btn-lg {
-  background-color: #FFFFFF;
-  border: 2px solid #2BCCDE;
-  color: #2BCCDE;
+  background-color: #ffffff;
+  border: 2px solid #2bccde;
+  color: #2bccde;
 }
 
 .pharmacist .btn-lg:hover {
-  background-color: #2BCCDE;
-  color: #FFFFFF;
+  background-color: #2bccde;
+  color: #ffffff;
 }

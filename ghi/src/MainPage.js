@@ -1,12 +1,11 @@
 function MainPage() {
   return (
     <div className="container">
-      <div className="row gx-4 p-5 mb-5 hero">
+      <div className="row gx-4 p-5 mt-5 mb-5 hero">
         <div className="col-md-6"></div>
         <div className="col-md-6">
           <h1>Prescriptions delivered to you</h1>
           <p>Get refills without leaving home</p>
-          <p></p>
           <div className="mt-5">
             <p>
               <a className="btn btn-lg" href="accounts/login" role="button">

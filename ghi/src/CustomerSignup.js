@@ -39,7 +39,7 @@ const CustomerForm = () => {
       headers: {
         Authorization: `Bearer ${token}`,
         "Content-Type": "application/json",
-      }
+      },
     };
     fetch(customerUrl, fetchConfig)
       .then((response) => response.json())
@@ -59,7 +59,7 @@ const CustomerForm = () => {
       .catch((e) => console.log("error: ", e))
       .then(() => {
         window.location.reload();
-      });;
+      });
   };
 
   const handleFirstNameChange = (event) => {
@@ -116,147 +116,145 @@ const CustomerForm = () => {
     <div className="container">
       <div className="row">
         <div className="offset-3 col-6">
-          <div className="shadow p-4 mt-4">
-            <h1>Add Customer information</h1>
-            <form onSubmit={handleSubmit} id="create-shoe-form">
-              <div className="form-floating mb-3">
-                <input
-                  value={customerFirstName}
-                  onChange={handleFirstNameChange}
-                  placeholder="First Name"
-                  required
-                  type="text"
-                  name="first_name"
-                  id="first_name"
-                  className="form-control"
-                />
-                <label htmlFor="first_name">First Name</label>
-              </div>
-              <div className="form-floating mb-3">
-                <input
-                  value={customerLastName}
-                  onChange={handleLastNameChange}
-                  placeholder="Last Name"
-                  required
-                  type="text"
-                  name="last_name"
-                  id="last_name"
-                  className="form-control"
-                />
-                <label htmlFor="last_name">Last Name</label>
-              </div>
-              <div className="form-floating mb-3">
-                <input
-                  value={customerDOB}
-                  onChange={handleDOBChange}
-                  placeholder="DOB"
-                  required
-                  type="date"
-                  name="dob"
-                  id="dob"
-                  className="form-control"
-                />
-                <label htmlFor="dob">Date of Birth</label>
-              </div>
-              <div className="form-floating mb-3">
-                <input
-                  value={customerPhone}
-                  onChange={handlePhoneChange}
-                  placeholder="Phone Number"
-                  required
-                  type="text"
-                  name="phone"
-                  id="phone"
-                  className="form-control"
-                />
-                <label htmlFor="phone">Phone Number</label>
-              </div>
-              <div className="form-floating mb-3">
-                <input
-                  value={customerEmail}
-                  onChange={handleEmailChange}
-                  placeholder="Email"
-                  required
-                  type="email"
-                  name="email"
-                  id="email"
-                  className="form-control"
-                />
-                <label htmlFor="email">Email</label>
-              </div>
-              <div className="form-floating mb-3">
-                <input
-                  value={customerAddress1}
-                  onChange={handleAddress1Change}
-                  placeholder="Address 1"
-                  required
-                  type="text"
-                  name="address_1"
-                  id="address_1"
-                  className="form-control"
-                />
-                <label htmlFor="address_1">Address 1</label>
-              </div>
-              <div className="form-floating mb-3">
-                <input
-                  value={customerAddress2}
-                  onChange={handleAddress2Change}
-                  placeholder="Address 2"
-                  type="text"
-                  name="address_2"
-                  id="address_2"
-                  className="form-control"
-                />
-                <label htmlFor="address_2">Address 2</label>
-              </div>
-              <div className="form-floating mb-3">
-                <input
-                  value={customerCity}
-                  onChange={handleCityChange}
-                  placeholder="city"
-                  required
-                  type="text"
-                  name="city"
-                  id="city"
-                  className="form-control"
-                />
-                <label htmlFor="city">City</label>
-              </div>
-              <div className="form-floating mb-3">
-                <input
-                  value={customerState}
-                  onChange={handleStateChange}
-                  placeholder="state"
-                  required
-                  type="text"
-                  name="state"
-                  id="state"
-                  className="form-control"
-                />
-                <label htmlFor="state">State</label>
-              </div>
-              <div className="form-floating mb-3">
-                <input
-                  value={customerZip}
-                  onChange={handleZipChange}
-                  placeholder="zip"
-                  required
-                  type="text"
-                  name="zip"
-                  id="zip"
-                  className="form-control"
-                />
-                <label htmlFor="zip">Zip Code</label>
-              </div>
-              <Link
-                className={"btn btn-primary"}
-                to={"/customers/:id"}
-                role="button"
-              >
-                Create
-              </Link>
-            </form>
-          </div>
+          <h1 className="text-center mt-4 mb-4">Add customer information</h1>
+          <form onSubmit={handleSubmit} id="create-shoe-form">
+            <div className="form-floating mb-3">
+              <input
+                value={customerFirstName}
+                onChange={handleFirstNameChange}
+                placeholder="First Name"
+                required
+                type="text"
+                name="first_name"
+                id="first_name"
+                className="form-control"
+              />
+              <label htmlFor="first_name">First Name</label>
+            </div>
+            <div className="form-floating mb-3">
+              <input
+                value={customerLastName}
+                onChange={handleLastNameChange}
+                placeholder="Last Name"
+                required
+                type="text"
+                name="last_name"
+                id="last_name"
+                className="form-control"
+              />
+              <label htmlFor="last_name">Last Name</label>
+            </div>
+            <div className="form-floating mb-3">
+              <input
+                value={customerDOB}
+                onChange={handleDOBChange}
+                placeholder="DOB"
+                required
+                type="date"
+                name="dob"
+                id="dob"
+                className="form-control"
+              />
+              <label htmlFor="dob">Date of Birth</label>
+            </div>
+            <div className="form-floating mb-3">
+              <input
+                value={customerPhone}
+                onChange={handlePhoneChange}
+                placeholder="Phone Number"
+                required
+                type="text"
+                name="phone"
+                id="phone"
+                className="form-control"
+              />
+              <label htmlFor="phone">Phone Number</label>
+            </div>
+            <div className="form-floating mb-3">
+              <input
+                value={customerEmail}
+                onChange={handleEmailChange}
+                placeholder="Email"
+                required
+                type="email"
+                name="email"
+                id="email"
+                className="form-control"
+              />
+              <label htmlFor="email">Email</label>
+            </div>
+            <div className="form-floating mb-3">
+              <input
+                value={customerAddress1}
+                onChange={handleAddress1Change}
+                placeholder="Address 1"
+                required
+                type="text"
+                name="address_1"
+                id="address_1"
+                className="form-control"
+              />
+              <label htmlFor="address_1">Address 1</label>
+            </div>
+            <div className="form-floating mb-3">
+              <input
+                value={customerAddress2}
+                onChange={handleAddress2Change}
+                placeholder="Address 2"
+                type="text"
+                name="address_2"
+                id="address_2"
+                className="form-control"
+              />
+              <label htmlFor="address_2">Address 2</label>
+            </div>
+            <div className="form-floating mb-3">
+              <input
+                value={customerCity}
+                onChange={handleCityChange}
+                placeholder="city"
+                required
+                type="text"
+                name="city"
+                id="city"
+                className="form-control"
+              />
+              <label htmlFor="city">City</label>
+            </div>
+            <div className="form-floating mb-3">
+              <input
+                value={customerState}
+                onChange={handleStateChange}
+                placeholder="state"
+                required
+                type="text"
+                name="state"
+                id="state"
+                className="form-control"
+              />
+              <label htmlFor="state">State</label>
+            </div>
+            <div className="form-floating mb-3">
+              <input
+                value={customerZip}
+                onChange={handleZipChange}
+                placeholder="zip"
+                required
+                type="text"
+                name="zip"
+                id="zip"
+                className="form-control"
+              />
+              <label htmlFor="zip">Zip Code</label>
+            </div>
+            <Link
+              className={"btn btn-primary d-grid gap-2 col-4 mx-auto"}
+              to={"/customers/:id"}
+              role="button"
+            >
+              Create
+            </Link>
+          </form>
         </div>
       </div>
     </div>

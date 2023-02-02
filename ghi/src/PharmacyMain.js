@@ -3,11 +3,11 @@ import React from "react";
 function PharmacyMain() {
   return (
     <div className="container">
-      <div className="row gx-4 p-8 mb-5 pharmacist">
+      <div className="row gx-4 p-5 mt-5 mb-5 pharmacist">
         <div className="col-md-6"></div>
         <div className="col-md-6">
           <p></p>
-          <h2>Welcome, pharmacist!</h2>
+          <h1>Welcome, pharmacist!</h1>
           <div className="mt-5">
             <p>
               <a

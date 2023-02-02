@@ -21,14 +21,15 @@ const CustomerPrescriptionList = () => {
         if (response.ok) {
           const data = await response.json();
           const rxToDisplay = data.reduce((acc, cur) => {
-              if (
-                (acc[cur.rx_number] && cur.times_refilled > acc[cur.rx_number].times_refilled)
-                || !acc[cur.rx_number]
-              ) {
-                acc[cur.rx_number] = cur;
-              }
-              return acc;
-            }, {});
+            if (
+              (acc[cur.rx_number] &&
+                cur.times_refilled > acc[cur.rx_number].times_refilled) ||
+              !acc[cur.rx_number]
+            ) {
+              acc[cur.rx_number] = cur;
+            }
+            return acc;
+          }, {});
           setPrescriptions(Object.values(rxToDisplay));
         }
       };
@@ -41,8 +42,8 @@ const CustomerPrescriptionList = () => {
       (prescription) => prescription.id === id
     );
     const prescriptionObj = newPrescriptions[0];
-    console.log("newPrescriptions[0]",newPrescriptions[0])
-    console.log("prescriptionObj",prescriptionObj)
+    console.log("newPrescriptions[0]", newPrescriptions[0]);
+    console.log("prescriptionObj", prescriptionObj);
     const tempRefill = prescriptionObj.times_refilled + 1;
     const tempDate = new Date();
     const date =
@@ -66,13 +67,13 @@ const CustomerPrescriptionList = () => {
       },
     }).then(() => {
       window.location.reload();
-    });;
+    });
   };
 
   return (
     <div className="container">
-      <h2>Welcome, Customer!</h2>
-      <button type="button" className="btn btn-outline-primary  me-5">
+      <h2 className="mb-4">Welcome, Customer!</h2>
+      <button type="button" className="btn btn-outline-primary mb-4">
         <Link className="nav-link" to={"/customers/new"}>
           Add customer information
         </Link>
@@ -96,7 +97,8 @@ const CustomerPrescriptionList = () => {
                 <td width="12%">{prescription.rx_number}</td>
                 <td width="18%">{prescription.date_refills_expire}</td>
                 <td width="18%">
-                  {prescription.refills_as_written - prescription.times_refilled}
+                  {prescription.refills_as_written -
+                    prescription.times_refilled}
                 </td>
                 <td width="20%">{prescription.description}</td>
                 <td width="22%">

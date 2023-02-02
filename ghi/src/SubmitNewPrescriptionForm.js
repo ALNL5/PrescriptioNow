@@ -91,8 +91,8 @@ function SubmitNewPrescription(props) {
 
   return (
     <div className="container">
-      <div className="row offset-3 col-6 p-3 mt-4">
-        <h1 className="mb-4">Submit a new prescription</h1>
+      <div className="row offset-3 col-6">
+        <h1 className="text-center mt-4 mb-4">Submit a new prescription</h1>
         <form onSubmit={handleSubmit} id="new-prescription-form">
           <PrescriptionFormInput
             labelText="Date requested"

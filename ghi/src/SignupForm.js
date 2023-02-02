@@ -48,39 +48,39 @@ const SignupForm = () => {
     <div className="container">
       <div className="row">
         <div className="offset-3 col-6">
-          <div className="shadow p-4 mt-4">
-            <h1 className="text-center">Sign Up</h1>
-            <p className="text-center">* For customers in Seattle area only</p>
-            <form onSubmit={handleSubmit} id="create-account-form">
-              <div className="form-floating mb-3">
-                <input
-                  value={accountsUsername}
-                  onChange={handleUsernameChange}
-                  placeholder="Username"
-                  required
-                  type="text"
-                  name="username"
-                  id="username"
-                  className="form-control"
-                />
-                <label htmlFor="username">Username</label>
-              </div>
-              <div className="form-floating mb-3">
-                <input
-                  value={accountsPassword}
-                  onChange={handlePasswordChange}
-                  placeholder="Password"
-                  required
-                  type="password"
-                  name="password"
-                  id="password"
-                  className="form-control"
-                />
-                <label htmlFor="password">Password</label>
-              </div>
-              <button className="btn btn-primary">Submit</button>
-            </form>
-          </div>
+          <h1 className="text-center mt-4 mb-4">Sign up</h1>
+          <p className="text-center">* For customers in Seattle area only</p>
+          <form onSubmit={handleSubmit} id="create-account-form">
+            <div className="form-floating mb-3">
+              <input
+                value={accountsUsername}
+                onChange={handleUsernameChange}
+                placeholder="Username"
+                required
+                type="text"
+                name="username"
+                id="username"
+                className="form-control"
+              />
+              <label htmlFor="username">Username</label>
+            </div>
+            <div className="form-floating mb-3">
+              <input
+                value={accountsPassword}
+                onChange={handlePasswordChange}
+                placeholder="Password"
+                required
+                type="password"
+                name="password"
+                id="password"
+                className="form-control"
+              />
+              <label htmlFor="password">Password</label>
+            </div>
+            <button className="btn btn-primary d-grid gap-2 col-4 mx-auto">
+              Submit
+            </button>
+          </form>
         </div>
       </div>
     </div>
