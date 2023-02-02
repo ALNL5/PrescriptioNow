@@ -29,30 +29,21 @@ function OrderHistoryWithSearch() {
   }, [token, setPrescriptions]);
 
   return (
-    <div className="container d-grid gap-4">
+    <div className="container d-grid gap-4 mt-5">
       <div>
         <ul className="nav nav-tabs">
           <li className="nav-item">
-            <Link
-              className="nav-link"
-              to={"/pharmacy/prescriptions"}
-            >
+            <Link className="nav-link" to={"/pharmacy/prescriptions"}>
               All prescriptions
             </Link>
           </li>
           <li className="nav-item">
-            <Link
-            className="nav-link"
-            to={"/pharmacy/prescriptions/orders"}
-            >
+            <Link className="nav-link" to={"/pharmacy/prescriptions/orders"}>
               Refill orders
             </Link>
           </li>
           <li className="nav-item">
-            <Link
-            className="nav-link active"
-            to={"/pharmacy/order-history"}
-            >
+            <Link className="nav-link active" to={"/pharmacy/order-history"}>
               Order history
             </Link>
           </li>

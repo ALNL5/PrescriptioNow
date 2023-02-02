@@ -60,14 +60,11 @@ function RefillOrders() {
   };
 
   return (
-    <div className="container d-grid gap-4">
+    <div className="container d-grid gap-4 mt-5">
       <div>
         <ul className="nav nav-tabs">
           <li className="nav-item">
-            <Link
-            className="nav-link"
-            to={"/pharmacy/prescriptions"}
-            >
+            <Link className="nav-link" to={"/pharmacy/prescriptions"}>
               All prescriptions
             </Link>
           </li>
@@ -80,10 +77,7 @@ function RefillOrders() {
             </Link>
           </li>
           <li className="nav-item">
-            <Link
-            className="nav-link"
-            to={"/pharmacy/order-history"}
-            >
+            <Link className="nav-link" to={"/pharmacy/order-history"}>
               Order history
             </Link>
           </li>
@@ -114,8 +108,7 @@ function RefillOrders() {
                 <td>
                   <Link
                     to={
-                      "/pharmacy/prescriptions/order-details/" +
-                      prescription.id
+                      "/pharmacy/prescriptions/order-details/" + prescription.id
                     }
                   >
                     <span className="badge bg-info text-dark">Details</span>

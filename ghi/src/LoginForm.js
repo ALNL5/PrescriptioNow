@@ -8,7 +8,7 @@ function Login() {
   const token = useToken();
   const loginUser = token[1];
   const navigate = useNavigate();
-  
+
   async function handleSubmit(e) {
     e.preventDefault();
     const userResponse = await loginUser(username, password);
@@ -18,13 +18,13 @@ function Login() {
 
     if (decodedUsersRole === 0) {
       navigate(`/customers/${decodedUser.id}`);
-    };
+    }
     if (decodedUsersRole === 1) {
       navigate(`/pharmacy`);
-    };
+    }
     if (decodedUsersRole === 2) {
       navigate(`/Deliveries`);
-    };
+    }
   }
 
   function parseJwt(token) {
@@ -41,14 +41,13 @@ function Login() {
     );
 
     return JSON.parse(jsonPayload);
-
   }
 
   return (
     <div className="container">
       <div className="row">
         <div className="offset-3 col-6">
-          <div className="shadow p-4 mt-4">
+          <div className="p-4 mt-5">
             <h1 className="text-center">Login</h1>
             <form id="create-account-form">
               <div className="form-floating mb-3">
