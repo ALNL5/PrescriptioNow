@@ -9,7 +9,7 @@ function PrescriptionList({ prescriptions = [] }) {
           <tr>
             <th>RX #</th>
             <th>RX name</th>
-            <th>Customer ID</th>
+            <th>Customer name</th>
             <th>Expiration date</th>
             <th>Prescription</th>
           </tr>
@@ -20,7 +20,7 @@ function PrescriptionList({ prescriptions = [] }) {
               <tr key={prescription.id}>
                 <td width="16%">{prescription.rx_number}</td>
                 <td width="20%">{prescription.name}</td>
-                <td width="20%">{prescription.customer_id}</td>
+                <td width="22%">{prescription.customer_name}</td>
                 <td width="22%">{prescription.date_refills_expire}</td>
                 <td>
                   <Link to={"/pharmacy/prescriptions/" + prescription.id}>

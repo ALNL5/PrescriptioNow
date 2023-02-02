@@ -42,8 +42,6 @@ const CustomerPrescriptionList = () => {
       (prescription) => prescription.id === id
     );
     const prescriptionObj = newPrescriptions[0];
-    console.log("newPrescriptions[0]", newPrescriptions[0]);
-    console.log("prescriptionObj", prescriptionObj);
     const tempRefill = prescriptionObj.times_refilled + 1;
     const tempDate = new Date();
     const date =

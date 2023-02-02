@@ -6,14 +6,14 @@ import { Link } from "react-router-dom";
 const PrescriptionDetails = () => {
   let { id } = useParams();
   const [prescriptions, setPrescriptions] = useState([]);
-  const [tempPrescriptions, setTempPrescriptions] = useState([]);
-  const [changed, setChanged] = useState(false);
+  // const [changed, setChanged] = useState(false);
   const { token } = useAuthContext();
 
   useEffect(() => {
     if (token) {
       async function getPrescriptions() {
         const prescriptionURL = `${process.env.REACT_APP_PHARMACY_API_HOST}/prescriptions/${id}`;
+        const customerURL = `${process.env.REACT_APP_PHARMACY_API_HOST}/customers`;
         const fetchConfig = {
           method: "GET",
           headers: {
@@ -21,11 +21,22 @@ const PrescriptionDetails = () => {
             "Content-Type": "application/json",
           },
         };
-        const response = await fetch(prescriptionURL, fetchConfig);
-        if (response.ok) {
-          const data = await response.json();
-          setPrescriptions(data);
-          setTempPrescriptions(data);
+        const response1 = await fetch(prescriptionURL, fetchConfig);
+        const response2 = await fetch(customerURL, fetchConfig);
+        if (response1.ok && response2.ok) {
+          const data_rx = await response1.json();
+          const data_customers = await response2.json();
+          const customerInfo = data_customers.reduce((acc, cur) => {
+            if (!acc[cur.id]) {
+              acc[cur.id] = cur;
+            }
+            return acc;
+          }, {});
+          data_rx["customer_name"] =
+            customerInfo[data_rx.customer_id].first_name +
+            " " +
+            customerInfo[data_rx.customer_id].last_name;
+          setPrescriptions(data_rx);
         }
       }
       getPrescriptions();
@@ -47,21 +58,21 @@ const PrescriptionDetails = () => {
     });
   };
 
-  const updatePrescription = async (id) => {
-    await fetch(
-      `${process.env.REACT_APP_PHARMACY_API_HOST}/prescriptions/${id}`,
-      {
-        method: "put",
-        headers: {
-          Authorization: `Bearer ${token}`,
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(tempPrescriptions),
-      }
-    ).then(() => {
-      window.location.reload();
-    });
-  };
+  // const updatePrescription = async (id) => {
+  //   await fetch(
+  //     `${process.env.REACT_APP_PHARMACY_API_HOST}/prescriptions/${id}`,
+  //     {
+  //       method: "put",
+  //       headers: {
+  //         Authorization: `Bearer ${token}`,
+  //         "Content-Type": "application/json",
+  //       },
+  //       body: JSON.stringify(tempPrescriptions),
+  //     }
+  //   ).then(() => {
+  //     window.location.reload();
+  //   });
+  // };
 
   return (
     <div className="container d-grid gap-4 mt-5">
@@ -86,14 +97,21 @@ const PrescriptionDetails = () => {
       </div>
       <div className="offset-2 col-6">
         <h3>Prescription #: {prescriptions.rx_number}</h3>
-        <p>Input to update prescription</p>
       </div>
       <form className="offset-2">
         <div className="col-sm-9 d-flex align-items-center">
-          <label className="col-sm-4 col-form-label">Name</label>
+          <label className="col-sm-4 col-form-label">Prescription name</label>
           <input
             className="form-control mx-1"
             value={prescriptions.name}
+            disabled
+          />
+        </div>
+        <div className="col-sm-9 d-flex align-items-center">
+          <label className="col-sm-4 col-form-label">Customer name</label>
+          <input
+            className="form-control mx-1"
+            value={prescriptions.customer_name}
             disabled
           />
         </div>
@@ -109,42 +127,26 @@ const PrescriptionDetails = () => {
           <label className="col-sm-4 col-form-label">Description</label>
           <input
             className="form-control mx-1"
-            value={tempPrescriptions.description}
-            onChange={(e) => {
-              setChanged(true);
-              setTempPrescriptions({
-                ...tempPrescriptions,
-                description: e.target.value,
-              });
-            }}
+            value={prescriptions.description}
+            disabled
           />
         </div>
         <div className="col-sm-9 d-flex align-items-center">
           <label className="col-sm-4 col-form-label">Quantity</label>
           <input
             className="form-control mx-1"
-            value={tempPrescriptions.quantity}
-            onChange={(e) => {
-              setChanged(true);
-              setTempPrescriptions({
-                ...tempPrescriptions,
-                quantity: e.target.value,
-              });
-            }}
+            value={prescriptions.quantity}
+            disabled
           />
         </div>
         <div className="col-sm-9 d-flex align-items-center">
-          <label className="col-sm-4 col-form-label">Refills as written</label>
+          <label className="col-sm-4 col-form-label">
+            Maximum refill times
+          </label>
           <input
             className="form-control mx-1"
-            value={tempPrescriptions.refills_as_written}
-            onChange={(e) => {
-              setChanged(true);
-              setTempPrescriptions({
-                ...tempPrescriptions,
-                refills_as_written: e.target.value,
-              });
-            }}
+            value={prescriptions.refills_as_written}
+            disabled
           />
         </div>
         <div className="col-sm-9 d-flex align-items-center">
@@ -159,7 +161,7 @@ const PrescriptionDetails = () => {
       </form>
       <div className="d-flex flex-column mb-3">
         <div className="text-center p-3">
-          {changed ? (
+          {/* {changed ? (
             <button
               type="button"
               className="btn btn-outline-primary  me-5"
@@ -175,7 +177,7 @@ const PrescriptionDetails = () => {
             >
               Save
             </button>
-          )}
+          )} */}
           <button
             onClick={() => deletePrescription(prescriptions.id)}
             type="button"

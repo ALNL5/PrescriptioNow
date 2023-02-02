@@ -25,6 +25,7 @@ function PrescriptionsWithSearch() {
     if (token) {
       const fetchPrescriptions = async () => {
         const prescriptionURL = `${process.env.REACT_APP_PHARMACY_API_HOST}/prescriptions`;
+        const customerURL = `${process.env.REACT_APP_PHARMACY_API_HOST}/customers`;
         const fetchConfig = {
           method: "GET",
           headers: {
@@ -32,11 +33,28 @@ function PrescriptionsWithSearch() {
             "Content-Type": "application/json",
           },
         };
-        const response = await fetch(prescriptionURL, fetchConfig);
-        if (response.ok) {
-          const data = await response.json();
-          setAllPrescriptions(data);
-          setPrescriptions(data);
+        const response1 = await fetch(prescriptionURL, fetchConfig);
+        const response2 = await fetch(customerURL, fetchConfig);
+        if (response1.ok && response2.ok) {
+          const data_rx = await response1.json();
+          const data_customers = await response2.json();
+          const customerInfo = data_customers.reduce((acc, cur) => {
+            if (!acc[cur.id]) {
+              acc[cur.id] = cur;
+            }
+            return acc;
+          }, {});
+          const rxToDisplay = data_rx.reduce((acc, cur) => {
+            if (!acc[cur.rx_number]) {
+              cur["customer_name"] = customerInfo[cur.customer_id].first_name +
+                " " +
+                customerInfo[cur.customer_id].last_name;
+              acc[cur.rx_number] = cur;
+            }
+            return acc;
+          }, {});
+          setPrescriptions(Object.values(rxToDisplay));
+          setAllPrescriptions(Object.values(rxToDisplay));
         }
       };
       fetchPrescriptions();
@@ -48,7 +66,10 @@ function PrescriptionsWithSearch() {
       <div>
         <ul className="nav nav-tabs">
           <li className="nav-item">
-            <Link className="nav-link active" to={"/pharmacy/prescriptions"}>
+            <Link
+              className="nav-link active"
+              to={"/pharmacy/prescriptions"}
+            >
               All prescriptions
             </Link>
           </li>
@@ -66,7 +87,10 @@ function PrescriptionsWithSearch() {
       </div>
       <div>
         <button type="button" className="btn btn-outline-primary  me-5">
-          <Link className="nav-link" to={"/pharmacy/prescriptions/new"}>
+          <Link
+            className="nav-link"
+            to={"/pharmacy/prescriptions/new"}
+          >
             Create prescription
           </Link>
         </button>
