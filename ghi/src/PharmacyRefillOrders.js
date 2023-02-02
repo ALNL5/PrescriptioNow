@@ -10,6 +10,7 @@ function RefillOrders() {
     if (token) {
       const getOrderedPrescriptions = async () => {
         const prescriptionURL = `${process.env.REACT_APP_PHARMACY_API_HOST}/prescriptions`;
+        const customerURL = `${process.env.REACT_APP_PHARMACY_API_HOST}/customers`;
         const fetchConfig = {
           method: "GET",
           headers: {
@@ -17,14 +18,31 @@ function RefillOrders() {
             "Content-Type": "application/json",
           },
         };
-        const response = await fetch(prescriptionURL, fetchConfig);
-        if (response.ok) {
-          const data = await response.json();
-          const orderedPrescriptions = data.filter(
+        const response1 = await fetch(prescriptionURL, fetchConfig);
+        const response2 = await fetch(customerURL, fetchConfig);
+        if (response1.ok && response2.ok) {
+          const data_rx = await response1.json();
+          const data_customers = await response2.json();
+          const customerInfo = data_customers.reduce((acc, cur) => {
+            if (!acc[cur.id]) {
+              acc[cur.id] = cur;
+            }
+            return acc;
+          }, {});
+          const orderedPrescriptions = data_rx.filter(
             (prescription) =>
               prescription.date_requested !== null &&
               prescription.date_filled === null
           );
+          const rxToDisplay = orderedPrescriptions.reduce((acc, cur) => {
+            cur["customer_name"] =
+              customerInfo[cur.customer_id].first_name +
+              " " +
+              customerInfo[cur.customer_id].last_name;
+            acc[cur.rx_number] = cur;
+            return acc;
+          }, {});
+          console.log(rxToDisplay);
           setOrderedPrescriptions(orderedPrescriptions);
         }
       };
@@ -86,9 +104,9 @@ function RefillOrders() {
       <table className="table table-striped">
         <thead>
           <tr>
+            <th>Customer</th>
             <th>RX_#</th>
             <th>RX name</th>
-            <th>Customer ID</th>
             <th>Request date</th>
             <th>Prescription</th>
             <th>Change status</th>
@@ -98,9 +116,9 @@ function RefillOrders() {
           {orderedPrescriptions?.map((prescription) => {
             return (
               <tr key={prescription.id}>
-                <td width="14%">{prescription.rx_number}</td>
-                <td width="14%">{prescription.name}</td>
-                <td width="16%">{prescription.customer_id}</td>
+                <td width="17%">{prescription.customer_name}</td>
+                <td width="12%">{prescription.rx_number}</td>
+                <td width="18%">{prescription.name}</td>
                 {prescription.date_requested && (
                   <td width="18%">{prescription.date_requested}</td>
                 )}

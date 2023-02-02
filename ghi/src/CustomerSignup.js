@@ -39,7 +39,7 @@ const CustomerForm = () => {
       headers: {
         Authorization: `Bearer ${token}`,
         "Content-Type": "application/json",
-      },
+      }
     };
     fetch(customerUrl, fetchConfig)
       .then((response) => response.json())

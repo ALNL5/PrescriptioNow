@@ -11,6 +11,7 @@ const OrderDetails = () => {
     if (token) {
       async function getPrescriptions() {
         const prescriptionURL = `${process.env.REACT_APP_PHARMACY_API_HOST}/prescriptions/${id}`;
+        const customerURL = `${process.env.REACT_APP_PHARMACY_API_HOST}/customers`;
         const fetchConfig = {
           method: "GET",
           headers: {
@@ -18,10 +19,22 @@ const OrderDetails = () => {
             "Content-Type": "application/json",
           },
         };
-        const response = await fetch(prescriptionURL, fetchConfig);
-        if (response.ok) {
-          const data = await response.json();
-          setPrescriptions(data);
+        const response1 = await fetch(prescriptionURL, fetchConfig);
+        const response2 = await fetch(customerURL, fetchConfig);
+        if (response1.ok && response2.ok) {
+          const data_rx = await response1.json();
+          const data_customers = await response2.json();
+          const customerInfo = data_customers.reduce((acc, cur) => {
+            if (!acc[cur.id]) {
+              acc[cur.id] = cur;
+            }
+            return acc;
+          }, {});
+          data_rx["customer_name"] =
+            customerInfo[data_rx.customer_id].first_name +
+            " " +
+            customerInfo[data_rx.customer_id].last_name;
+          setPrescriptions(data_rx);
         }
       }
       getPrescriptions();
@@ -66,6 +79,13 @@ const OrderDetails = () => {
           <input className="form-control mx-1" value={prescriptions.name} />
         </div>
         <div className="col-sm-9 d-flex align-items-center">
+          <label className="col-sm-4 col-form-label">Customer name</label>
+          <input
+            className="form-control mx-1"
+            value={prescriptions.customer_name}
+          />
+        </div>
+        <div className="col-sm-9 d-flex align-items-center">
           <label className="col-sm-4 col-form-label">Customer ID</label>
           <input
             className="form-control mx-1"
@@ -84,7 +104,9 @@ const OrderDetails = () => {
           <input className="form-control mx-1" value={prescriptions.quantity} />
         </div>
         <div className="col-sm-9 d-flex align-items-center">
-          <label className="col-sm-4 col-form-label">Refills as written</label>
+          <label className="col-sm-4 col-form-label">
+            Maximum refill times
+          </label>
           <input
             className="form-control mx-1"
             value={prescriptions.refills_as_written}
