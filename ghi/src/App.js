@@ -59,11 +59,11 @@ function App() {
               element={<OrderHistoryWithSearch />}
             />
             <Route
-              path="customers/:id"
+              path="/customers/:id"
               element={<CustomerPrescriptionList />}
             />
-            <Route path="customers/new" element={<CustomerForm />} />
-            <Route path="accounts">
+            <Route path="/customers/new" element={<CustomerForm />} />
+            <Route path="/accounts">
               <Route path="signup" element={<SignupForm />} />
               <Route path="login" element={<Login />} />
               <Route path="logout" element={<Logout />} />
