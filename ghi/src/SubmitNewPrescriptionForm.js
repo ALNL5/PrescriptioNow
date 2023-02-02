@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import { useAuthContext } from "./auth";
 
 function PrescriptionFormInput(props) {
@@ -30,6 +31,7 @@ function SubmitNewPrescription(props) {
   const [refillsExpire, setRefillsExpire] = useState("");
   const [customerId, setCustomerId] = useState(0);
   const [customers, setCustomers] = useState([]);
+  const navigate = useNavigate();
   const { token } = useAuthContext();
 
   useEffect(() => {
@@ -64,6 +66,7 @@ function SubmitNewPrescription(props) {
       date_refills_expire: refillsExpire,
       customer_id: customerId,
     };
+    navigate("/pharmacy/prescriptions");
 
     const prescriptionUrl = `${process.env.REACT_APP_PHARMACY_API_HOST}/prescriptions`;
     const fetchConfig = {
@@ -162,7 +165,10 @@ function SubmitNewPrescription(props) {
               ))}
             </select>
           </div>
-          <button type="submit" className="btn btn-primary">
+          <button
+            type="submit"
+            className="btn btn-primary"
+          >
             Submit prescription
           </button>
         </form>
