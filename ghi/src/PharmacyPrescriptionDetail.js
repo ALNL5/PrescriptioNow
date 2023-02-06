@@ -149,14 +149,14 @@ const PrescriptionDetails = () => {
             disabled
           />
         </div>
-        <div className="col-sm-9 d-flex align-items-center">
+        {/* <div className="col-sm-9 d-flex align-items-center">
           <label className="col-sm-4 col-form-label">Times refilled</label>
           <input
             className="form-control mx-1"
             value={prescriptions.times_refilled}
             disabled
           />
-        </div>
+        </div> */}
         <div className="col-sm-9 d-flex align-items-center"></div>
       </form>
       <div className="d-flex flex-column mb-3">
