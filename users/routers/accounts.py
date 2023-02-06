@@ -14,6 +14,7 @@ from queries.accounts import (
     Error,
     AccountIn,
     AccountOut,
+    AccountOutWithPassword,
     AccountsRepository,
     RoleIn,
     RoleOut,
@@ -55,6 +56,13 @@ async def get_token(
             "type": "Bearer",
             "account": account,
         }
+
+
+@router.get(
+    "/api/accounts", response_model=Union[List[AccountOutWithPassword], Error]
+)
+def get_all_accounts(repo: AccountsRepository = Depends()):
+    return repo.get_all_accounts()
 
 
 @router.post("/api/accounts", response_model=AccountToken | HttpError)

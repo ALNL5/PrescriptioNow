@@ -14,7 +14,7 @@ class MyAuthenticator(Authenticator):
         username: str,
         accounts: AccountsRepository,
     ):
-        return accounts.get(username)
+        return accounts.get_one_account(username)
 
     def get_account_getter(
         self,

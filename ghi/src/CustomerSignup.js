@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useAuthContext } from "./auth";
 import { Link } from "react-router-dom";
 
@@ -15,6 +15,40 @@ const CustomerForm = () => {
   const [customerZip, setCustomerZip] = useState("");
   const [customerUserID, setCustomerUserID] = useState(0);
   const { token } = useAuthContext();
+  const [userName, setUserName] = useState("");
+
+  function parseJwt(data) {
+    const base64Url = data.split(".")[1];
+    const base64 = base64Url.replace("-", "+").replace("_", "/");
+    const info = JSON.parse(window.atob(base64));
+    setUserName(info.account.username);
+  }
+
+  useEffect(() => {
+    if (token) {
+      parseJwt(token);
+      const fetchUsers = async () => {
+        const usersURL = `${process.env.REACT_APP_USER_API_HOST}/api/accounts`;
+        const fetchConfig = {
+          method: "GET",
+          headers: {
+            Authorization: `Bearer ${token}`,
+            "Content-Type": "application/json",
+          },
+        };
+        const response = await fetch(usersURL, fetchConfig);
+        if (response.ok) {
+          const data_users = await response.json();
+          const user = data_users.filter((cur) => cur.username === userName);
+          console.log("user:", user);
+          const userID = user[0]?.id;
+          console.log("userID:", userID);
+          setCustomerUserID(userID);
+        }
+      };
+      fetchUsers();
+    }
+  }, [token, setCustomerUserID, userName]);
 
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -248,9 +282,11 @@ const CustomerForm = () => {
               <label htmlFor="zip">Zip Code</label>
             </div>
             <Link
+              onClick={handleSubmit}
               className={"btn btn-primary d-grid gap-2 col-4 mx-auto"}
               to={"/customers/:id"}
               role="button"
+              type="submit"
             >
               Create
             </Link>

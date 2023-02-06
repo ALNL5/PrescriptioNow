@@ -61,7 +61,7 @@ class AccountsRepository:
                 id = result.fetchone()[0]
                 return self.account_in_out(id, info)
 
-    def get(self, username: str) -> AccountOutWithPassword:
+    def get_one_account(self, username: str) -> AccountOutWithPassword:
         with pool.connection() as conn:
             with conn.cursor() as db:
                 result = db.execute(
@@ -86,6 +86,32 @@ class AccountsRepository:
                     )
                 else:
                     print("Bad username")
+
+    def get_all_accounts(self) -> AccountOutWithPassword:
+        try:
+            with pool.connection() as conn:
+                with conn.cursor() as db:
+                    result = db.execute(
+                        """
+                        SELECT
+                        id,
+                        username,
+                        password,
+                        role_id
+                        FROM users
+                        """,
+                    )
+                    return [self.record_in_to_out(record) for record in result]
+        except Exception:
+            return {"message": "Could not get all prescriptions"}
+
+    def record_in_to_out(self, record):
+        return AccountOutWithPassword(
+            id=record[0],
+            username=record[1],
+            hashed_password=record[2],
+            role_id=record[3],
+        )
 
     def account_in_out(self, id: int, account: AccountIn):
         data = account.dict()
