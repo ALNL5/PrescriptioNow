@@ -103,7 +103,7 @@ class AccountsRepository:
                     )
                     return [self.record_in_to_out(record) for record in result]
         except Exception:
-            return {"message": "Could not get all prescriptions"}
+            return {"message": "Could not get all accounts"}
 
     def record_in_to_out(self, record):
         return AccountOutWithPassword(
