@@ -6,18 +6,7 @@
 ## Deliverables
 
 * [API documentation](docs/apis.md)
-* ![HomePage](docs/HomePage.mov)
-* ![SignupPage](docs/)
-* ![LoginPage](docs/)
-* ![CustomerHome](docs/)
-* ![PharmacistHome](docs/)
-* ![PharmacistCreatePrescription](docs/)
-* ![PharmacistAllPrescriptions](docs/)
-* ![PharmacistPrescriptionDetails](docs/)
-* ![PharmacistRefillOrders](docs/)
-* ![PharmacistRefillOrderDetails](docs/)
-* ![PharmacistOrderHistory](docs/)
-* ![DeliveryHome](docs/)
+* ![UseDemo](docs/HomePage.mov)
 
 ## Ports
 * frontend: http://localhost:3000/
@@ -37,22 +26,28 @@ The people we would expect to use this application, are customers, pharmacists, 
 
 ### Functionality
 
-- customers should be able to sign up for an account
-- customers should be able to log in for an account to see their prescriptions and order refill in their account
-- customers should be able to log out for an account
-- pharmacists should be able to log in for an account to make CRUD on prescriptions
-- pharmacists should be able to select medicine description from information provided by a 3rd-party API
-- pharmacists should be able to filter out prescriptions with refill request
-- pharmacists should be able to log out for an account
-- delivery drivers should be able to log in to their account
-- delivery drivers should be able to filter out delivery tasks with completed refill request
-- delivery drivers should be able to see routing suggestions automatically list on the map provided by a 3rd-party API
-- delivery drivers should be able to update delivery status when the order is delivered
-- delivery drivers should be able to send a delivery notification to customer when the order is delivered
-
-#### GitLab pages URL
-
-https://gitlab.com/epsilon15/prescriptionow
+* Customers:
+      sign up,
+      login,
+      fill personal information,
+      request refill,
+      logout
+* Pharmacists:
+      login,
+      create new prescription for existing customer,
+      view all customer's prescriptions,
+      view prescription details,
+      delete prescriptions,
+      view refill orders requested by customers,
+      update status of refill orders,
+      view refill order history
+      logout
+* Drivers:
+      login,
+      view delivery tasks,
+      view addresses pointed on map with optimized routing suggestions,
+      update status of delivered orders,
+      logout
 
 ### Addresses ###
 Please only create customer addresses in Seattle, since this prescription delivery is only designed for customers in Seattle area.
