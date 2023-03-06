@@ -1,4 +1,4 @@
-### Built With
+## Built With
 * React.js
 * Python
 * FastAPI
@@ -6,28 +6,28 @@
 * RESTful API
 * PostgreSQL
 
-### About The Project
+## About The Project
 * ![Demo](docs/HomePage.mov)
 * [API documentation](docs/apis.md)
 
-## Intended market
+### Intended market
 The people we expect to use this application are customers, pharmacists, and delivery drivers. Pharmacists create prescriptions for customers, and then customers can view their prescription in their account and select to refill it. The pharmacists receive the order to fulfill it, and once the refill is complete, the delivery driver delivers the refill orders to customers using optimized routing suggestions. After the delivery is finished, the customer will receive a confirmation message regarding the delivery.
 
-### Getting Started
-# Prerequisites
+# Getting Started
+## Prerequisites
 * npm install npm@latest -g
 
-# Installation
+## Installation
 1. Clone the repo: git clone https://gitlab.com/ALNL/prescriptio-now.git
 2. Install NPM package: npm install
 
-# Docker Commands
+## Docker Commands
 1) CREATE pg-admin VOLUME: docker volume create pg-admin
 2) CREATE postgres VOLUME: docker volume create postgres-data
 3) BUILD IMAGE : docker compose build
 4) RUN IMAGE: docker compose up
 
-# Ports
+## Ports
 * frontend: http://localhost:3000/
 * backend-accounts: http://localhost:8001/docs
 * backend-customers, prescriptions and drivers: http://localhost:8001/docs
@@ -35,11 +35,11 @@ The people we expect to use this application are customers, pharmacists, and del
 * pg-admin username: admin@epsilon.com
 * pg-admin password: password
 
-# Backend needs
+## Backend needs
 * CRUD of prescriptions, customers, deliveries and their personal information.
 * Incorporated authentication for increased user protection.
 
-### Functionality
+## Functionality
 
 * Customers:
       sign up,
