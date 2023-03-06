@@ -1,14 +1,33 @@
-## Install Extensions
+### Built With
+* React.js
+* Python
+* FastAPI
+* Bootstrap
+* RESTful API
+* PostgreSQL
 
-* Prettier: <https://marketplace.visualstudio.com/items?itemName=esbenp.prettier-vscode>
-* Black Formatter: <https://marketplace.visualstudio.com/items?itemName=ms-python.black-formatter>
-
-## Deliverables
-
+### About The Project
+* ![Demo](docs/HomePage.mov)
 * [API documentation](docs/apis.md)
-* ![UseDemo](docs/HomePage.mov)
 
-## Ports
+## Intended market
+The people we expect to use this application are customers, pharmacists, and delivery drivers. Pharmacists create prescriptions for customers, and then customers can view their prescription in their account and select to refill it. The pharmacists receive the order to fulfill it, and once the refill is complete, the delivery driver delivers the refill orders to customers using optimized routing suggestions. After the delivery is finished, the customer will receive a confirmation message regarding the delivery.
+
+### Getting Started
+# Prerequisites
+* npm install npm@latest -g
+
+# Installation
+1. Clone the repo: git clone https://gitlab.com/ALNL/prescriptio-now.git
+2. Install NPM package: npm install
+
+# Docker Commands
+1) CREATE pg-admin VOLUME: docker volume create pg-admin
+2) CREATE postgres VOLUME: docker volume create postgres-data
+3) BUILD IMAGE : docker compose build
+4) RUN IMAGE: docker compose up
+
+# Ports
 * frontend: http://localhost:3000/
 * backend-accounts: http://localhost:8001/docs
 * backend-customers, prescriptions and drivers: http://localhost:8001/docs
@@ -16,13 +35,9 @@
 * pg-admin username: admin@epsilon.com
 * pg-admin password: password
 
-## Intended market
-
-The people we would expect to use this application, are customers, pharmacists, and delivery drivers. Pharmacist creates prescriptions for customers, then customers can see their prescription in their account and select to refill, then pharmacists receive the order to fulfill. When the refill is complete, delivery driver deliver the refill orders to customers with an optimized routing suggestion. After finishing the delivery, the customer will receive a confirmation message about delivery.
-
-## Backend needs
-
-- We made CRUD of prescriptions, customers, deliveries and their personal information. Incorporated authentication for increased user protection.
+# Backend needs
+* CRUD of prescriptions, customers, deliveries and their personal information.
+* Incorporated authentication for increased user protection.
 
 ### Functionality
 
@@ -49,5 +64,5 @@ The people we would expect to use this application, are customers, pharmacists, 
       update status of delivered orders,
       logout
 
-### Addresses ###
-Please only create customer addresses in Seattle, since this prescription delivery is only designed for customers in Seattle area.
+### Customer addresses ###
+Please only create customer with addresses in Seattle, since this prescription delivery is only designed for customers in Seattle area.
