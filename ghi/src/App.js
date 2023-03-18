@@ -16,6 +16,7 @@ import OrderHistoryWithSearch from "./PharmacyOrderHistorySearch.js";
 import CustomerPrescriptionList from "./CustomerPrescriptions";
 import Deliveries from "./Deliveries.jsx";
 import CustomerForm from "./CustomerSignup.js";
+import DeliveryTasks from "./Delivery";
 
 function GetToken() {
   // Get token from JWT cookie (if already logged in)
@@ -68,7 +69,8 @@ function App() {
               <Route path="login" element={<Login />} />
               <Route path="logout" element={<Logout />} />
             </Route>
-            <Route path="/Deliveries" element={<Deliveries />} />
+            {/* <Route path="/Deliveries" element={<Deliveries />} /> */}
+            <Route path="/deliveries" element={<DeliveryTasks />} />
           </Routes>
         </div>
       </AuthProvider>

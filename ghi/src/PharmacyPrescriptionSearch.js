@@ -63,13 +63,11 @@ function PrescriptionsWithSearch() {
 
   return (
     <div className="container d-grid gap-4 mt-5">
+      <h3>Welcome, pharmacist!</h3>
       <div>
         <ul className="nav nav-tabs">
           <li className="nav-item">
-            <Link
-              className="nav-link active"
-              to={"/pharmacy/prescriptions"}
-            >
+            <Link className="nav-link active" to={"/pharmacy/prescriptions"}>
               All prescriptions
             </Link>
           </li>
@@ -87,10 +85,7 @@ function PrescriptionsWithSearch() {
       </div>
       <div>
         <button type="button" className="btn btn-outline-primary  me-5">
-          <Link
-            className="nav-link"
-            to={"/pharmacy/prescriptions/new"}
-          >
+          <Link className="nav-link" to={"/pharmacy/prescriptions/new"}>
             Create prescription
           </Link>
         </button>

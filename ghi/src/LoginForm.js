@@ -23,7 +23,7 @@ function Login() {
       navigate(`/pharmacy`);
     }
     if (decodedUsersRole === 2) {
-      navigate(`/Deliveries`);
+      navigate(`/deliveries`);
     }
   }
 

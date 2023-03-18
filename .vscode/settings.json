@@ -3,8 +3,6 @@
   "python.formatting.provider": "black",
   "editor.formatOnSave": true,
   "editor.defaultFormatter": "esbenp.prettier-vscode",
-  "cSpell.words": [
-    "fastapi",
-    "jwtdown"
-  ]
+  "cSpell.words": ["fastapi", "jwtdown"],
+  "liveServer.settings.port": 5501
 }

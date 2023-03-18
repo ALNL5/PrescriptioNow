@@ -112,13 +112,13 @@ const OrderDetails = () => {
             value={prescriptions.refills_as_written}
           />
         </div>
-        <div className="col-sm-9 d-flex align-items-center">
+        {/* <div className="col-sm-9 d-flex align-items-center">
           <label className="col-sm-4 col-form-label">Times refilled</label>
           <input
             className="form-control mx-1"
             value={prescriptions.times_refilled}
           />
-        </div>
+        </div> */}
         <div className="col-sm-9 d-flex align-items-center"></div>
         <div className="col-sm-9 d-flex align-items-center">
           <label className="col-sm-4 col-form-label">Request date</label>

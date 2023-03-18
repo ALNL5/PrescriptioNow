@@ -1,8 +1,10 @@
 import React, { useState, useEffect } from "react";
 import { useAuthContext } from "./auth";
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
+// import { useNavigate } from "react-router-dom";
 
 const CustomerForm = () => {
+  let { id } = useParams();
   const [customerFirstName, setCustomerFirstName] = useState("");
   const [customerLastName, setCustomerLastName] = useState("");
   const [customerDOB, setCustomerDOB] = useState("");
@@ -16,6 +18,7 @@ const CustomerForm = () => {
   const [customerUserID, setCustomerUserID] = useState(0);
   const { token } = useAuthContext();
   const [userName, setUserName] = useState("");
+  // const navigate = useNavigate();
 
   function parseJwt(data) {
     const base64Url = data.split(".")[1];
@@ -92,6 +95,7 @@ const CustomerForm = () => {
       })
       .catch((e) => console.log("error: ", e))
       .then(() => {
+        // navigate(`/customers/${id}`);
         window.location.reload();
       });
   };
@@ -151,7 +155,7 @@ const CustomerForm = () => {
       <div className="row">
         <div className="offset-3 col-6">
           <h1 className="text-center mt-4 mb-4">Add customer information</h1>
-          <form onSubmit={handleSubmit} id="create-shoe-form">
+          <form onSubmit={handleSubmit} id="create-customer-form">
             <div className="form-floating mb-3">
               <input
                 value={customerFirstName}

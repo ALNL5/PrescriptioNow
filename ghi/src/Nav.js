@@ -1,5 +1,6 @@
 import { useToken } from "./auth";
 import { Link } from "react-router-dom";
+import { LineUtil } from "leaflet";
 
 function Nav() {
   const [token] = useToken();
@@ -14,6 +15,11 @@ function Nav() {
           className="collapse navbar-collapse justify-content-end"
           id="navbarNavAltMarkup"
         >
+          {/* <div className="navbar-nav">
+            <li className={token ? "d-none" : "nav-link link-dark"}>
+              Please login
+            </li>
+          </div> */}
           <div className="navbar-nav">
             <Link
               className={token ? "btn btn-primary" : "d-none"}
